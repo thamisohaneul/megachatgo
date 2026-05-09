@@ -1,7 +1,7 @@
 {
   "name": "MegaChat Go",
   "short_name": "MegaChat",
-  "start_url": "index.html",
+  "start_url": "splash.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#25D366",
@@ -9,7 +9,7 @@
   "icons": [
     {
       "src": "logo.png",
-      "sizes": "512x512",
+      "sizes": "1024x1024",
       "type": "image/png"
     }
   ]
