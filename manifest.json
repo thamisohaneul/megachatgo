@@ -1,0 +1,16 @@
+{
+  "name": "MegaChat Go",
+  "short_name": "MegaChat",
+  "start_url": "splash.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#25D366",
+  "description": "Lightweight chat app",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
