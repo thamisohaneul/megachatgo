@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Notifications</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f7f7f7;
+  color:#111;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:78px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+/* HEADER ICONS */
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.header-icons div{
+  font-size:24px;
+}
+
+/* TABS */
+
+.tabs{
+  margin-top:90px;
+
+  display:flex;
+  gap:12px;
+
+  overflow-x:auto;
+
+  padding:0 16px 10px;
+
+  scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+/* TAB */
+
+.tab{
+  padding:10px 18px;
+
+  background:white;
+
+  border-radius:18px;
+
+  font-size:14px;
+  font-weight:600;
+
+  color:#777;
+
+  box-shadow:
+  0 4px 14px rgba(0,0,0,0.04);
+}
+
+/* ACTIVE TAB */
+
+.active-tab{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+}
+
+/* NOTIFICATION LIST */
+
+.notifications{
+  padding:8px 14px 110px;
+}
+
+/* SINGLE NOTIFICATION */
+
+.notification{
+  background:white;
+
+  border-radius:26px;
+
+  padding:15px;
+
+  margin-bottom:15px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+
+  animation:fadeUp 0.5s ease;
+}
+
+/* LEFT */
+
+.notification-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* AVATAR */
+
+.avatar{
+  position:relative;
+}
+
+.avatar img{
+  width:62px;
+  height:62px;
+
+  border-radius:22px;
+
+  object-fit:cover;
+}
+
+/* PURPLE DOT */
+
+.dot{
+  position:absolute;
+  top:0;
+  right:0;
+
+  width:14px;
+  height:14px;
+
+  border-radius:50%;
+
+  background:#8a2be2;
+
+  border:3px solid white;
+}
+
+/* TEXT AREA */
+
+.notification-info{
+  display:flex;
+  flex-direction:column;
+}
+
+/* MESSAGE */
+
+.message{
+  font-size:14px;
+  line-height:1.5;
+}
+
+.message b{
+  font-weight:700;
+}
+
+/* TIME */
+
+.time{
+  margin-top:5px;
+
+  font-size:12px;
+  color:#888;
+}
+
+/* RIGHT SIDE */
+
+.preview img{
+  width:62px;
+  height:62px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+}
+
+/* BUTTON */
+
+.follow-btn{
+  padding:10px 16px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  font-size:13px;
+  font-weight:600;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(12px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  font-size:28px;
+  color:#999;
+}
+
+/* ACTIVE */
+
+.active{
+  color:#8a2be2;
+  transform:translateY(-3px);
+}
+
+/* CREATE BUTTON */
+
+.create{
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:34px;
+
+  margin-top:-38px;
+
+  box-shadow:
+  0 10px 28px rgba(138,43,226,0.35);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Notifications
+  </div>
+
+  <div class="header-icons">
+    <div>⚙️</div>
+  </div>
+
+</div>
+
+<!-- TABS -->
+
+<div class="tabs">
+
+  <div class="tab active-tab">
+    All
+  </div>
+
+  <div class="tab">
+    Mentions
+  </div>
+
+  <div class="tab">
+    Likes
+  </div>
+
+  <div class="tab">
+    Follows
+  </div>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div class="notifications">
+
+  <!-- NOTIFICATION -->
+
+  <div class="notification">
+
+    <div class="notification-left">
+
+      <div class="avatar">
+
+        <img src="https://i.pravatar.cc/150?img=1">
+
+        <div class="dot"></div>
+
+      </div>
+
+      <div class="notification-info">
+
+        <div class="message">
+          <b>Sarah Kim</b> liked your post ✨
+        </div>
+
+        <div class="time">
+          2 minutes ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="preview">
+
+      <img src="https://picsum.photos/120/120">
+
+    </div>
+
+  </div>
+
+  <!-- NOTIFICATION -->
+
+  <div class="notification">
+
+    <div class="notification-left">
+
+      <div class="avatar">
+
+        <img src="https://i.pravatar.cc/150?img=2">
+
+        <div class="dot"></div>
+
+      </div>
+
+      <div class="notification-info">
+
+        <div class="message">
+          <b>Alex Carter</b> started following you 🚀
+        </div>
+
+        <div class="time">
+          15 minutes ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="follow-btn">
+      Follow Back
+    </button>
+
+  </div>
+
+  <!-- NOTIFICATION -->
+
+  <div class="notification">
+
+    <div class="notification-left">
+
+      <div class="avatar">
+
+        <img src="https://i.pravatar.cc/150?img=3">
+
+      </div>
+
+      <div class="notification-info">
+
+        <div class="message">
+          <b>Emma</b> mentioned you in a comment 💬
+        </div>
+
+        <div class="time">
+          1 hour ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="preview">
+
+      <img src="https://picsum.photos/121/121">
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item">
+    🏠
+  </div>
+
+  <div class="nav-item">
+    🔍
+  </div>
+
+  <div class="create">
+    +
+  </div>
+
+  <div class="nav-item active">
+    🔔
+  </div>
+
+  <div class="nav-item">
+    👤
+  </div>
+
+</div>
+
+</body>
+</html>
