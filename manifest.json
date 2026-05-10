@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "MegaChat Go",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "MegaChat",
+  "start_url": "/",
+  "theme_color": "#25d366",
+  "id": "Lyno platforms "
+}
