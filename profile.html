@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Profile</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f7f7f7;
+  color:#111;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:78px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+/* ICONS */
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.header-icons div{
+  font-size:24px;
+}
+
+/* PROFILE AREA */
+
+.profile{
+  margin-top:95px;
+  padding:0 18px;
+}
+
+/* TOP PROFILE */
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+/* PROFILE IMAGE */
+
+.profile-img{
+  position:relative;
+}
+
+.profile-img img{
+  width:105px;
+  height:105px;
+
+  border-radius:32px;
+
+  object-fit:cover;
+
+  border:4px solid white;
+
+  box-shadow:
+  0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* ONLINE DOT */
+
+.online{
+  position:absolute;
+  right:4px;
+  bottom:4px;
+
+  width:20px;
+  height:20px;
+
+  border-radius:50%;
+
+  background:#8a2be2;
+
+  border:4px solid white;
+}
+
+/* PROFILE INFO */
+
+.profile-info{
+  flex:1;
+}
+
+/* NAME */
+
+.name{
+  font-size:28px;
+  font-weight:800;
+}
+
+/* USERNAME */
+
+.username{
+  margin-top:4px;
+
+  color:#777;
+  font-size:14px;
+}
+
+/* BIO */
+
+.bio{
+  margin-top:12px;
+
+  line-height:1.6;
+  font-size:14px;
+}
+
+/* STATS */
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+
+  margin-top:24px;
+
+  background:white;
+
+  border-radius:26px;
+
+  padding:18px;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* SINGLE STAT */
+
+.stat{
+  text-align:center;
+  flex:1;
+}
+
+.stat-number{
+  font-size:22px;
+  font-weight:800;
+}
+
+.stat-text{
+  margin-top:4px;
+
+  font-size:13px;
+  color:#777;
+}
+
+/* BUTTONS */
+
+.buttons{
+  display:flex;
+  gap:14px;
+
+  margin-top:20px;
+}
+
+/* BUTTON */
+
+.btn{
+  flex:1;
+
+  height:52px;
+
+  border:none;
+
+  border-radius:18px;
+
+  font-size:15px;
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+/* PRIMARY */
+
+.primary{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  box-shadow:
+  0 8px 20px rgba(138,43,226,0.25);
+}
+
+/* SECONDARY */
+
+.secondary{
+  background:white;
+
+  color:#111;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* PROFILE NOTE */
+
+.note{
+  margin-top:22px;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:16px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* NOTE ICON */
+
+.note-icon{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:24px;
+}
+
+/* NOTE TEXT */
+
+.note-text{
+  font-size:14px;
+  line-height:1.5;
+}
+
+.note-text b{
+  display:block;
+  margin-bottom:4px;
+}
+
+/* CONTENT TABS */
+
+.content-tabs{
+  margin-top:26px;
+
+  display:flex;
+  justify-content:space-around;
+
+  background:white;
+
+  border-radius:22px;
+
+  padding:14px;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* TAB */
+
+.tab{
+  font-size:24px;
+  color:#999;
+}
+
+/* ACTIVE TAB */
+
+.active-tab{
+  color:#8a2be2;
+}
+
+/* POSTS GRID */
+
+.posts{
+  margin-top:18px;
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+
+  gap:8px;
+
+  padding-bottom:110px;
+}
+
+/* POST */
+
+.posts img{
+  width:100%;
+  height:160px;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+  animation:fadeUp 0.5s ease;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(12px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  font-size:28px;
+  color:#999;
+}
+
+/* ACTIVE */
+
+.active{
+  color:#8a2be2;
+  transform:translateY(-3px);
+}
+
+/* CREATE */
+
+.create{
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:34px;
+
+  margin-top:-38px;
+
+  box-shadow:
+  0 10px 28px rgba(138,43,226,0.35);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Profile
+  </div>
+
+  <div class="header-icons">
+    <div>⚙️</div>
+    <div>☰</div>
+  </div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div class="profile">
+
+  <!-- TOP -->
+
+  <div class="profile-top">
+
+    <div class="profile-img">
+
+      <img src="https://i.pravatar.cc/300?img=12">
+
+      <div class="online"></div>
+
+    </div>
+
+    <div class="profile-info">
+
+      <div class="name">
+        Mega Creator
+      </div>
+
+      <div class="username">
+        @megachat
+      </div>
+
+      <div class="bio">
+        Building the future of social media with MegaChat Go 🚀
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="stat-number">
+        248
+      </div>
+
+      <div class="stat-text">
+        Posts
+      </div>
+
+    </div>
+
+    <div class="stat">
+
+      <div class="stat-number">
+        18.4K
+      </div>
+
+      <div class="stat-text">
+        Followers
+      </div>
+
+    </div>
+
+    <div class="stat">
+
+      <div class="stat-number">
+        540
+      </div>
+
+      <div class="stat-text">
+        Following
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BUTTONS -->
+
+  <div class="buttons">
+
+    <button class="btn primary">
+      Edit Profile
+    </button>
+
+    <button class="btn secondary">
+      Share Profile
+    </button>
+
+  </div>
+
+  <!-- NOTE -->
+
+  <div class="note">
+
+    <div class="note-icon">
+      ✨
+    </div>
+
+    <div class="note-text">
+
+      <b>Profile Note</b>
+
+      Creating futuristic experiences every day.
+
+    </div>
+
+  </div>
+
+  <!-- CONTENT TABS -->
+
+  <div class="content-tabs">
+
+    <div class="tab active-tab">
+      ⬜
+    </div>
+
+    <div class="tab">
+      🎥
+    </div>
+
+    <div class="tab">
+      ❤️
+    </div>
+
+    <div class="tab">
+      🔖
+    </div>
+
+  </div>
+
+  <!-- POSTS -->
+
+  <div class="posts">
+
+    <img src="https://picsum.photos/300/400?1">
+
+    <img src="https://picsum.photos/300/400?2">
+
+    <img src="https://picsum.photos/300/400?3">
+
+    <img src="https://picsum.photos/300/400?4">
+
+    <img src="https://picsum.photos/300/400?5">
+
+    <img src="https://picsum.photos/300/400?6">
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item">
+    🏠
+  </div>
+
+  <div class="nav-item">
+    🔍
+  </div>
+
+  <div class="create">
+    +
+  </div>
+
+  <div class="nav-item">
+    🎥
+  </div>
+
+  <div class="nav-item active">
+    👤
+  </div>
+
+</div>
+
+</body>
+</html>
