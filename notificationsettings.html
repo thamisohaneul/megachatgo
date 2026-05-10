@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notification Settings</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* BACK */
+
+.back-btn{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* TITLE */
+
+.title{
+  margin-left:16px;
+
+  font-size:28px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:105px 18px 150px;
+}
+
+/* ALERT CARD */
+
+.alert-card{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #b266ff,
+    #d8b4fe
+  );
+
+  border-radius:34px;
+
+  padding:26px;
+
+  color:white;
+
+  position:relative;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 14px 30px rgba(138,43,226,0.18);
+
+  animation:fadeUp .5s ease;
+}
+
+/* GLOW */
+
+.glow{
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  background:white;
+
+  opacity:.15;
+
+  filter:blur(70px);
+
+  top:-70px;
+  right:-40px;
+}
+
+/* ALERT TITLE */
+
+.alert-title{
+  font-size:18px;
+  font-weight:800;
+
+  position:relative;
+  z-index:2;
+}
+
+/* ALERT NUMBER */
+
+.alert-number{
+  margin-top:14px;
+
+  font-size:52px;
+  font-weight:900;
+
+  position:relative;
+  z-index:2;
+}
+
+/* ALERT TEXT */
+
+.alert-text{
+  margin-top:10px;
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  opacity:.95;
+
+  position:relative;
+  z-index:2;
+}
+
+/* SETTINGS */
+
+.settings{
+  margin-top:22px;
+
+  background:white;
+
+  border-radius:34px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .6s ease;
+}
+
+/* ITEM */
+
+.item{
+  padding:22px 20px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  border-bottom:1px solid #f3f3f3;
+
+  transition:.25s ease;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+/* LEFT */
+
+.item-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* ICON */
+
+.icon{
+  width:58px;
+  height:58px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:24px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.2);
+}
+
+/* TEXTS */
+
+.texts{
+  display:flex;
+  flex-direction:column;
+}
+
+/* ITEM TITLE */
+
+.item-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+/* DESC */
+
+.item-desc{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#777;
+
+  line-height:1.5;
+}
+
+/* SWITCH */
+
+.switch{
+  position:relative;
+
+  width:60px;
+  height:34px;
+}
+
+/* INPUT */
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+/* SLIDER */
+
+.slider{
+  position:absolute;
+  inset:0;
+
+  background:#ddd;
+
+  border-radius:40px;
+
+  transition:.3s ease;
+}
+
+/* CIRCLE */
+
+.slider:before{
+  content:"";
+
+  position:absolute;
+
+  width:26px;
+  height:26px;
+
+  left:4px;
+  top:4px;
+
+  border-radius:50%;
+
+  background:white;
+
+  transition:.3s ease;
+}
+
+/* ACTIVE */
+
+input:checked + .slider{
+  background:#8a2be2;
+}
+
+input:checked + .slider:before{
+  transform:translateX(26px);
+}
+
+/* INFO CARD */
+
+.info-card{
+  margin-top:22px;
+
+  background:#faf7ff;
+
+  border-radius:30px;
+
+  padding:22px;
+
+  animation:fadeUp .7s ease;
+}
+
+/* INFO TITLE */
+
+.info-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* INFO TEXT */
+
+.info-text{
+  margin-top:12px;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  color:#666;
+}
+
+/* FOOTER */
+
+.footer{
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* ACTIVE EFFECT */
+
+.item:active{
+  transform:scale(.98);
+  background:#faf7ff;
+}
+
+.back-btn:active{
+  transform:scale(.9);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="back-btn">
+    ←
+  </div>
+
+  <div class="title">
+    Notification Settings
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- ALERT CARD -->
+
+  <div class="alert-card">
+
+    <div class="glow"></div>
+
+    <div class="alert-title">
+      Notification Alerts
+    </div>
+
+    <div class="alert-number">
+      19
+    </div>
+
+    <div class="alert-text">
+      You currently have 19 unread alerts and activity updates across MegaChat Go.
+    </div>
+
+  </div>
+
+  <!-- SETTINGS -->
+
+  <div class="settings">
+
+    <!-- MUTE -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          🔕
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Mute Notifications
+          </div>
+
+          <div class="item-desc">
+            Silence all MegaChat alerts and sounds temporarily.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- OVERLAY -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          💬
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Draw Over Other Apps
+          </div>
+
+          <div class="item-desc">
+            Allow notification messages to appear above other apps.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- POPUP -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          🔔
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Popup Notifications
+          </div>
+
+          <div class="item-desc">
+            Show popup alerts for incoming messages and mentions.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- VIBRATION -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          📳
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Vibration Alerts
+          </div>
+
+          <div class="item-desc">
+            Vibrate device when new notifications arrive.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+  </div>
+
+  <!-- INFO CARD -->
+
+  <div class="info-card">
+
+    <div class="info-title">
+      Stay Connected ✨
+    </div>
+
+    <div class="info-text">
+      Notification controls help you customize how MegaChat Go communicates with you while maintaining a clean and distraction-free experience powered by Lyno Platforms.
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* BACK BUTTON */
+
+const backBtn =
+document.querySelector(".back-btn");
+
+backBtn.addEventListener("click",()=>{
+
+  backBtn.style.transform = "scale(.9)";
+
+  setTimeout(()=>{
+    backBtn.style.transform = "scale(1)";
+  },180);
+
+  history.back();
+
+});
+
+/* ITEMS */
+
+const items =
+document.querySelectorAll(".item");
+
+items.forEach(item=>{
+
+  item.addEventListener("click",()=>{
+
+    item.style.transform = "scale(.98)";
+
+    setTimeout(()=>{
+      item.style.transform = "scale(1)";
+    },180);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
