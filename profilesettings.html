@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Settings</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* BACK */
+
+.back-btn{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* TITLE */
+
+.title{
+  margin-left:16px;
+
+  font-size:30px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:105px 18px 150px;
+}
+
+/* SETTINGS BOX */
+
+.settings-box{
+  background:white;
+
+  border-radius:34px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .5s ease;
+}
+
+/* ITEM */
+
+.item{
+  padding:22px 20px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  border-bottom:1px solid #f3f3f3;
+
+  transition:.25s ease;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+/* LEFT */
+
+.item-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* ICON */
+
+.icon{
+  width:58px;
+  height:58px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:24px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.2);
+}
+
+/* TEXTS */
+
+.texts{
+  display:flex;
+  flex-direction:column;
+}
+
+/* ITEM TITLE */
+
+.item-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+/* DESCRIPTION */
+
+.item-desc{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#777;
+
+  line-height:1.5;
+}
+
+/* SWITCH */
+
+.switch{
+  position:relative;
+
+  width:60px;
+  height:34px;
+}
+
+/* INPUT */
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+/* SLIDER */
+
+.slider{
+  position:absolute;
+  inset:0;
+
+  background:#ddd;
+
+  border-radius:40px;
+
+  transition:.3s ease;
+}
+
+/* CIRCLE */
+
+.slider:before{
+  content:"";
+
+  position:absolute;
+
+  width:26px;
+  height:26px;
+
+  left:4px;
+  top:4px;
+
+  border-radius:50%;
+
+  background:white;
+
+  transition:.3s ease;
+}
+
+/* ACTIVE */
+
+input:checked + .slider{
+  background:#8a2be2;
+}
+
+input:checked + .slider:before{
+  transform:translateX(26px);
+}
+
+/* POLICY */
+
+.policy{
+  margin-top:24px;
+
+  background:#faf7ff;
+
+  border-radius:30px;
+
+  padding:22px;
+
+  animation:fadeUp .6s ease;
+}
+
+/* POLICY TITLE */
+
+.policy-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* POLICY TEXT */
+
+.policy-text{
+  margin-top:12px;
+
+  font-size:14px;
+
+  color:#666;
+
+  line-height:1.8;
+}
+
+/* FOOTER */
+
+.footer{
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* ACTIVE EFFECT */
+
+.item:active{
+  transform:scale(.98);
+  background:#faf7ff;
+}
+
+.back-btn:active{
+  transform:scale(.9);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="back-btn">
+    ←
+  </div>
+
+  <div class="title">
+    Profile Settings
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- SETTINGS -->
+
+  <div class="settings-box">
+
+    <!-- PRIVACY -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          🔒
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Privacy Policy
+          </div>
+
+          <div class="item-desc">
+            Manage your account privacy and data protection settings.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div style="font-size:24px;color:#999;">
+        ›
+      </div>
+
+    </div>
+
+    <!-- DISAPPEARING -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          ⏳
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Disappearing Messages
+          </div>
+
+          <div class="item-desc">
+            Automatically remove messages after a selected time.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- READ RECEIPTS -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          ✔✔
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Read Receipts
+          </div>
+
+          <div class="item-desc">
+            Let others know when you have read their messages.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- TYPING -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          ✍
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Typing Indicator
+          </div>
+
+          <div class="item-desc">
+            Show when you are typing in conversations.
+          </div>
+
+        </div>
+
+      </div>
+
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+
+    </div>
+
+    <!-- BLOCKED USERS -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon">
+          🚫
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Blocked Users
+          </div>
+
+          <div class="item-desc">
+            View and manage accounts you have blocked.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div style="font-size:24px;color:#999;">
+        ›
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- POLICY CARD -->
+
+  <div class="policy">
+
+    <div class="policy-title">
+      Your Privacy Matters ✨
+    </div>
+
+    <div class="policy-text">
+      MegaChat Go uses secure and modern communication technology powered by Lyno Platforms to protect your conversations, account activity, and personal experience across the platform.
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* BACK BUTTON */
+
+const backBtn =
+document.querySelector(".back-btn");
+
+backBtn.addEventListener("click",()=>{
+
+  backBtn.style.transform = "scale(.9)";
+
+  setTimeout(()=>{
+    backBtn.style.transform = "scale(1)";
+  },180);
+
+  history.back();
+
+});
+
+/* ITEMS */
+
+const items =
+document.querySelectorAll(".item");
+
+items.forEach(item=>{
+
+  item.addEventListener("click",()=>{
+
+    item.style.transform = "scale(.98)";
+
+    setTimeout(()=>{
+      item.style.transform = "scale(1)";
+    },180);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
