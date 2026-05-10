@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Go</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #5f2c82, #8a2be2, #c084fc);
+}
+
+/* Card */
+.container {
+  width: 330px;
+  padding: 30px 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  text-align: center;
+  color: white;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Inputs */
+.input-group {
+  position: relative;
+  margin: 15px 0;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.input-group label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.7);
+  transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 12px;
+  color: white;
+}
+
+/* Eye */
+.eye {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #6a0dad;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+button:disabled {
+  opacity: 0.7;
+}
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #6a0dad;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg) translate(-50%, -50%); }
+}
+
+/* Text hidden when loading */
+.loading-text {
+  visibility: visible;
+}
+
+.loading .loading-text {
+  visibility: hidden;
+}
+
+.loading .spinner {
+  display: block;
+}
+
+/* Forgot */
+.forgot {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* Others */
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.social {
+  margin-top: 15px;
+}
+
+.social button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #d8b4fe;
+  opacity: 0;
+  animation: fadeFooter 2s ease forwards;
+}
+
+.footer img {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+@keyframes fadeFooter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 0.8; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>MegaChat Go</h1>
+
+  <!-- LOGIN -->
+  <div id="loginForm">
+    <div class="input-group">
+      <input type="text" placeholder=" " required>
+      <label>Phone or Email</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="loginPass" placeholder=" " required>
+      <label>Password</label>
+      <span class="eye" onclick="togglePass('loginPass')">👁️</span>
+    </div>
+
+    <button id="loginBtn" onclick="login()">
+      <span class="loading-text">Login</span>
+      <div class="spinner"></div>
+    </button>
+
+    <div class="forgot" onclick="forgotPassword()">Forgot Password?</div>
+
+    <div class="social">
+      <button onclick="googleLogin()">Continue with Google</button>
+      <button onclick="appleLogin()">Continue with Apple</button>
+    </div>
+
+    <div class="switch" onclick="toggle()">No account? Sign Up</div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="signupForm" class="hidden">
+    <div class="input-group">
+      <input type="text" placeholder=" " required>
+      <label>Username</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" placeholder=" " required>
+      <label>Phone or Email</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="signPass" placeholder=" " required>
+      <label>Password</label>
+      <span class="eye" onclick="togglePass('signPass')">👁️</span>
+    </div>
+
+    <button onclick="signup()">Sign Up</button>
+
+    <div class="switch" onclick="toggle()">Already have account? Login</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <img src="lyno.png">
+  <span>from Lyno</span>
+</div>
+
+<script>
+function toggle() {
+  loginForm.classList.toggle("hidden");
+  signupForm.classList.toggle("hidden");
+}
+
+function togglePass(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+function login() {
+  const btn = document.getElementById("loginBtn");
+
+  btn.classList.add("loading");
+  btn.disabled = true;
+
+  // Simulate loading
+  setTimeout(() => {
+    btn.classList.remove("loading");
+    btn.disabled = false;
+    alert("Login complete 🚀");
+  }, 2000);
+}
+
+function signup() {
+  alert("Signup clicked");
+}
+
+function forgotPassword() {
+  alert("Reset password flow (connect Firebase)");
+}
+
+function googleLogin() {
+  alert("Google login needs Firebase");
+}
+
+function appleLogin() {
+  alert("Apple login needs backend");
+}
+</script>
+
+</body>
+</html>
