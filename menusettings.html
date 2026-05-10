@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Menu Settings</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  min-height:100vh;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* LEFT */
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* BACK */
+
+.back-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* TITLE */
+
+.title{
+  font-size:28px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+}
+
+/* CONTENT */
+
+.content{
+  flex:1;
+
+  padding:110px 18px 150px;
+}
+
+/* SECTION */
+
+.section{
+  background:white;
+
+  border-radius:34px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .5s ease;
+}
+
+/* ITEM */
+
+.item{
+  padding:22px 20px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  border-bottom:1px solid #f2f2f2;
+
+  transition:.25s ease;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+/* LEFT */
+
+.item-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* ICON */
+
+.icon{
+  width:56px;
+  height:56px;
+
+  border-radius:22px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  color:white;
+}
+
+/* PURPLE */
+
+.purple{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.22);
+}
+
+/* RED */
+
+.red{
+  background:linear-gradient(
+    135deg,
+    #ff4d6d,
+    #ff758f
+  );
+
+  box-shadow:
+  0 10px 24px rgba(255,77,109,0.22);
+}
+
+/* TEXT AREA */
+
+.texts{
+  display:flex;
+  flex-direction:column;
+}
+
+/* ITEM TITLE */
+
+.item-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+/* DESCRIPTION */
+
+.item-desc{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#777;
+
+  line-height:1.5;
+}
+
+/* ARROW */
+
+.arrow{
+  font-size:24px;
+
+  color:#999;
+}
+
+/* WARNING BOX */
+
+.warning{
+  margin-top:24px;
+
+  background:#faf7ff;
+
+  border-radius:28px;
+
+  padding:20px;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  color:#555;
+
+  animation:fadeUp .6s ease;
+}
+
+/* FOOTER */
+
+.footer{
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  pointer-events:none;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* HOVER */
+
+.item:active{
+  transform:scale(.98);
+  background:#faf7ff;
+}
+
+.back-btn:active{
+  transform:scale(.9);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <div class="back-btn">
+      ←
+    </div>
+
+    <div class="title">
+      Menu Settings
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- SETTINGS SECTION -->
+
+  <div class="section">
+
+    <!-- TRANSFER OWNERSHIP -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon purple">
+          👑
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Transfer Ownership
+          </div>
+
+          <div class="item-desc">
+            Transfer control of your MegaChat account or group ownership securely.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </div>
+
+    <!-- DEACTIVATE -->
+
+    <div class="item">
+
+      <div class="item-left">
+
+        <div class="icon red">
+          ⚠
+        </div>
+
+        <div class="texts">
+
+          <div class="item-title">
+            Deactivation of Account
+          </div>
+
+          <div class="item-desc">
+            Temporarily disable your MegaChat account and activity.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- WARNING -->
+
+  <div class="warning">
+    Some actions inside Menu Settings may affect your account visibility, ownership access, and connected data across MegaChat Go.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* BACK BUTTON */
+
+const backBtn =
+document.querySelector(".back-btn");
+
+backBtn.addEventListener("click",()=>{
+
+  backBtn.style.transform = "scale(.9)";
+
+  setTimeout(()=>{
+    backBtn.style.transform = "scale(1)";
+  },180);
+
+  history.back();
+
+});
+
+/* SETTINGS ITEMS */
+
+const items =
+document.querySelectorAll(".item");
+
+items.forEach(item=>{
+
+  item.addEventListener("click",()=>{
+
+    item.style.transform = "scale(.98)";
+
+    setTimeout(()=>{
+      item.style.transform = "scale(1)";
+    },180);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
