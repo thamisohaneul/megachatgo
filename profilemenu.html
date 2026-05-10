@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Menu</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:relative;
+
+  width:100%;
+  height:240px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #b266ff,
+    #d8b4fe
+  );
+
+  border-bottom-left-radius:40px;
+  border-bottom-right-radius:40px;
+
+  overflow:hidden;
+}
+
+/* GLOW */
+
+.glow1,
+.glow2{
+  position:absolute;
+
+  border-radius:50%;
+
+  background:white;
+
+  opacity:.16;
+
+  filter:blur(70px);
+}
+
+.glow1{
+  width:180px;
+  height:180px;
+
+  top:-60px;
+  left:-40px;
+}
+
+.glow2{
+  width:160px;
+  height:160px;
+
+  bottom:-70px;
+  right:-40px;
+}
+
+/* TOP BAR */
+
+.top-bar{
+  position:absolute;
+  top:20px;
+
+  width:100%;
+
+  padding:0 18px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* BACK */
+
+.back-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,0.16);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* MENU */
+
+.menu-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,0.16);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:22px;
+}
+
+/* PROFILE */
+
+.profile{
+  position:absolute;
+  bottom:24px;
+
+  width:100%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* IMAGE */
+
+.profile-image{
+  width:110px;
+  height:110px;
+
+  border-radius:34px;
+
+  border:5px solid white;
+
+  object-fit:cover;
+
+  box-shadow:
+  0 14px 28px rgba(0,0,0,0.12);
+}
+
+/* NAME */
+
+.name{
+  margin-top:16px;
+
+  font-size:30px;
+  font-weight:800;
+
+  color:white;
+
+  letter-spacing:-1px;
+}
+
+/* USERNAME */
+
+.username{
+  margin-top:6px;
+
+  font-size:14px;
+
+  color:rgba(255,255,255,0.9);
+}
+
+/* CONTENT */
+
+.content{
+  padding:30px 18px 150px;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:16px;
+}
+
+/* CARD */
+
+.card{
+  background:white;
+
+  border-radius:32px;
+
+  padding:24px 20px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.05);
+
+  animation:fadeUp .5s ease;
+
+  transition:.25s ease;
+}
+
+/* CARD ICON */
+
+.card-icon{
+  width:58px;
+  height:58px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  color:white;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.2);
+}
+
+/* NUMBER */
+
+.number{
+  margin-top:20px;
+
+  font-size:32px;
+  font-weight:800;
+
+  color:#111;
+}
+
+/* LABEL */
+
+.label{
+  margin-top:8px;
+
+  font-size:14px;
+
+  color:#777;
+
+  line-height:1.5;
+}
+
+/* BIG CARD */
+
+.big-card{
+  margin-top:18px;
+
+  background:white;
+
+  border-radius:34px;
+
+  padding:24px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.05);
+
+  animation:fadeUp .6s ease;
+}
+
+/* TITLE */
+
+.big-title{
+  font-size:22px;
+  font-weight:800;
+}
+
+/* DESCRIPTION */
+
+.big-desc{
+  margin-top:12px;
+
+  font-size:14px;
+
+  color:#666;
+
+  line-height:1.8;
+}
+
+/* FOOTER */
+
+.footer{
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* HOVER */
+
+.card:active{
+  transform:scale(.97);
+}
+
+.back-btn:active,
+.menu-btn:active{
+  transform:scale(.9);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="glow1"></div>
+  <div class="glow2"></div>
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="back-btn">
+      ←
+    </div>
+
+    <div class="menu-btn">
+      ☰
+    </div>
+
+  </div>
+
+  <!-- PROFILE -->
+
+  <div class="profile">
+
+    <img
+    class="profile-image"
+    src="https://i.pravatar.cc/300?img=12">
+
+    <div class="name">
+      Mega Creator
+    </div>
+
+    <div class="username">
+      @megacreator
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <!-- FOLLOWERS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        👥
+      </div>
+
+      <div class="number">
+        24K
+      </div>
+
+      <div class="label">
+        Followers connected to your MegaChat profile
+      </div>
+
+    </div>
+
+    <!-- BUZZ -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        🚀
+      </div>
+
+      <div class="number">
+        186
+      </div>
+
+      <div class="label">
+        Posted Buzz and viral moments shared
+      </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        🔔
+      </div>
+
+      <div class="number">
+        19
+      </div>
+
+      <div class="label">
+        New notifications waiting for your attention
+      </div>
+
+    </div>
+
+    <!-- FOLLOWING -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        💜
+      </div>
+
+      <div class="number">
+        932
+      </div>
+
+      <div class="label">
+        Accounts and creators you follow daily
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ABOUT -->
+
+  <div class="big-card">
+
+    <div class="big-title">
+      Your Mega Presence ✨
+    </div>
+
+    <div class="big-desc">
+      Your profile represents your identity across MegaChat Go. Manage your followers, track your buzz performance, and grow your futuristic social presence with Lyno-powered experiences.
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* BACK BUTTON */
+
+const backBtn =
+document.querySelector(".back-btn");
+
+backBtn.addEventListener("click",()=>{
+
+  backBtn.style.transform = "scale(.9)";
+
+  setTimeout(()=>{
+    backBtn.style.transform = "scale(1)";
+  },180);
+
+  history.back();
+
+});
+
+/* CARDS */
+
+const cards =
+document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+
+  card.addEventListener("click",()=>{
+
+    card.style.transform = "scale(.96)";
+
+    setTimeout(()=>{
+      card.style.transform = "scale(1)";
+    },180);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
