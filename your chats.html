@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat - Your Chats</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  overflow:hidden;
+  color:#111;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* LEFT */
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* BACK */
+
+.back{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+}
+
+/* USER */
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.user img{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+}
+
+/* USER INFO */
+
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+
+/* NAME */
+
+.name{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* STATUS */
+
+.status{
+  margin-top:4px;
+
+  font-size:12px;
+  color:#8a2be2;
+
+  font-weight:600;
+}
+
+/* HEADER ICONS */
+
+.header-icons{
+  display:flex;
+  gap:14px;
+}
+
+/* ICON */
+
+.icon{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+}
+
+/* CHAT AREA */
+
+.chat-area{
+  margin-top:90px;
+  padding:18px 14px 110px;
+
+  height:100vh;
+  overflow-y:auto;
+}
+
+/* DATE */
+
+.date{
+  text-align:center;
+
+  margin-bottom:20px;
+
+  font-size:12px;
+  color:#888;
+}
+
+/* MESSAGE ROW */
+
+.row{
+  display:flex;
+  margin-bottom:16px;
+}
+
+/* RECEIVED */
+
+.received{
+  justify-content:flex-start;
+}
+
+/* SENT */
+
+.sent{
+  justify-content:flex-end;
+}
+
+/* MESSAGE */
+
+.message{
+  max-width:78%;
+
+  padding:14px 16px;
+
+  border-radius:24px;
+
+  font-size:14px;
+  line-height:1.6;
+
+  position:relative;
+
+  animation:fadeUp .4s ease;
+}
+
+/* RECEIVED STYLE */
+
+.received .message{
+  background:white;
+
+  border-top-left-radius:8px;
+
+  color:#111;
+
+  box-shadow:
+  0 5px 16px rgba(0,0,0,0.04);
+}
+
+/* SENT STYLE */
+
+.sent .message{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  border-top-right-radius:8px;
+
+  box-shadow:
+  0 10px 22px rgba(138,43,226,0.22);
+}
+
+/* TIME */
+
+.time{
+  margin-top:7px;
+
+  font-size:11px;
+
+  opacity:0.7;
+
+  text-align:right;
+}
+
+/* INPUT AREA */
+
+.input-area{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-top:1px solid #ececec;
+
+  padding:14px;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* INPUT */
+
+.input{
+  flex:1;
+
+  height:56px;
+
+  border:none;
+  outline:none;
+
+  background:#f3f3f3;
+
+  border-radius:20px;
+
+  padding:0 18px;
+
+  font-size:15px;
+}
+
+/* SEND BUTTON */
+
+.send{
+  width:56px;
+  height:56px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:24px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.25);
+}
+
+/* ATTACH */
+
+.attach{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <div class="back">
+      ←
+    </div>
+
+    <div class="user">
+
+      <img src="https://i.pravatar.cc/300?img=12">
+
+      <div class="user-info">
+
+        <div class="name">
+          Sarah Kim
+        </div>
+
+        <div class="status">
+          ● Online
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="header-icons">
+
+    <div class="icon">
+      📞
+    </div>
+
+    <div class="icon">
+      🎥
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CHAT AREA -->
+
+<div class="chat-area">
+
+  <div class="date">
+    Today
+  </div>
+
+  <!-- RECEIVED -->
+
+  <div class="row received">
+
+    <div class="message">
+
+      Hey 👋 Welcome to MegaChat Go!
+
+      <div class="time">
+        09:12
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SENT -->
+
+  <div class="row sent">
+
+    <div class="message">
+
+      Thank you ✨ The app design looks amazing.
+
+      <div class="time">
+        09:14
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RECEIVED -->
+
+  <div class="row received">
+
+    <div class="message">
+
+      We’re building a futuristic social experience 🚀
+
+      <div class="time">
+        09:15
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SENT -->
+
+  <div class="row sent">
+
+    <div class="message">
+
+      I really love the purple theme and minimal style.
+
+      <div class="time">
+        09:17
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- INPUT AREA -->
+
+<div class="input-area">
+
+  <div class="attach">
+    ＋
+  </div>
+
+  <input
+  class="input"
+  type="text"
+  placeholder="Message...">
+
+  <div class="send">
+    ➤
+  </div>
+
+</div>
+
+</body>
+</html>
