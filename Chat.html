@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Messages</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f7f7f7;
+  color:#111;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:78px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+/* HEADER ICONS */
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.header-icons div{
+  font-size:24px;
+}
+
+/* SEARCH */
+
+.search-box{
+  margin-top:95px;
+  padding:0 16px;
+}
+
+.search{
+  width:100%;
+  height:52px;
+
+  border:none;
+  outline:none;
+
+  background:white;
+
+  border-radius:18px;
+
+  padding:0 18px;
+
+  font-size:15px;
+
+  box-shadow:
+  0 4px 14px rgba(0,0,0,0.04);
+}
+
+/* ACTIVE USERS */
+
+.active-users{
+  margin-top:18px;
+
+  display:flex;
+  gap:15px;
+
+  overflow-x:auto;
+
+  padding:0 16px 12px;
+
+  scrollbar-width:none;
+}
+
+.active-users::-webkit-scrollbar{
+  display:none;
+}
+
+/* USER */
+
+.active-user{
+  min-width:72px;
+  text-align:center;
+}
+
+.active-avatar{
+  position:relative;
+}
+
+.active-avatar img{
+  width:70px;
+  height:70px;
+
+  border-radius:24px;
+
+  object-fit:cover;
+
+  border:3px solid white;
+
+  box-shadow:
+  0 6px 16px rgba(0,0,0,0.05);
+}
+
+/* ONLINE DOT */
+
+.online{
+  position:absolute;
+  right:3px;
+  bottom:3px;
+
+  width:16px;
+  height:16px;
+
+  border-radius:50%;
+
+  background:#8a2be2;
+
+  border:3px solid white;
+}
+
+.active-user p{
+  margin-top:7px;
+  font-size:12px;
+  font-weight:500;
+}
+
+/* CHAT LIST */
+
+.chat-list{
+  padding:10px 14px 110px;
+}
+
+/* CHAT ITEM */
+
+.chat{
+  background:white;
+
+  border-radius:24px;
+
+  padding:14px;
+
+  margin-bottom:14px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  box-shadow:
+  0 4px 16px rgba(0,0,0,0.04);
+
+  animation:fadeUp 0.5s ease;
+}
+
+/* LEFT */
+
+.chat-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* PROFILE */
+
+.chat-avatar{
+  position:relative;
+}
+
+.chat-avatar img{
+  width:62px;
+  height:62px;
+
+  border-radius:22px;
+
+  object-fit:cover;
+}
+
+/* MESSAGE INFO */
+
+.chat-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-name{
+  font-size:16px;
+  font-weight:700;
+}
+
+.chat-message{
+  margin-top:4px;
+
+  font-size:13px;
+  color:#777;
+
+  max-width:170px;
+
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+/* RIGHT */
+
+.chat-right{
+  text-align:right;
+}
+
+/* TIME */
+
+.chat-time{
+  font-size:12px;
+  color:#888;
+}
+
+/* UNREAD */
+
+.unread{
+  margin-top:8px;
+
+  width:24px;
+  height:24px;
+
+  border-radius:10px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:12px;
+  font-weight:700;
+
+  margin-left:auto;
+}
+
+/* FLOAT BUTTON */
+
+.float-btn{
+  position:fixed;
+  right:20px;
+  bottom:95px;
+
+  width:62px;
+  height:62px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:34px;
+
+  box-shadow:
+  0 10px 28px rgba(138,43,226,0.3);
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(12px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+/* NAV */
+
+.nav-item{
+  font-size:28px;
+  color:#999;
+}
+
+.active{
+  color:#8a2be2;
+  transform:translateY(-3px);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Chats
+  </div>
+
+  <div class="header-icons">
+    <div>📷</div>
+    <div>✏️</div>
+  </div>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+  <input
+  class="search"
+  type="text"
+  placeholder="Ask Lyno AI or Search">
+
+</div>
+
+<!-- ACTIVE USERS -->
+
+<div class="active-users">
+
+  <div class="active-user">
+
+    <div class="active-avatar">
+      <img src="https://i.pravatar.cc/150?img=1">
+      <div class="online"></div>
+    </div>
+
+    <p>Alex</p>
+
+  </div>
+
+  <div class="active-user">
+
+    <div class="active-avatar">
+      <img src="https://i.pravatar.cc/150?img=2">
+      <div class="online"></div>
+    </div>
+
+    <p>Sarah</p>
+
+  </div>
+
+  <div class="active-user">
+
+    <div class="active-avatar">
+      <img src="https://i.pravatar.cc/150?img=3">
+      <div class="online"></div>
+    </div>
+
+    <p>Chris</p>
+
+  </div>
+
+  <div class="active-user">
+
+    <div class="active-avatar">
+      <img src="https://i.pravatar.cc/150?img=4">
+      <div class="online"></div>
+    </div>
+
+    <p>Emma</p>
+
+  </div>
+
+</div>
+
+<!-- CHAT LIST -->
+
+<div class="chat-list">
+
+  <!-- CHAT -->
+
+  <div class="chat">
+
+    <div class="chat-left">
+
+      <div class="chat-avatar">
+        <img src="https://i.pravatar.cc/150?img=5">
+      </div>
+
+      <div class="chat-info">
+
+        <div class="chat-name">
+          Mega Creator
+        </div>
+
+        <div class="chat-message">
+          Hey, welcome to MegaChat Go 🚀
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="chat-right">
+
+      <div class="chat-time">
+        2m
+      </div>
+
+      <div class="unread">
+        2
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CHAT -->
+
+  <div class="chat">
+
+    <div class="chat-left">
+
+      <div class="chat-avatar">
+        <img src="https://i.pravatar.cc/150?img=6">
+      </div>
+
+      <div class="chat-info">
+
+        <div class="chat-name">
+          Sarah Kim
+        </div>
+
+        <div class="chat-message">
+          Let's build something amazing ✨
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="chat-right">
+
+      <div class="chat-time">
+        1h
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FLOAT BUTTON -->
+
+<div class="float-btn">
+  +
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item">
+    🏠
+  </div>
+
+  <div class="nav-item">
+    🔍
+  </div>
+
+  <div class="nav-item active">
+    💬
+  </div>
+
+  <div class="nav-item">
+    🎥
+  </div>
+
+  <div class="nav-item">
+    👤
+  </div>
+
+</div>
+
+</body>
+</html>
+<!-- ========================= -->
+<!-- L Y N O   A I   S E C T I O N -->
+<!-- Paste inside chats.html -->
+<!-- ========================= -->
+
+<!-- LYNO AI CARD -->
+
+<div class="lyno-ai-card">
+
+  <!-- LEFT -->
+
+  <div class="lyno-ai-left">
+
+    <!-- AI LOGO -->
+
+    <div class="lyno-ai-logo">
+
+      <div class="ai-glow"></div>
+
+      <img src="logo.png">
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="lyno-ai-info">
+
+      <div class="lyno-ai-name">
+        Lyno AI
+      </div>
+
+      <div class="lyno-ai-desc">
+        Ask anything • Smart replies • Generate ideas
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BUTTON -->
+
+  <button class="lyno-ai-btn">
+    Open
+  </button>
+
+</div>
+
+<!-- AI SEARCH -->
+
+<div class="lyno-ai-search-wrap">
+
+  <div class="lyno-ai-search">
+
+    <span>✨</span>
+
+    <input
+    type="text"
+    placeholder="Ask Lyno AI anything...">
+
+  </div>
+
+</div>
+
+<!-- AI SUGGESTIONS -->
+
+<div class="ai-suggestions">
+
+  <div class="ai-chip">
+    Create caption
+  </div>
+
+  <div class="ai-chip">
+    Smart reply
+  </div>
+
+  <div class="ai-chip">
+    Summarize
+  </div>
+
+  <div class="ai-chip">
+    Translate
+  </div>
+
+</div>
+
+<style>
+
+/* ========================= */
+/* LYNO AI MAIN CARD */
+/* ========================= */
+
+.lyno-ai-card{
+  width:100%;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #b266ff,
+    #d8b4fe
+  );
+
+  border-radius:32px;
+
+  padding:18px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-top:18px;
+  margin-bottom:18px;
+
+  box-shadow:
+  0 12px 30px rgba(138,43,226,0.18);
+
+  animation:fadeUp .6s ease;
+}
+
+/* LEFT */
+
+.lyno-ai-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* AI LOGO */
+
+.lyno-ai-logo{
+  position:relative;
+
+  width:68px;
+  height:68px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,0.14);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  overflow:hidden;
+}
+
+/* GLOW */
+
+.ai-glow{
+  position:absolute;
+
+  width:80px;
+  height:80px;
+
+  border-radius:50%;
+
+  background:white;
+
+  opacity:.18;
+
+  filter:blur(18px);
+
+  animation:pulse 2.5s infinite;
+}
+
+/* LOGO IMAGE */
+
+.lyno-ai-logo img{
+  width:38px;
+  height:38px;
+
+  object-fit:contain;
+
+  position:relative;
+  z-index:2;
+}
+
+/* INFO */
+
+.lyno-ai-info{
+  display:flex;
+  flex-direction:column;
+}
+
+/* NAME */
+
+.lyno-ai-name{
+  font-size:22px;
+  font-weight:800;
+
+  color:white;
+
+  letter-spacing:-0.5px;
+}
+
+/* DESC */
+
+.lyno-ai-desc{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:rgba(255,255,255,0.85);
+
+  line-height:1.5;
+}
+
+/* BUTTON */
+
+.lyno-ai-btn{
+  border:none;
+
+  height:48px;
+
+  padding:0 22px;
+
+  border-radius:18px;
+
+  background:white;
+
+  color:#8a2be2;
+
+  font-size:14px;
+  font-weight:800;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ========================= */
+/* AI SEARCH */
+/* ========================= */
+
+.lyno-ai-search-wrap{
+  margin-bottom:18px;
+}
+
+.lyno-ai-search{
+  width:100%;
+  height:58px;
+
+  background:white;
+
+  border-radius:22px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  gap:12px;
+
+  box-shadow:
+  0 5px 18px rgba(0,0,0,0.04);
+}
+
+/* ICON */
+
+.lyno-ai-search span{
+  font-size:20px;
+
+  color:#8a2be2;
+}
+
+/* INPUT */
+
+.lyno-ai-search input{
+  flex:1;
+
+  border:none;
+  outline:none;
+
+  font-size:15px;
+
+  background:transparent;
+}
+
+/* ========================= */
+/* SUGGESTIONS */
+/* ========================= */
+
+.ai-suggestions{
+  display:flex;
+  gap:12px;
+
+  overflow-x:auto;
+
+  padding-bottom:8px;
+
+  scrollbar-width:none;
+}
+
+.ai-suggestions::-webkit-scrollbar{
+  display:none;
+}
+
+/* CHIP */
+
+.ai-chip{
+  min-width:max-content;
+
+  padding:12px 18px;
+
+  border-radius:18px;
+
+  background:white;
+
+  font-size:13px;
+  font-weight:700;
+
+  color:#8a2be2;
+
+  box-shadow:
+  0 5px 14px rgba(0,0,0,0.04);
+}
+
+/* ========================= */
+/* ANIMATIONS */
+/* ========================= */
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(1);
+    opacity:.18;
+  }
+
+  50%{
+    transform:scale(1.15);
+    opacity:.28;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:.18;
+  }
+
+}
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
