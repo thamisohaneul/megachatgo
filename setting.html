@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Settings</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f7f7f7;
+  color:#111;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:78px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+/* HEADER ICON */
+
+.header-icon{
+  font-size:24px;
+}
+
+/* SETTINGS AREA */
+
+.settings{
+  margin-top:95px;
+  padding:0 14px 110px;
+}
+
+/* PROFILE CARD */
+
+.profile-card{
+  background:white;
+
+  border-radius:30px;
+
+  padding:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+
+  animation:fadeUp 0.5s ease;
+}
+
+/* PROFILE LEFT */
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* IMAGE */
+
+.profile-left img{
+  width:72px;
+  height:72px;
+
+  border-radius:24px;
+
+  object-fit:cover;
+}
+
+/* NAME */
+
+.name{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* EMAIL */
+
+.email{
+  margin-top:5px;
+
+  font-size:13px;
+  color:#777;
+}
+
+/* EDIT BUTTON */
+
+.edit-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:22px;
+}
+
+/* SECTION */
+
+.section{
+  margin-top:24px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+  margin-bottom:14px;
+
+  padding-left:6px;
+
+  font-size:14px;
+  font-weight:700;
+
+  color:#777;
+}
+
+/* SETTING CARD */
+
+.card{
+  background:white;
+
+  border-radius:28px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* ITEM */
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px;
+
+  border-bottom:1px solid #f3f3f3;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+/* LEFT SIDE */
+
+.item-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* ICON */
+
+.icon{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:#f4f1ff;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  color:#8a2be2;
+}
+
+/* TEXT */
+
+.text{
+  display:flex;
+  flex-direction:column;
+}
+
+.label{
+  font-size:15px;
+  font-weight:700;
+}
+
+.sub{
+  margin-top:4px;
+
+  font-size:12px;
+  color:#888;
+}
+
+/* RIGHT */
+
+.right{
+  font-size:22px;
+  color:#999;
+}
+
+/* TOGGLE */
+
+.toggle{
+  width:52px;
+  height:30px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  position:relative;
+}
+
+.toggle::before{
+  content:"";
+
+  position:absolute;
+
+  top:4px;
+  right:4px;
+
+  width:22px;
+  height:22px;
+
+  border-radius:50%;
+
+  background:white;
+}
+
+/* LOGOUT */
+
+.logout{
+  margin-top:26px;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:12px;
+
+  color:#ff3b5c;
+
+  font-size:16px;
+  font-weight:700;
+
+  box-shadow:
+  0 4px 18px rgba(0,0,0,0.04);
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:82px;
+
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(12px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+/* NAV */
+
+.nav-item{
+  font-size:28px;
+  color:#999;
+}
+
+/* ACTIVE */
+
+.active{
+  color:#8a2be2;
+  transform:translateY(-3px);
+}
+
+/* CREATE */
+
+.create{
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:34px;
+
+  margin-top:-38px;
+
+  box-shadow:
+  0 10px 28px rgba(138,43,226,0.35);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Settings
+  </div>
+
+  <div class="header-icon">
+    ⚙️
+  </div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div class="settings">
+
+  <!-- PROFILE CARD -->
+
+  <div class="profile-card">
+
+    <div class="profile-left">
+
+      <img src="https://i.pravatar.cc/300?img=12">
+
+      <div>
+
+        <div class="name">
+          Mega Creator
+        </div>
+
+        <div class="email">
+          megachat@email.com
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="edit-btn">
+      ✏️
+    </div>
+
+  </div>
+
+  <!-- ACCOUNT -->
+
+  <div class="section">
+
+    <div class="section-title">
+      ACCOUNT
+    </div>
+
+    <div class="card">
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            👤
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Edit Profile
+            </div>
+
+            <div class="sub">
+              Change your information
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            🔒
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Privacy
+            </div>
+
+            <div class="sub">
+              Manage account privacy
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- APP SETTINGS -->
+
+  <div class="section">
+
+    <div class="section-title">
+      APP SETTINGS
+    </div>
+
+    <div class="card">
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            🌙
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Dark Mode
+            </div>
+
+            <div class="sub">
+              Switch appearance
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="toggle"></div>
+
+      </div>
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            🔔
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Notifications
+            </div>
+
+            <div class="sub">
+              Push alerts and sounds
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            🌐
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Language
+            </div>
+
+            <div class="sub">
+              English
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SUPPORT -->
+
+  <div class="section">
+
+    <div class="section-title">
+      SUPPORT
+    </div>
+
+    <div class="card">
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            ❓
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Help Center
+            </div>
+
+            <div class="sub">
+              FAQs and support
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+      <div class="item">
+
+        <div class="item-left">
+
+          <div class="icon">
+            📄
+          </div>
+
+          <div class="text">
+
+            <div class="label">
+              Terms & Privacy
+            </div>
+
+            <div class="sub">
+              Policies and conditions
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LOGOUT -->
+
+  <div class="logout">
+
+    🚪 Logout
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item">
+    🏠
+  </div>
+
+  <div class="nav-item">
+    💬
+  </div>
+
+  <div class="create">
+    +
+  </div>
+
+  <div class="nav-item">
+    🎥
+  </div>
+
+  <div class="nav-item active">
+    ⚙️
+  </div>
+
+</div>
+
+</body>
+</html>
+<!-- CEO SECTION -->
+
+<div class="ceo-section">
+
+  <!-- BANNER -->
+
+  <div class="banner">
+
+    <div class="glow1"></div>
+    <div class="glow2"></div>
+
+  </div>
+
+  <!-- PROFILE -->
+
+  <div class="profile">
+
+    <!-- IMAGE -->
+
+    <div class="profile-image">
+
+      <img src="https://i.pravatar.cc/400?img=15">
+
+      <div class="verified">
+        ✔
+      </div>
+
+    </div>
+
+    <!-- NAME -->
+
+    <div class="name">
+      Tebogo Thamiso Seroke
+    </div>
+
+    <!-- ROLE -->
+
+    <div class="role">
+      Co-Founder & CEO of Lyno Platforms
+    </div>
+
+    <!-- BIO -->
+
+    <div class="bio">
+      Visionary creator behind MegaChat Go and Lyno Platforms, building futuristic digital experiences with modern social innovation and next-generation communication.
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div class="card">
+
+        <div class="number">
+          12+
+        </div>
+
+        <div class="label">
+          Projects
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="number">
+          1M+
+        </div>
+
+        <div class="label">
+          Future Users
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="number">
+          2026
+        </div>
+
+        <div class="label">
+          Vision
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+      <button class="btn primary">
+        Follow Vision
+      </button>
+
+      <button class="btn secondary">
+        Contact
+      </button>
+
+    </div>
+
+    <!-- QUOTE -->
+
+    <div class="quote">
+      “Technology should feel human, elegant, and limitless.”
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+
+/* CEO SECTION */
+
+.ceo-section{
+  width:100%;
+
+  background:white;
+
+  border-radius:38px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,0.05);
+
+  margin-top:24px;
+
+  animation:fadeUp .6s ease;
+}
+
+/* TOP BANNER */
+
+.banner{
+  height:150px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc,
+    #e9d5ff
+  );
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* GLOW */
+
+.glow1,
+.glow2{
+  position:absolute;
+
+  border-radius:50%;
+
+  filter:blur(70px);
+
+  opacity:.4;
+}
+
+.glow1{
+  width:180px;
+  height:180px;
+
+  background:white;
+
+  top:-70px;
+  left:-50px;
+}
+
+.glow2{
+  width:160px;
+  height:160px;
+
+  background:#ffffff;
+
+  bottom:-70px;
+  right:-50px;
+}
+
+/* PROFILE */
+
+.profile{
+  position:relative;
+
+  margin-top:-60px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  padding:0 24px 28px;
+}
+
+/* IMAGE */
+
+.profile-image{
+  position:relative;
+}
+
+.profile-image img{
+  width:120px;
+  height:120px;
+
+  border-radius:38px;
+
+  object-fit:cover;
+
+  border:6px solid white;
+
+  box-shadow:
+  0 14px 30px rgba(138,43,226,0.18);
+}
+
+/* VERIFIED */
+
+.verified{
+  position:absolute;
+  bottom:4px;
+  right:4px;
+
+  width:34px;
+  height:34px;
+
+  border-radius:14px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:16px;
+
+  border:4px solid white;
+}
+
+/* NAME */
+
+.name{
+  margin-top:20px;
+
+  font-size:28px;
+  font-weight:800;
+
+  text-align:center;
+
+  line-height:1.3;
+}
+
+/* ROLE */
+
+.role{
+  margin-top:10px;
+
+  font-size:15px;
+  font-weight:700;
+
+  color:#8a2be2;
+
+  text-align:center;
+}
+
+/* BIO */
+
+.bio{
+  margin-top:20px;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  color:#555;
+
+  text-align:center;
+}
+
+/* STATS */
+
+.stats{
+  margin-top:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:space-between;
+
+  gap:12px;
+}
+
+/* CARD */
+
+.card{
+  flex:1;
+
+  background:#faf7ff;
+
+  border-radius:24px;
+
+  padding:18px 10px;
+
+  text-align:center;
+}
+
+/* NUMBER */
+
+.number{
+  font-size:22px;
+  font-weight:800;
+
+  color:#8a2be2;
+}
+
+/* LABEL */
+
+.label{
+  margin-top:6px;
+
+  font-size:12px;
+
+  color:#777;
+}
+
+/* BUTTONS */
+
+.buttons{
+  margin-top:28px;
+
+  width:100%;
+
+  display:flex;
+  gap:14px;
+}
+
+/* BUTTON */
+
+.btn{
+  flex:1;
+
+  height:56px;
+
+  border:none;
+
+  border-radius:22px;
+
+  font-size:15px;
+  font-weight:700;
+}
+
+/* PRIMARY */
+
+.primary{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  box-shadow:
+  0 12px 24px rgba(138,43,226,0.22);
+}
+
+/* SECONDARY */
+
+.secondary{
+  background:#f3f3f3;
+
+  color:#111;
+}
+
+/* QUOTE */
+
+.quote{
+  margin-top:28px;
+
+  background:#faf7ff;
+
+  border-radius:26px;
+
+  padding:22px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  color:#555;
+
+  font-style:italic;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
