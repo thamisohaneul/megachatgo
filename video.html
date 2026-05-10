@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Reels</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:black;
+  overflow:hidden;
+  color:white;
+}
+
+/* VIDEO CONTAINER */
+
+.reels{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+}
+
+.reels::-webkit-scrollbar{
+  display:none;
+}
+
+/* SINGLE VIDEO */
+
+.video{
+  position:relative;
+
+  width:100%;
+  height:100vh;
+
+  scroll-snap-align:start;
+
+  overflow:hidden;
+}
+
+/* VIDEO IMAGE */
+
+.video img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* DARK OVERLAY */
+
+.overlay{
+  position:absolute;
+  inset:0;
+
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.1),
+    rgba(0,0,0,0.5)
+  );
+}
+
+/* TOP BAR */
+
+.topbar{
+  position:absolute;
+  top:0;
+
+  width:100%;
+  height:85px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  z-index:10;
+}
+
+/* TITLE */
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+/* TOP ICONS */
+
+.top-icons{
+  display:flex;
+  gap:18px;
+
+  font-size:25px;
+}
+
+/* RIGHT ACTIONS */
+
+.actions{
+  position:absolute;
+
+  right:14px;
+  bottom:130px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:22px;
+
+  z-index:10;
+}
+
+/* ACTION */
+
+.action{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.action img{
+  width:56px;
+  height:56px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+
+  border:2px solid white;
+}
+
+.action-icon{
+  font-size:34px;
+}
+
+.action-text{
+  margin-top:5px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* VIDEO INFO */
+
+.info{
+  position:absolute;
+
+  left:16px;
+  bottom:120px;
+
+  z-index:10;
+
+  width:70%;
+}
+
+/* USER */
+
+.user{
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:12px;
+}
+
+.user img{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+}
+
+.username{
+  font-size:17px;
+  font-weight:700;
+}
+
+/* FOLLOW BUTTON */
+
+.follow{
+  padding:6px 14px;
+
+  border-radius:14px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  font-size:13px;
+  font-weight:600;
+}
+
+/* CAPTION */
+
+.caption{
+  font-size:15px;
+  line-height:1.5;
+}
+
+/* MUSIC */
+
+.music{
+  margin-top:14px;
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  font-size:13px;
+
+  opacity:0.9;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:82px;
+
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:20;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  font-size:28px;
+  color:#bbb;
+}
+
+/* ACTIVE */
+
+.active{
+  color:#c084fc;
+  transform:translateY(-3px);
+}
+
+/* CREATE BUTTON */
+
+.create{
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  font-size:34px;
+
+  margin-top:-38px;
+
+  box-shadow:
+  0 10px 28px rgba(138,43,226,0.35);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="reels">
+
+  <!-- VIDEO 1 -->
+
+  <div class="video">
+
+    <img src="https://picsum.photos/500/900">
+
+    <div class="overlay"></div>
+
+    <!-- TOP -->
+
+    <div class="topbar">
+
+      <div class="logo">
+        Buzz
+      </div>
+
+      <div class="top-icons">
+        <div>🔍</div>
+        <div>📷</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT ACTIONS -->
+
+    <div class="actions">
+
+      <div class="action">
+
+        <img src="https://i.pravatar.cc/150?img=1">
+
+      </div>
+
+      <div class="action">
+        <div class="action-icon">♡</div>
+        <div class="action-text">124K</div>
+      </div>
+
+      <div class="action">
+        <div class="action-icon">💬</div>
+        <div class="action-text">8.2K</div>
+      </div>
+
+      <div class="action">
+        <div class="action-icon">➤</div>
+        <div class="action-text">Share</div>
+      </div>
+
+      <div class="action">
+        <div class="action-icon">⋮</div>
+      </div>
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="info">
+
+      <div class="user">
+
+        <img src="https://i.pravatar.cc/150?img=2">
+
+        <div class="username">
+          Mega Creator
+        </div>
+
+        <div class="follow">
+          Follow
+        </div>
+
+      </div>
+
+      <div class="caption">
+        Creating futuristic content with MegaChat Go 🚀✨
+      </div>
+
+      <div class="music">
+        🎵 Original Audio • Mega Creator
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item">
+    🏠
+  </div>
+
+  <div class="nav-item">
+    🔍
+  </div>
+
+  <div class="create">
+    +
+  </div>
+
+  <div class="nav-item active">
+    🎥
+  </div>
+
+  <div class="nav-item">
+    👤
+  </div>
+
+</div>
+
+</body>
+</html>
