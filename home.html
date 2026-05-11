@@ -666,7 +666,15 @@ body{
   </div>
 
   <div class="nav-item"><a href="settings.html"><img src="profile.png"></a>
-  </div>
+    <button onclick="logoutUser()">Logout</button>
+
+<script>
+  function logoutUser() {
+    localStorage.removeItem("megachat_logged_in");
+    window.location.href = "login.html";
+  }
+</script>
+
 
 </div>
 
