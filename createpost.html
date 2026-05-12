@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Post</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* LEFT */
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* BACK */
+
+.back-btn{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* TITLE */
+
+.title{
+  font-size:28px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+}
+
+/* POST BUTTON */
+
+.post-btn{
+  height:48px;
+
+  padding:0 24px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  font-size:15px;
+  font-weight:900;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.2);
+
+  transition:.25s ease;
+}
+
+/* CONTENT */
+
+.content{
+  padding:105px 18px 150px;
+}
+
+/* USER CARD */
+
+.user-card{
+  background:white;
+
+  border-radius:32px;
+
+  padding:20px;
+
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .5s ease;
+}
+
+/* PROFILE */
+
+.profile{
+  width:68px;
+  height:68px;
+
+  border-radius:24px;
+
+  object-fit:cover;
+}
+
+/* NAME */
+
+.name{
+  font-size:18px;
+  font-weight:800;
+}
+
+/* STATUS */
+
+.status{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#8a2be2;
+
+  font-weight:700;
+}
+
+/* TEXT AREA */
+
+.text-box{
+  margin-top:18px;
+
+  background:white;
+
+  border-radius:34px;
+
+  padding:22px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .6s ease;
+}
+
+/* TEXTAREA */
+
+textarea{
+  width:100%;
+  height:150px;
+
+  border:none;
+  outline:none;
+  resize:none;
+
+  font-size:16px;
+
+  line-height:1.7;
+
+  background:transparent;
+}
+
+/* MEDIA UPLOAD */
+
+.upload-box{
+  margin-top:18px;
+
+  background:white;
+
+  border-radius:34px;
+
+  padding:22px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .7s ease;
+}
+
+/* LABEL */
+
+.upload-label{
+  width:100%;
+  min-height:230px;
+
+  border:2px dashed #d7c2ff;
+
+  border-radius:28px;
+
+  background:#faf7ff;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  padding:24px;
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+/* ICON */
+
+.upload-icon{
+  width:80px;
+  height:80px;
+
+  border-radius:28px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:34px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.2);
+}
+
+/* TITLE */
+
+.upload-title{
+  margin-top:20px;
+
+  font-size:18px;
+  font-weight:800;
+}
+
+/* TEXT */
+
+.upload-text{
+  margin-top:10px;
+
+  font-size:14px;
+
+  color:#777;
+
+  line-height:1.7;
+}
+
+/* INPUT */
+
+input[type="file"]{
+  display:none;
+}
+
+/* PREVIEW */
+
+.preview{
+  margin-top:18px;
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:14px;
+}
+
+/* PREVIEW ITEM */
+
+.preview img,
+.preview video{
+  width:100%;
+  height:180px;
+
+  object-fit:cover;
+
+  border-radius:24px;
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* OPTIONS */
+
+.options{
+  margin-top:18px;
+
+  display:flex;
+  gap:14px;
+}
+
+/* OPTION */
+
+.option{
+  flex:1;
+
+  background:white;
+
+  border-radius:26px;
+
+  padding:20px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .8s ease;
+
+  transition:.25s ease;
+}
+
+/* OPTION ICON */
+
+.option-icon{
+  width:58px;
+  height:58px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:24px;
+}
+
+/* OPTION TEXT */
+
+.option-text{
+  margin-top:14px;
+
+  font-size:14px;
+  font-weight:700;
+
+  color:#555;
+}
+
+/* FOOTER */
+
+.footer{
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* ACTIVE */
+
+.back-btn:active,
+.post-btn:active,
+.option:active,
+.upload-label:active{
+  transform:scale(.97);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <div class="back-btn">
+      ←
+    </div>
+
+    <div class="title">
+      Create Post
+    </div>
+
+  </div>
+
+  <button class="post-btn">
+    POST
+  </button>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- USER -->
+
+  <div class="user-card">
+
+    <img
+    class="profile"
+    src="https://i.pravatar.cc/300?img=12">
+
+    <div>
+
+      <div class="name">
+        Mega Creator
+      </div>
+
+      <div class="status">
+        Ready to share ✨
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TEXT -->
+
+  <div class="text-box">
+
+    <textarea
+    placeholder="What's happening on MegaChat today?"></textarea>
+
+  </div>
+
+  <!-- UPLOAD -->
+
+  <div class="upload-box">
+
+    <label
+    for="mediaInput"
+    class="upload-label">
+
+      <div class="upload-icon">
+        ⬆
+      </div>
+
+      <div class="upload-title">
+        Add Photos or Videos
+      </div>
+
+      <div class="upload-text">
+        Tap here to upload media directly from your device storage.
+      </div>
+
+    </label>
+
+    <input
+    type="file"
+    id="mediaInput"
+    accept="image/*,video/*"
+    multiple>
+
+    <div class="preview" id="preview"></div>
+
+  </div>
+
+  <!-- OPTIONS -->
+
+  <div class="options">
+
+    <div class="option">
+
+      <div class="option-icon">
+        📍
+      </div>
+
+      <div class="option-text">
+        Location
+      </div>
+
+    </div>
+
+    <div class="option">
+
+      <div class="option-icon">
+        😊
+      </div>
+
+      <div class="option-text">
+        Mood
+      </div>
+
+    </div>
+
+    <div class="option">
+
+      <div class="option-icon">
+        🎵
+      </div>
+
+      <div class="option-text">
+        Music
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* BACK BUTTON */
+
+document.querySelector(".back-btn")
+.addEventListener("click",()=>{
+
+  history.back();
+
+});
+
+/* FILE PREVIEW */
+
+const mediaInput =
+document.getElementById("mediaInput");
+
+const preview =
+document.getElementById("preview");
+
+mediaInput.addEventListener("change",(e)=>{
+
+  preview.innerHTML = "";
+
+  const files = e.target.files;
+
+  Array.from(files).forEach(file=>{
+
+    const url =
+    URL.createObjectURL(file);
+
+    if(file.type.startsWith("image/")){
+
+      const img =
+      document.createElement("img");
+
+      img.src = url;
+
+      preview.appendChild(img);
+
+    }
+
+    else if(file.type.startsWith("video/")){
+
+      const video =
+      document.createElement("video");
+
+      video.src = url;
+
+      video.controls = true;
+
+      preview.appendChild(video);
+
+    }
+
+  });
+
+});
+
+/* POST BUTTON */
+
+document.querySelector(".post-btn")
+.addEventListener("click",()=>{
+
+  const btn =
+  document.querySelector(".post-btn");
+
+  btn.innerHTML = "POSTING...";
+
+  btn.style.opacity = ".8";
+
+  setTimeout(()=>{
+
+    btn.innerHTML = "POSTED ✓";
+
+  },1800);
+
+});
+
+</script>
+
+</body>
+</html>
