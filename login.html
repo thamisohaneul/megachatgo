@@ -4,7 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MegaChat Go</title>
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 
+  const supabaseUrl = 'https://iafpnqjexmagcoeyfzuq.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhZnBucWpleG1hZ2NvZXlmenVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDI5MzEsImV4cCI6MjA5NDIxODkzMX0.j-YcA_h842zPWLp0c1bAYlwOW80wrdw5aOH1SW4a9Is' 
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  window.loginUser = async function() {
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    
+    const { data, error } = await supabase.auth.signInWithPassword({ 
+      email: email, 
+      password: password 
+    })
+    
+    if (error) {
+      alert("Login failed: " + error.message)
+    } else {
+      localStorage.setItem("megachat_logged_in", "true")
+      window.location.href = "home.html"
+    }
+  }
+</script>
+</head>
 <style>
 <head>
 <body>
