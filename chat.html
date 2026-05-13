@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Chats</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:32px;
+  font-weight:900;
+
+  letter-spacing:-1px;
+}
+
+/* HEADER ICON */
+
+.header-icon{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* CONTENT */
+
+.content{
+  padding:102px 18px 120px;
+}
+
+/* SEARCH */
+
+.search-box{
+  background:white;
+
+  height:62px;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  animation:fadeUp .4s ease;
+}
+
+/* SEARCH ICON */
+
+.search-icon{
+  font-size:22px;
+
+  color:#8a2be2;
+}
+
+/* SEARCH INPUT */
+
+.search-box input{
+  flex:1;
+
+  border:none;
+  outline:none;
+
+  background:transparent;
+
+  margin-left:12px;
+
+  font-size:15px;
+}
+
+/* ACTIVE USERS */
+
+.active-users{
+  margin-top:22px;
+
+  display:flex;
+  gap:16px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+
+  padding-bottom:6px;
+}
+
+.active-users::-webkit-scrollbar{
+  display:none;
+}
+
+/* USER */
+
+.user{
+  min-width:78px;
+
+  text-align:center;
+
+  animation:fadeUp .5s ease;
+}
+
+/* RING */
+
+.user-ring{
+  width:78px;
+  height:78px;
+
+  border-radius:26px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc,
+    #d8b4fe
+  );
+
+  padding:3px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,0.18);
+}
+
+/* INNER */
+
+.user-inner{
+  width:100%;
+  height:100%;
+
+  border-radius:24px;
+
+  background:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* IMAGE */
+
+.user-inner img{
+  width:64px;
+  height:64px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+}
+
+/* NAME */
+
+.user p{
+  margin-top:8px;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* CHAT LIST */
+
+.chat-list{
+  margin-top:24px;
+}
+
+/* CHAT ITEM */
+
+.chat-item{
+  background:white;
+
+  border-radius:30px;
+
+  padding:16px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:16px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,0.04);
+
+  transition:.25s ease;
+
+  animation:fadeUp .6s ease;
+}
+
+/* LEFT */
+
+.chat-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* CHAT IMAGE */
+
+.chat-left img{
+  width:66px;
+  height:66px;
+
+  border-radius:22px;
+
+  object-fit:cover;
+}
+
+/* CHAT INFO */
+
+.chat-info{
+  display:flex;
+  flex-direction:column;
+}
+
+/* USERNAME */
+
+.username{
+  font-size:16px;
+  font-weight:800;
+}
+
+/* MESSAGE */
+
+.message{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#777;
+}
+
+/* RIGHT */
+
+.chat-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+}
+
+/* TIME */
+
+.time{
+  font-size:12px;
+
+  color:#888;
+}
+
+/* BADGE */
+
+.badge{
+  margin-top:10px;
+
+  min-width:24px;
+  height:24px;
+
+  padding:0 8px;
+
+  border-radius:50px;
+
+  background:#8a2be2;
+
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+/* AI CARD */
+
+.ai-card{
+  margin-top:24px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  border-radius:34px;
+
+  padding:24px;
+
+  color:white;
+
+  position:relative;
+
+  overflow:hidden;
+
+  animation:fadeUp .7s ease;
+}
+
+/* GLOW */
+
+.glow{
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  background:white;
+
+  opacity:.15;
+
+  filter:blur(70px);
+
+  top:-70px;
+  right:-40px;
+}
+
+/* AI TITLE */
+
+.ai-title{
+  font-size:22px;
+  font-weight:900;
+
+  position:relative;
+  z-index:2;
+}
+
+/* AI TEXT */
+
+.ai-text{
+  margin-top:12px;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  opacity:.95;
+
+  position:relative;
+  z-index:2;
+}
+
+/* AI BUTTON */
+
+.ai-btn{
+  margin-top:20px;
+
+  height:52px;
+
+  border:none;
+
+  border-radius:20px;
+
+  background:white;
+
+  color:#8a2be2;
+
+  font-size:15px;
+  font-weight:900;
+
+  padding:0 24px;
+
+  position:relative;
+  z-index:2;
+
+  transition:.25s ease;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.96);
+
+  backdrop-filter:blur(14px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  color:#999;
+
+  transition:.25s ease;
+}
+
+/* ACTIVE */
+
+.active{
+  background:#f3e8ff;
+
+  color:#8a2be2;
+}
+
+/* ACTIVE EFFECT */
+
+.chat-item:active,
+.user:active,
+.header-icon:active,
+.nav-item:active,
+.ai-btn:active{
+  transform:scale(.96);
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Chats
+  </div>
+
+  <div class="header-icon"><img src="edit.png"></a>
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- SEARCH -->
+
+  <div class="search-box">
+
+    <div class="search-icon"><img src="search.png"></a>
+    </div>
+
+    <input
+    type="text"
+    placeholder="Ask Lyno AI or Search">
+
+  </div>
+
+  <!-- ACTIVE USERS -->
+
+  <div class="active-users">
+
+    <div class="user">
+
+      <div class="user-ring">
+        <div class="user-inner">
+          <img src="https://i.pravatar.cc/150?img=1">
+        </div>
+      </div>
+
+      <p>You</p>
+
+    </div>
+
+    <div class="user">
+
+      <div class="user-ring">
+        <div class="user-inner">
+          <img src="https://i.pravatar.cc/150?img=2">
+        </div>
+      </div>
+
+      <p>Alex</p>
+
+    </div>
+
+    <div class="user">
+
+      <div class="user-ring">
+        <div class="user-inner">
+          <img src="https://i.pravatar.cc/150?img=3">
+        </div>
+      </div>
+
+      <p>Sarah</p>
+
+    </div>
+
+    <div class="user">
+
+      <div class="user-ring">
+        <div class="user-inner">
+          <img src="https://i.pravatar.cc/150?img=4">
+        </div>
+      </div>
+
+      <p>Chris</p>
+
+    </div>
+
+    <div class="user">
+
+      <div class="user-ring">
+        <div class="user-inner">
+          <img src="https://i.pravatar.cc/150?img=5">
+        </div>
+      </div>
+
+      <p>Emma</p>
+
+    </div>
+
+  </div>
+
+  <!-- CHAT LIST -->
+
+  <div class="chat-list">
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat('Alex')">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=2">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Alex Morgan
+          </div>
+
+          <div class="message">
+            Hey, are you coming today?
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          2m ago
+        </div>
+
+        <div class="badge">
+          2
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat('Sarah')">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=3">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Sarah Lee
+          </div>
+
+          <div class="message">
+            Your post looks amazing 🔥
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          9m ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat('Chris')">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=4">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Chris Noah
+          </div>
+
+          <div class="message">
+            Let's build something huge 🚀
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          1h ago
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LYNO AI -->
+
+  <div class="ai-card">
+
+    <div class="glow"></div>
+
+    <div class="ai-title">
+      Lyno AI
+    </div>
+
+    <div class="ai-text">
+      Ask questions, generate ideas, summarize chats, and get instant help directly inside MegaChat Go.
+    </div>
+
+    <button
+    class="ai-btn"
+    onclick="openLynoAI()">
+
+      Open Lyno AI
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div
+  class="nav-item"
+  onclick="goHome()"><img src="home.png"></a>
+  </div>
+
+  <div
+  class="nav-item active"><img src="chat.png"></a>
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goCreate()">
+    ➕
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goVideos()"><img src="buzz.png"></a>
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goProfile()"><img src="profile.png"></a>
+  </div>
+
+</div>
+
+<script>
+
+/* OPEN CHAT */
+
+function openChat(name){
+
+  alert("Opening chat with " + name)
+
+}
+
+/* OPEN AI */
+
+function openLynoAI(){
+
+  alert("CEO 'Tebogo Thamiso Seroke' still working on Lyno AI ✨ to be launched soon...")
+
+}
+
+/* NAVIGATION */
+
+function goHome(){
+  window.location.href = "home.html"
+}
+
+function goCreate(){
+  window.location.href = "createpost.html"
+}
+
+function goVideos(){
+  window.location.href = "buzz.html"
+}
+
+function goProfile(){
+  window.location.href = "settings.html"
+}
+
+</script>
+
+</body>
+</html>
