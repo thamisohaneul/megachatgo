@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Sign Up</title>
+
+<!-- SUPABASE -->
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+const supabaseUrl =
+'https://iafpnqjexmagcoeyfzuq.supabase.co'
+
+const supabaseKey =
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhZnBucWpleG1hZ2NvZXlmenVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDI5MzEsImV4cCI6MjA5NDIxODkzMX0.j-YcA_h842zPWLp0c1bAYlwOW80wrdw5aOH1SW4a9Is'
+
+const supabase =
+createClient(supabaseUrl, supabaseKey)
+
+/* SIGN UP */
+
+window.signupUser = async function(){
+
+  const username =
+  document.getElementById("username").value
+
+  const email =
+  document.getElementById("email").value
+
+  const password =
+  document.getElementById("password").value
+
+  const signupBtn =
+  document.querySelector(".signup-btn")
+
+  signupBtn.innerHTML = "Creating..."
+
+  const { data, error } =
+  await supabase.auth.signUp({
+
+    email,
+    password,
+
+    options:{
+      data:{
+        username:username
+      }
+    }
+
+  })
+
+  if(error){
+
+    alert("Signup failed: " + error.message)
+
+    signupBtn.innerHTML = "SIGN UP"
+
+  }
+
+  else{
+
+    signupBtn.innerHTML = "Success ✓"
+
+    setTimeout(()=>{
+
+      window.location.href =
+      "login.html"
+
+    },1500)
+
+  }
+
+}
+
+</script>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+
+  min-height:100vh;
+
+  background:
+  linear-gradient(
+    180deg,
+    #ffffff,
+    #f8f2ff,
+    #ffffff
+  );
+
+  overflow:hidden;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:20px;
+}
+
+/* GLOW */
+
+.glow1,
+.glow2{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  background:#c084fc;
+
+  opacity:.15;
+
+  filter:blur(90px);
+
+}
+
+.glow1{
+
+  width:240px;
+  height:240px;
+
+  top:-80px;
+  left:-60px;
+
+}
+
+.glow2{
+
+  width:220px;
+  height:220px;
+
+  bottom:-80px;
+  right:-60px;
+
+}
+
+/* CONTAINER */
+
+.container{
+
+  width:100%;
+  max-width:420px;
+
+  background:
+  rgba(255,255,255,0.92);
+
+  backdrop-filter:blur(18px);
+
+  border-radius:38px;
+
+  padding:34px 26px;
+
+  box-shadow:
+  0 12px 34px rgba(0,0,0,0.06);
+
+  position:relative;
+  z-index:2;
+
+  animation:fadeUp .6s ease;
+}
+
+/* TITLE */
+
+.title{
+
+  font-size:36px;
+  font-weight:900;
+
+  text-align:center;
+
+  color:#111;
+}
+
+/* SUBTITLE */
+
+.subtitle{
+
+  margin-top:10px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  color:#777;
+
+  line-height:1.7;
+}
+
+/* FORM */
+
+.form{
+
+  margin-top:34px;
+}
+
+/* INPUT BOX */
+
+.input-box{
+
+  margin-bottom:18px;
+
+  position:relative;
+}
+
+/* INPUT */
+
+.input-box input{
+
+  width:100%;
+  height:64px;
+
+  border:none;
+  outline:none;
+
+  border-radius:22px;
+
+  background:#f5f3f8;
+
+  padding:
+  0 55px 0 18px;
+
+  font-size:15px;
+
+  transition:.25s ease;
+}
+
+/* FOCUS */
+
+.input-box input:focus{
+
+  background:white;
+
+  box-shadow:
+  0 0 0 4px
+  rgba(138,43,226,0.12);
+
+}
+
+/* EYE */
+
+.eye{
+
+  position:absolute;
+
+  right:18px;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  font-size:20px;
+
+  color:#8a2be2;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+/* BUTTON */
+
+.signup-btn{
+
+  width:100%;
+  height:62px;
+
+  border:none;
+
+  border-radius:22px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  font-size:16px;
+  font-weight:900;
+
+  margin-top:10px;
+
+  box-shadow:
+  0 12px 28px
+  rgba(138,43,226,0.22);
+
+  transition:.25s ease;
+}
+
+/* BUTTON ACTIVE */
+
+.signup-btn:active{
+
+  transform:scale(.97);
+
+}
+
+/* LOGIN */
+
+.login{
+
+  margin-top:24px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  color:#666;
+}
+
+/* LINK */
+
+.login span{
+
+  color:#8a2be2;
+
+  font-weight:800;
+
+  cursor:pointer;
+}
+
+/* FOOTER */
+
+.footer{
+
+  position:fixed;
+  bottom:28px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FROM WRAP */
+
+.from-wrap{
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* FROM */
+
+.from{
+
+  font-size:11px;
+
+  color:#999;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+/* LYNO ROW */
+
+.lyno-row{
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+}
+
+/* LOGO */
+
+.logo{
+
+  width:28px;
+  height:28px;
+
+  border-radius:10px;
+
+  object-fit:cover;
+}
+
+/* LYNO */
+
+.lyno{
+
+  font-size:16px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  letter-spacing:-0.5px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+
+    opacity:0;
+    transform:translateY(20px);
+
+  }
+
+  to{
+
+    opacity:1;
+    transform:translateY(0);
+
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- GLOW -->
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- CONTAINER -->
+
+<div class="container">
+
+  <div class="title">
+    Sign Up
+  </div>
+
+  <div class="subtitle">
+    Create your MegaChat account and join the future of social messaging.
+  </div>
+
+  <!-- FORM -->
+
+  <div class="form">
+
+    <!-- USERNAME -->
+
+    <div class="input-box">
+
+      <input
+      id="username"
+      type="text"
+      placeholder="Username">
+
+    </div>
+
+    <!-- EMAIL -->
+
+    <div class="input-box">
+
+      <input
+      id="email"
+      type="email"
+      placeholder="Email Address">
+
+    </div>
+
+    <!-- PASSWORD -->
+
+    <div class="input-box">
+
+      <input
+      id="password"
+      type="password"
+      placeholder="Password">
+
+      <div
+      class="eye"
+      onclick="togglePassword()">
+        👁
+      </div>
+
+    </div>
+
+    <!-- BUTTON -->
+
+    <button
+    class="signup-btn"
+    onclick="signupUser()">
+
+      SIGN UP
+
+    </button>
+
+    <!-- LOGIN -->
+
+    <div class="login">
+
+      Already have an account?
+      <span onclick="window.location.href='login.html'">
+        Login
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+  <div class="from-wrap">
+
+    <div class="from">
+      FROM
+    </div>
+
+    <div class="lyno-row">
+
+      <img
+      class="logo"
+      src="logo.png">
+
+      <div class="lyno">
+        Lyno
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* PASSWORD TOGGLE */
+
+function togglePassword(){
+
+  const password =
+  document.getElementById("password")
+
+  if(password.type === "password"){
+
+    password.type = "text"
+
+  }
+
+  else{
+
+    password.type = "password"
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
