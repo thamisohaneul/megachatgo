@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaChat Home</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#fafafa;
+  color:#111;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:74px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 18px;
+
+  border-bottom:1px solid #ececec;
+
+  z-index:100;
+}
+
+/* LOGO */
+
+.logo{
+  font-size:34px;
+  font-weight:800;
+
+  letter-spacing:-1px;
+
+  color:#111;
+}
+
+/* HEADER ICONS */
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* TOP ICON */
+
+.top-icon{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:#f4f4f4;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:21px;
+
+  transition:.25s ease;
+}
+
+.top-icon img{
+  width:24px;
+  height:24px;
+}
+
+/* STORIES */
+
+.stories{
+  margin-top:88px;
+
+  display:flex;
+  gap:16px;
+
+  overflow-x:auto;
+
+  padding:16px;
+
+  scrollbar-width:none;
+}
+
+.stories::-webkit-scrollbar{
+  display:none;
+}
+
+/* STORY */
+
+.story{
+  min-width:78px;
+
+  text-align:center;
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+/* STORY RING */
+
+.story-ring{
+  width:78px;
+  height:78px;
+
+  border-radius:26px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc,
+    #d8b4fe
+  );
+
+  padding:3px;
+}
+
+/* STORY INNER */
+
+.story-inner{
+  width:100%;
+  height:100%;
+
+  border-radius:24px;
+
+  background:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* STORY IMAGE */
+
+.story-inner img{
+  width:64px;
+  height:64px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+}
+
+/* STORY TEXT */
+
+.story p{
+  margin-top:8px;
+
+  font-size:12px;
+  font-weight:600;
+}
+
+/* FEED */
+
+.feed{
+  padding:5px 14px 120px;
+}
+
+/* POST */
+
+.post{
+  background:white;
+
+  border-radius:32px;
+
+  margin-bottom:24px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 6px 20px rgba(0,0,0,0.04);
+
+  animation:fadeUp .5s ease;
+}
+
+/* POST HEADER */
+
+.post-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:16px;
+}
+
+/* USER */
+
+.post-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* USER IMAGE */
+
+.post-user img{
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+}
+
+/* USERNAME */
+
+.username{
+  font-size:15px;
+  font-weight:700;
+}
+
+/* LOCATION */
+
+.location{
+  font-size:12px;
+  color:#888;
+
+  margin-top:3px;
+}
+
+/* MENU */
+
+.menu{
+  font-size:22px;
+}
+
+/* POST IMAGE */
+
+.post-image{
+  width:100%;
+  height:430px;
+
+  object-fit:cover;
+}
+
+/* ACTIONS */
+
+.post-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px;
+}
+
+/* LEFT ACTIONS */
+
+.left-actions{
+  display:flex;
+  gap:18px;
+}
+
+/* ACTION ICON */
+
+.action-icon{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:#f5f5f5;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+/* LIKES */
+
+.likes{
+  padding:0 18px;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+/* CAPTION */
+
+.caption{
+  padding:12px 18px 22px;
+
+  font-size:14px;
+
+  line-height:1.6;
+}
+
+.caption b{
+  margin-right:5px;
+}
+
+/* PROFILE NOTE */
+
+.profile-note{
+  margin:18px;
+
+  background:#faf7ff;
+
+  border-radius:24px;
+
+  padding:16px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* NOTE AVATAR */
+
+.note-avatar{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:22px;
+  font-weight:800;
+}
+
+/* NOTE BOX */
+
+.note-box{
+  flex:1;
+}
+
+/* NOTE TEXT */
+
+.note-text{
+  font-size:14px;
+  font-weight:600;
+}
+
+/* NOTE TIME */
+
+.note-time{
+  margin-top:5px;
+
+  font-size:12px;
+  color:#888;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(14px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:25px;
+
+  color:#999;
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+.nav-item img{
+  width:26px;
+  height:26px;
+}
+
+/* ACTIVE NAV */
+
+.active{
+  background:#f3ebff;
+
+  color:#8a2be2;
+
+  transform:translateY(-4px);
+}
+
+/* CREATE BUTTON */
+
+.create{
+  width:62px;
+  height:62px;
+
+  border-radius:22px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:34px;
+
+  margin-top:-40px;
+
+  box-shadow:
+  0 12px 28px rgba(138,43,226,0.35);
+
+  transition:.25s ease;
+
+  cursor:pointer;
+}
+
+.create img{
+  width:30px;
+  height:30px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="logo">
+    MegaChat
+  </div>
+
+  <div class="header-icons">
+
+    <div class="top-icon" onclick="openNotifications()">
+      <img src="notifications.png">
+    </div>
+
+    <div class="top-icon" onclick="openChats()">
+      <img src="chat.png">
+    </div>
+
+  </div>
+
+</div>
+
+<!-- STORIES -->
+
+<div class="stories">
+
+  <div class="story" onclick="openStatus()">
+
+    <div class="story-ring">
+
+      <div class="story-inner">
+        <img src="https://i.pravatar.cc/150?img=1">
+      </div>
+
+    </div>
+
+    <p>Your Status</p>
+
+  </div>
+
+  <div class="story" onclick="openStatus()">
+
+    <div class="story-ring">
+
+      <div class="story-inner">
+        <img src="https://i.pravatar.cc/150?img=2">
+      </div>
+
+    </div>
+
+    <p>Sarah</p>
+
+  </div>
+
+  <div class="story" onclick="openStatus()">
+
+    <div class="story-ring">
+
+      <div class="story-inner">
+        <img src="https://i.pravatar.cc/150?img=3">
+      </div>
+
+    </div>
+
+    <p>Chris</p>
+
+  </div>
+
+  <div class="story" onclick="openStatus()">
+
+    <div class="story-ring">
+
+      <div class="story-inner">
+        <img src="https://i.pravatar.cc/150?img=4">
+      </div>
+
+    </div>
+
+    <p>Alex</p>
+
+  </div>
+
+</div>
+
+<!-- FEED -->
+
+<div class="feed">
+
+  <!-- PROFILE NOTE -->
+
+  <div class="profile-note">
+
+    <div class="note-avatar">
+      M
+    </div>
+
+    <div class="note-box">
+
+      <div class="note-text">
+        Building the future of social media 🚀
+      </div>
+
+      <div class="note-time">
+        Active now
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- POST -->
+
+  <div class="post">
+
+    <div class="post-header">
+
+      <div class="post-user">
+
+        <img src="https://i.pravatar.cc/150?img=5">
+
+        <div>
+
+          <div class="username">
+            Mega Creator
+          </div>
+
+          <div class="location">
+            Paris, France
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="menu">
+        ⋮
+      </div>
+
+    </div>
+
+    <img
+    class="post-image"
+    src="https://picsum.photos/500/700">
+
+    <!-- ACTIONS -->
+
+    <div class="post-actions">
+
+      <div class="left-actions">
+
+        <div class="action-icon like-btn">
+          ♡
+        </div>
+
+        <div class="action-icon comment-btn">
+          💬
+        </div>
+
+        <div class="action-icon share-btn">
+          ➤
+        </div>
+
+      </div>
+
+      <div class="action-icon save-btn">
+        🔖
+      </div>
+
+    </div>
+
+    <div class="likes">
+      12,483 likes
+    </div>
+
+    <div class="caption">
+      <b>Mega Creator</b>
+      Creating the future of social media with MegaChat Go 🚀
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item active" onclick="goHome()">
+    <img src="home.png">
+  </div>
+
+  <div class="nav-item" onclick="goSearch()">
+    <img src="search.png">
+  </div>
+
+  <div class="create" id="createBtn" onclick="goCreate()">
+    <img src="plus.png">
+  </div>
+
+  <div class="nav-item" onclick="goBuzz()">
+    <img src="buzz.png">
+  </div>
+
+  <div class="nav-item" onclick="goProfile()">
+    <img src="profile.png">
+  </div>
+
+</div>
+
+<script>
+
+/* TOP BUTTONS */
+
+function openNotifications(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href = "notifications.html"
+  },180)
+
+}
+
+function openChats(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href = "chat.html"
+  },180)
+
+}
+
+/* STORIES */
+
+function openStatus(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href = "status.html"
+  },180)
+
+}
+
+/* LIKE */
+
+const likeBtn =
+document.querySelector(".like-btn")
+
+let liked = false
+
+likeBtn.addEventListener("click",()=>{
+
+  tapEffect(likeBtn)
+
+  liked = !liked
+
+  if(liked){
+
+    likeBtn.innerHTML = "❤"
+
+    likeBtn.style.background =
+    "#f3ebff"
+
+    likeBtn.style.color =
+    "#8a2be2"
+
+  }
+
+  else{
+
+    likeBtn.innerHTML = "♡"
+
+    likeBtn.style.background =
+    "#f5f5f5"
+
+    likeBtn.style.color =
+    "#111"
+
+  }
+
+})
+
+/* COMMENT */
+
+const commentBtn =
+document.querySelector(".comment-btn")
+
+commentBtn.addEventListener("click",()=>{
+
+  tapEffect(commentBtn)
+
+  setTimeout(()=>{
+    window.location.href =
+    "comments.html"
+  },180)
+
+})
+
+/* SHARE */
+
+const shareBtn =
+document.querySelector(".share-btn")
+
+shareBtn.addEventListener("click",()=>{
+
+  tapEffect(shareBtn)
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"MegaChat",
+      text:"Check this out 🚀",
+      url:window.location.href
+
+    })
+
+  }
+
+  else{
+
+    alert("Sharing post")
+
+  }
+
+})
+
+/* SAVE */
+
+const saveBtn =
+document.querySelector(".save-btn")
+
+let saved = false
+
+saveBtn.addEventListener("click",()=>{
+
+  tapEffect(saveBtn)
+
+  saved = !saved
+
+  if(saved){
+
+    saveBtn.innerHTML = "📌"
+
+    saveBtn.style.background =
+    "#f3ebff"
+
+    saveBtn.style.color =
+    "#8a2be2"
+
+  }
+
+  else{
+
+    saveBtn.innerHTML = "🔖"
+
+    saveBtn.style.background =
+    "#f5f5f5"
+
+    saveBtn.style.color =
+    "#111"
+
+  }
+
+})
+
+/* NAVIGATION */
+
+function goHome(){
+  tapEffect(event.currentTarget)
+}
+
+function goSearch(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href =
+    "search.html"
+  },180)
+
+}
+
+function goCreate(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href =
+    "createpost.html"
+  },180)
+
+}
+
+function goBuzz(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href =
+    "video.html"
+  },180)
+
+}
+
+function goProfile(){
+
+  tapEffect(event.currentTarget)
+
+  setTimeout(()=>{
+    window.location.href =
+    "settings.html"
+  },180)
+
+}
+
+/* TAP EFFECT */
+
+function tapEffect(element){
+
+  element.style.transform =
+  "scale(.90)"
+
+  setTimeout(()=>{
+
+    element.style.transform =
+    "scale(1)"
+
+  },180)
+
+}
+
+</script>
+
+</body>
+</html>
