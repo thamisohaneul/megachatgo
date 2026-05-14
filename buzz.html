@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buzz - MegaChat</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#000;
+  overflow:hidden;
+  color:white;
+}
+
+/* CONTAINER */
+
+.container{
+  height:100vh;
+  overflow-y:scroll;
+
+  scroll-snap-type:y mandatory;
+
+  scrollbar-width:none;
+}
+
+.container::-webkit-scrollbar{
+  display:none;
+}
+
+/* VIDEO CARD */
+
+.video-card{
+  position:relative;
+
+  width:100%;
+  height:100vh;
+
+  scroll-snap-align:start;
+
+  overflow:hidden;
+}
+
+/* VIDEO */
+
+.video{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+/* OVERLAY */
+
+.overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+  linear-gradient(
+    to top,
+    rgba(0,0,0,.82),
+    rgba(0,0,0,.08),
+    rgba(0,0,0,.45)
+  );
+}
+
+/* HEADER */
+
+.header{
+  position:absolute;
+  top:0;
+
+  width:100%;
+  height:90px;
+
+  padding:0 18px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  z-index:50;
+}
+
+/* TITLE */
+
+.title{
+  font-size:34px;
+  font-weight:900;
+
+  letter-spacing:-1px;
+}
+
+/* SEARCH */
+
+.search-btn{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.12);
+
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* RIGHT ACTIONS */
+
+.actions{
+  position:absolute;
+
+  right:14px;
+  bottom:120px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:18px;
+
+  z-index:20;
+}
+
+/* ACTION ITEM */
+
+.action-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  transition:.25s ease;
+}
+
+/* ACTION ICON */
+
+.action-icon{
+  width:62px;
+  height:62px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,.12);
+
+  backdrop-filter:blur(14px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:28px;
+
+  box-shadow:
+  0 10px 26px rgba(0,0,0,.25);
+}
+
+/* ACTION TEXT */
+
+.action-text{
+  margin-top:8px;
+
+  font-size:13px;
+  font-weight:700;
+}
+
+/* CONTENT */
+
+.content{
+  position:absolute;
+
+  left:18px;
+  bottom:115px;
+
+  width:72%;
+
+  z-index:20;
+}
+
+/* USER */
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* PROFILE */
+
+.profile{
+  width:56px;
+  height:56px;
+
+  border-radius:20px;
+
+  border:2px solid white;
+
+  object-fit:cover;
+}
+
+/* NAME */
+
+.name{
+  font-size:18px;
+  font-weight:900;
+}
+
+/* VERIFIED */
+
+.verified{
+  color:#c084fc;
+}
+
+/* CAPTION */
+
+.caption{
+  margin-top:16px;
+
+  font-size:15px;
+
+  line-height:1.7;
+
+  color:#f3f3f3;
+}
+
+/* MUSIC */
+
+.music{
+  margin-top:16px;
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  background:rgba(255,255,255,.12);
+
+  backdrop-filter:blur(14px);
+
+  width:max-content;
+
+  padding:12px 18px;
+
+  border-radius:18px;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+
+  width:100%;
+  height:84px;
+
+  background:rgba(0,0,0,.45);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid rgba(255,255,255,.08);
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  width:54px;
+  height:54px;
+
+  border-radius:20px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:26px;
+
+  color:#aaa;
+
+  transition:.25s ease;
+}
+
+/* ACTIVE */
+
+.active{
+  background:rgba(192,132,252,.18);
+
+  color:#c084fc;
+}
+
+/* TAP */
+
+.action-item:active,
+.nav-item:active,
+.search-btn:active{
+  transform:scale(.90);
+}
+
+/* PLAY BUTTON */
+
+.play-btn{
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  width:92px;
+  height:92px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.14);
+
+  backdrop-filter:blur(10px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:40px;
+
+  z-index:30;
+
+  opacity:0;
+
+  transition:.25s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- VIDEO CARD -->
+
+  <div class="video-card">
+
+    <video
+    class="video"
+    id="buzzVideo"
+    autoplay
+    muted
+    loop
+    playsinline>
+
+      <source
+      src="https://www.w3schools.com/html/mov_bbb.mp4"
+      type="video/mp4">
+
+    </video>
+
+    <div class="overlay"></div>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+      <div class="title">
+        Buzz
+      </div>
+
+      <div
+      class="search-btn"
+      onclick="openSearch(this)"><img src="search.png"></a>
+      </div>
+
+    </div>
+
+    <!-- PLAY -->
+
+    <div class="play-btn" id="playBtn">
+      ▶
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+      <div class="user">
+
+        <img
+        class="profile"
+        src="https://i.pravatar.cc/150?img=5">
+
+        <div class="name">
+          Mega Creator
+          <span class="verified">✔</span>
+        </div>
+
+      </div>
+
+      <div class="caption">
+        Building the future of social media with MegaChat Buzz 🚀✨
+      </div>
+
+      <div class="music">
+        🎵 Future Vibes • Lyno Music
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+      <!-- LIKE -->
+
+      <div
+      class="action-item"
+      onclick="likeVideo(this)">
+
+        <div class="action-icon">
+          ♡
+        </div>
+
+        <div class="action-text">
+          12.4K
+        </div>
+
+      </div>
+
+      <!-- COMMENT -->
+
+      <div
+      class="action-item"
+      onclick="openComments(this)">
+
+        <div class="action-icon">
+          💬
+        </div>
+
+        <div class="action-text">
+          894
+        </div>
+
+      </div>
+
+      <!-- SHARE -->
+
+      <div
+      class="action-item"
+      onclick="shareBuzz(this)">
+
+        <div class="action-icon">
+          ➤
+        </div>
+
+        <div class="action-text">
+          Share
+        </div>
+
+      </div>
+
+      <!-- SAVE -->
+
+      <div
+      class="action-item"
+      onclick="saveBuzz(this)">
+
+        <div class="action-icon">
+          🔖
+        </div>
+
+        <div class="action-text">
+          Save
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div
+  class="nav-item"
+  onclick="goHome(this)"><img src="home.png"></a>
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goChats(this)"><img src="chat.png"></a>
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goCreate(this)">
+    ➕
+  </div>
+
+  <div
+  class="nav-item active"><img src="buzz.png"></a>
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goProfile(this)"><img src="profile.png"></a>
+  </div>
+
+</div>
+
+<script>
+
+/* VIDEO */
+
+const video =
+document.getElementById("buzzVideo")
+
+const playBtn =
+document.getElementById("playBtn")
+
+/* PLAY / PAUSE */
+
+video.addEventListener("click",()=>{
+
+  if(video.paused){
+
+    video.play()
+
+    playBtn.style.opacity = "0"
+
+  }
+
+  else{
+
+    video.pause()
+
+    playBtn.style.opacity = "1"
+
+  }
+
+})
+
+/* TAP EFFECT */
+
+function tapEffect(element){
+
+  element.style.transform =
+  "scale(.90)"
+
+  setTimeout(()=>{
+
+    element.style.transform =
+    "scale(1)"
+
+  },180)
+
+}
+
+/* SEARCH */
+
+function openSearch(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "search.html"
+
+  },180)
+
+}
+
+/* LIKE */
+
+function likeVideo(element){
+
+  tapEffect(element)
+
+  const icon =
+  element.querySelector(".action-icon")
+
+  if(icon.innerHTML === "♡"){
+
+    icon.innerHTML = "♥"
+
+    icon.style.color =
+    "#ff4d6d"
+
+  }
+
+  else{
+
+    icon.innerHTML = "♡"
+
+    icon.style.color =
+    "white"
+
+  }
+
+}
+
+/* COMMENTS */
+
+function openComments(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "comments.html"
+
+  },180)
+
+}
+
+/* SHARE */
+
+function shareBuzz(element){
+
+  tapEffect(element)
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"MegaChat Buzz",
+      text:"Check out this Buzz 🚀",
+      url:window.location.href
+
+    })
+
+  }
+
+  else{
+
+    alert("Sharing Buzz")
+
+  }
+
+}
+
+/* SAVE */
+
+function saveBuzz(element){
+
+  tapEffect(element)
+
+  const icon =
+  element.querySelector(".action-icon")
+
+  if(icon.innerHTML === "🔖"){
+
+    icon.innerHTML = "📌"
+
+    icon.style.color =
+    "#c084fc"
+
+  }
+
+  else{
+
+    icon.innerHTML = "🔖"
+
+    icon.style.color =
+    "white"
+
+  }
+
+}
+
+/* NAVIGATION */
+
+function goHome(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "home.html"
+
+  },180)
+
+}
+
+function goChats(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "chat.html"
+
+  },180)
+
+}
+
+function goCreate(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "createpost.html"
+
+  },180)
+
+}
+
+function goProfile(element){
+
+  tapEffect(element)
+
+  setTimeout(()=>{
+
+    window.location.href =
+    "settings.html"
+
+  },180)
+
+}
+
+</script>
+
+</body>
+</html>
