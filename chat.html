@@ -626,19 +626,6 @@ function openChat(name,picture){
     <div
 class="user-card"
 
-onclick="openChat(
-'Alex',
-'https://i.pravatar.cc/150?img=5',
-'alex_001'
-)">
-
-<img
-src="https://i.pravatar.cc/150?img=5">
-
-<div>
-Alex
-</div>
-
 </div>
 
     <!-- CHAT -->
@@ -901,6 +888,35 @@ id
   )
 
   /* OPEN CHATROOM */
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+</script>
+  <script>
+
+function openChat(
+name,
+picture,
+id
+){
+
+  localStorage.setItem(
+  "chat_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  id
+  )
 
   window.location.href =
   "chatroom.html"
