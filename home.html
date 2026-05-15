@@ -923,7 +923,13 @@ function tapEffect(element){
   },180)
 
 }
-
+window.openChat = function(userId) {
+  if (userId === user.id) {
+    alert("That's you")
+    return
+  }
+  window.location.href = `chat.html?with=${userId}`
+}
 </script>
 
 </body>
