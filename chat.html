@@ -794,7 +794,14 @@ function goVideos(){
 function goProfile(){
   window.location.href = "settings.html"
 }
-
+  
+window.openChat = function(userId) {
+  if (userId === user.id) {
+    alert("That's you")
+    return
+  }
+  window.location.href = `chat.html?with=${userId}`
+}
 </script>
 
 </body>
