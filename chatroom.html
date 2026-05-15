@@ -695,35 +695,309 @@ function(e){
 
 <script>
 
+/* ===================================== */
+/* USER SYSTEM */
+/* ===================================== */
+
+const userId =
+localStorage.getItem(
+"opened_user_id"
+) || "default_user"
+
+/* ===================================== */
+/* CHAT ELEMENTS */
+/* ===================================== */
+
+const chatArea =
+document.getElementById(
+"chatArea"
+)
+
+const messageInput =
+document.getElementById(
+"messageInput"
+)
+
+const recordBtn =
+document.getElementById(
+"recordBtn"
+)
+
+let recording = false
+
+/* ===================================== */
+/* LOAD USER INFO */
+/* ===================================== */
+
 window.onload = function(){
 
   const userName =
   localStorage.getItem(
-    "chat_user_name"
+  "chat_user_name"
   )
 
   const userPicture =
   localStorage.getItem(
-    "chat_user_picture"
+  "chat_user_picture"
   )
 
   if(userName){
 
     document.querySelector(
-      ".username"
-    ).innerHTML = userName
+    ".username"
+    ).innerHTML =
+    userName
 
   }
 
   if(userPicture){
 
     document.querySelector(
-      ".profile"
-    ).src = userPicture
+    ".profile"
+    ).src =
+    userPicture
+
+  }
+
+  loadConversation()
+
+}
+
+/* ===================================== */
+/* SAVE MESSAGE */
+/* ===================================== */
+
+function saveMessage(
+content,
+type="text",
+side="sent"
+){
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+      "chat_" + userId
+    )
+  ) || []
+
+  messages.push({
+
+    content:content,
+
+    type:type,
+
+    side:side,
+
+    time:"Just now"
+
+  })
+
+  localStorage.setItem(
+
+    "chat_" + userId,
+
+    JSON.stringify(messages)
+
+  )
+
+}
+
+/* ===================================== */
+/* LOAD CONVERSATION */
+/* ===================================== */
+
+function loadConversation(){
+
+  chatArea.innerHTML = ""
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+      "chat_" + userId
+    )
+  ) || []
+
+  messages.forEach(msg=>{
+
+    const div =
+    document.createElement("div")
+
+    div.className =
+    "message " + msg.side
+
+    div.innerHTML = `
+
+      ${msg.content}
+
+      <div class="time">
+        ${msg.time}
+      </div>
+
+    `
+
+    chatArea.appendChild(div)
+
+  })
+
+  chatArea.scrollTop =
+  chatArea.scrollHeight
+
+}
+
+/* ===================================== */
+/* BACK */
+/* ===================================== */
+
+function goBack(){
+
+  history.back()
+
+}
+
+/* ===================================== */
+/* SETTINGS */
+/* ===================================== */
+
+function openSettings(){
+
+  window.location.href =
+  "profilesettings.html"
+
+}
+
+/* ===================================== */
+/* VIDEO CALL */
+/* ===================================== */
+
+function startVideoCall(){
+
+  alert(
+  "Starting video call 🎥"
+  )
+
+}
+
+/* ===================================== */
+/* AUDIO CALL */
+/* ===================================== */
+
+function startAudioCall(){
+
+  alert(
+  "Starting audio call 📞"
+  )
+
+}
+
+/* ===================================== */
+/* OPEN FILES */
+/* ===================================== */
+
+function openFiles(){
+
+  window.location.href =
+  "chatfile.html"
+
+}
+
+/* ===================================== */
+/* RECORDING */
+/* ===================================== */
+
+function toggleRecording(){
+
+  recording = !recording
+
+  if(recording){
+
+    recordBtn.classList.add(
+    "recording")
+
+    recordBtn.innerHTML =
+    "⏺"
+
+  }
+
+  else{
+
+    recordBtn.classList.remove(
+    "recording")
+
+    recordBtn.innerHTML =
+    '<img src="voice-call.png">'
 
   }
 
 }
+
+/* ===================================== */
+/* SEND MESSAGE */
+/* ===================================== */
+
+function sendMessage(){
+
+  const message =
+  messageInput.value.trim()
+
+  /* TEXT MESSAGE */
+
+  if(message !== ""){
+
+    saveMessage(
+      message,
+      "text",
+      "sent"
+    )
+
+    messageInput.value = ""
+
+    loadConversation()
+
+  }
+
+  /* VOICE MESSAGE */
+
+  if(recording){
+
+    saveMessage(
+
+      "🎤 Voice message",
+
+      "voice",
+
+      "sent"
+
+    )
+
+    recording = false
+
+    recordBtn.classList.remove(
+    "recording")
+
+    recordBtn.innerHTML =
+    '<img src="voice-call.png">'
+
+    loadConversation()
+
+  }
+
+}
+
+/* ===================================== */
+/* ENTER KEY */
+/* ===================================== */
+
+messageInput.addEventListener(
+"keypress",
+function(e){
+
+  if(e.key === "Enter"){
+
+    sendMessage()
+
+  }
+
+})
 
 </script>
 
