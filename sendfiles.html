@@ -9,7 +9,7 @@ initial-scale=1.0,
 maximum-scale=1.0,
 user-scalable=no">
 
-<title>MegaChat Share Panel</title>
+<title>MegaChat Share</title>
 
 <style>
 
@@ -25,28 +25,23 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#0f0f10;
+  background:white;
 }
 
-/* BACKGROUND */
+/* MAIN */
 
 .chat-bg{
+  position:relative;
+
   width:100%;
   height:100vh;
 
-  position:relative;
-
   overflow:hidden;
 
-  background:
-  linear-gradient(
-    180deg,
-    #18181b,
-    #0f0f10
-  );
+  background:white;
 }
 
-/* SIDE GLOW */
+/* SIDE GRADIENTS */
 
 .chat-bg::before,
 .chat-bg::after{
@@ -54,11 +49,10 @@ html,body{
   position:absolute;
   top:0;
 
-  width:120px;
+  width:4px;
   height:100%;
 
-  pointer-events:none;
-  z-index:0;
+  z-index:2;
 }
 
 .chat-bg::before{
@@ -66,8 +60,9 @@ html,body{
 
   background:
   linear-gradient(
-    90deg,
-    rgba(138,43,226,.18),
+    180deg,
+    transparent,
+    #1c1c1c,
     transparent
   );
 }
@@ -77,13 +72,14 @@ html,body{
 
   background:
   linear-gradient(
-    270deg,
-    rgba(192,132,252,.18),
+    180deg,
+    transparent,
+    #1c1c1c,
     transparent
   );
 }
 
-/* iOS BACKDROP */
+/* BACKDROP */
 
 .backdrop{
   position:fixed;
@@ -97,7 +93,7 @@ html,body{
 
   transition:.35s ease;
 
-  z-index:80;
+  z-index:90;
 
   pointer-events:none;
 }
@@ -105,24 +101,28 @@ html,body{
 .backdrop.active{
 
   background:
-  rgba(0,0,0,.34);
+  rgba(0,0,0,.18);
 
   backdrop-filter:
-  blur(10px);
+  blur(8px);
 }
 
 /* CHAT */
 
-.fake-chat{
-  position:relative;
-  z-index:2;
-
-  padding:
-  100px 16px 140px;
+.chat-container{
+  height:100vh;
 
   overflow-y:auto;
-  height:100vh;
+
+  padding:
+  24px 16px 120px;
+
+  position:relative;
+
+  z-index:1;
 }
+
+/* MESSAGE */
 
 .msg{
   max-width:74%;
@@ -143,8 +143,8 @@ html,body{
 }
 
 .left{
-  background:#1f1f23;
-  color:white;
+  background:#f3f4f6;
+  color:#111;
 
   border-bottom-left-radius:10px;
 }
@@ -164,97 +164,6 @@ html,body{
   border-bottom-right-radius:10px;
 }
 
-/* INPUT */
-
-.input-bar{
-  position:fixed;
-
-  left:16px;
-  right:16px;
-  bottom:20px;
-
-  height:64px;
-
-  background:
-  rgba(28,28,31,.96);
-
-  backdrop-filter:
-  blur(20px);
-
-  border-radius:26px;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 14px;
-
-  z-index:10;
-
-  box-shadow:
-  0 10px 30px rgba(0,0,0,.25);
-}
-
-/* PLUS */
-
-.plus-btn{
-  width:46px;
-  height:46px;
-
-  border-radius:18px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #8a2be2,
-    #c084fc
-  );
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  color:white;
-
-  font-size:30px;
-
-  transition:.2s ease;
-}
-
-.plus-btn:active{
-  transform:scale(.9);
-}
-
-/* INPUT */
-
-.input{
-  flex:1;
-
-  margin-left:14px;
-
-  color:#9ca3af;
-
-  font-size:15px;
-}
-
-/* SEND */
-
-.send-btn{
-  width:46px;
-  height:46px;
-
-  border-radius:18px;
-
-  background:#27272a;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  color:white;
-
-  font-size:20px;
-}
-
 /* PANEL */
 
 .send-panel{
@@ -267,12 +176,9 @@ html,body{
   height:88vh;
 
   background:
-  rgba(255,255,255,.94);
+  rgba(255,255,255,.96);
 
   backdrop-filter:
-  blur(30px);
-
-  -webkit-backdrop-filter:
   blur(30px);
 
   border-top-left-radius:34px;
@@ -286,17 +192,15 @@ html,body{
   overflow-y:auto;
 
   transform:
-  translateY(100%);
+  translateY(58%);
 
   transition:
   transform .38s cubic-bezier(.22,1,.36,1);
 
   touch-action:none;
 
-  will-change:transform;
-
   box-shadow:
-  0 -10px 40px rgba(0,0,0,.18);
+  0 -10px 40px rgba(0,0,0,.12);
 }
 
 /* HANDLE */
@@ -307,12 +211,9 @@ html,body{
 
   border-radius:999px;
 
-  background:#cfcfcf;
+  background:#d1d1d1;
 
   margin:0 auto 18px;
-
-  box-shadow:
-  0 2px 6px rgba(0,0,0,.08);
 }
 
 /* TOP */
@@ -347,8 +248,6 @@ html,body{
   align-items:center;
 
   font-size:20px;
-
-  color:#111;
 }
 
 /* GRID */
@@ -362,14 +261,12 @@ html,body{
   gap:22px 18px;
 }
 
-/* ITEMS */
+/* ITEM */
 
 .item{
   display:flex;
   flex-direction:column;
   align-items:center;
-
-  transition:.2s ease;
 }
 
 .item:active{
@@ -391,7 +288,7 @@ html,body{
   margin-bottom:12px;
 
   box-shadow:
-  0 12px 28px rgba(0,0,0,.08);
+  0 12px 28px rgba(0,0,0,.06);
 }
 
 .icon img{
@@ -401,42 +298,18 @@ html,body{
 
 /* COLORS */
 
-.photos{
-  background:#f3ebff;
-}
-
-.camera{
-  background:#ecfeff;
-}
-
-.video{
-  background:#ffeef1;
-}
-
+.photos{background:#f3ebff;}
+.camera{background:#ecfeff;}
+.video{background:#ffeef1;}
 .audio{
   background:#eafcf4;
   font-size:32px;
 }
-
-.files{
-  background:#eef4ff;
-}
-
-.apps{
-  background:#fff6e8;
-}
-
-.contact{
-  background:#f3f4f6;
-}
-
-.location{
-  background:#fef3c7;
-}
-
-.poll{
-  background:#ede9fe;
-}
+.files{background:#eef4ff;}
+.apps{background:#fff6e8;}
+.contact{background:#f3f4f6;}
+.location{background:#fef3c7;}
+.poll{background:#ede9fe;}
 
 /* TEXT */
 
@@ -444,51 +317,6 @@ html,body{
   font-size:13px;
   font-weight:700;
   color:#111827;
-}
-
-/* FOOTER */
-
-.footer{
-  margin-top:44px;
-
-  padding-bottom:20px;
-
-  display:flex;
-  justify-content:center;
-}
-
-.from-wrap{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.from{
-  font-size:10px;
-  letter-spacing:2px;
-  color:#9ca3af;
-
-  margin-bottom:8px;
-}
-
-.row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.logo{
-  width:26px;
-  height:26px;
-
-  border-radius:10px;
-}
-
-.lyno{
-  font-size:15px;
-  font-weight:900;
-
-  color:#8a2be2;
 }
 
 /* ANIMATION */
@@ -519,27 +347,8 @@ id="backdrop"></div>
 
 <!-- CHAT -->
 
-<div class="fake-chat"
+<div class="chat-container"
 id="chatContainer"></div>
-
-<!-- INPUT -->
-
-<div class="input-bar">
-
-<div class="plus-btn"
-onclick="togglePanel()">
-+
-</div>
-
-<div class="input">
-Message...
-</div>
-
-<div class="send-btn">
-➤
-</div>
-
-</div>
 
 </div>
 
@@ -557,7 +366,7 @@ Share
 </div>
 
 <div class="close"
-onclick="closePanel()">
+onclick="goBack()">
 ✕
 </div>
 
@@ -686,34 +495,9 @@ Poll
 
 </div>
 
-<!-- FOOTER -->
-
-<div class="footer">
-
-<div class="from-wrap">
-
-<div class="from">
-FROM
 </div>
 
-<div class="row">
-
-<img class="logo"
-src="logo.png">
-
-<div class="lyno">
-Lyno
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- FILE INPUTS -->
+<!-- INPUTS -->
 
 <input type="file"
 id="photoInput"
@@ -732,7 +516,6 @@ hidden>
 
 <input type="file"
 id="fileInput"
-accept=".pdf,.doc,.docx,.txt,.zip,.rar"
 hidden>
 
 <input type="file"
@@ -753,21 +536,21 @@ hidden>
 
 <script>
 
-/* USER ID */
+/* CURRENT USER */
 
 const userId =
 localStorage.getItem(
 "opened_user_id"
-) || "default_user"
+)
 
-/* CHAT CONTAINER */
+/* CHAT */
 
 const chatContainer =
 document.getElementById(
 "chatContainer"
 )
 
-/* LOAD USER CONVERSATION */
+/* LOAD CONVERSATION */
 
 function loadConversation(){
 
@@ -797,7 +580,7 @@ function loadConversation(){
 
 }
 
-/* SAVE MESSAGE */
+/* SAVE */
 
 function saveMessage(
 content,
@@ -844,53 +627,11 @@ const SNAP_MID = 58
 const SNAP_BOTTOM = 100
 
 let currentSnap =
-SNAP_BOTTOM
+SNAP_MID
 
 let startY = 0
 let currentY = 0
-
 let dragging = false
-
-/* OPEN PANEL */
-
-function togglePanel(){
-
-  if(currentSnap ===
-  SNAP_BOTTOM){
-
-    currentSnap =
-    SNAP_MID
-
-    setPanel(
-    SNAP_MID)
-
-    backdrop.classList
-    .add("active")
-
-  }
-
-  else{
-
-    closePanel()
-
-  }
-
-}
-
-/* CLOSE */
-
-function closePanel(){
-
-  currentSnap =
-  SNAP_BOTTOM
-
-  setPanel(
-  SNAP_BOTTOM)
-
-  backdrop.classList
-  .remove("active")
-
-}
 
 /* POSITION */
 
@@ -901,7 +642,14 @@ function setPanel(percent){
 
 }
 
-/* DRAG START */
+/* START */
+
+setPanel(SNAP_MID)
+
+backdrop.classList
+.add("active")
+
+/* DRAG */
 
 panel.addEventListener(
 "touchstart",
@@ -910,12 +658,9 @@ e=>{
   dragging = true
 
   startY =
-  e.touches[0]
-  .clientY
+  e.touches[0].clientY
 
 })
-
-/* DRAG MOVE */
 
 panel.addEventListener(
 "touchmove",
@@ -924,8 +669,7 @@ e=>{
   if(!dragging) return
 
   currentY =
-  e.touches[0]
-  .clientY
+  e.touches[0].clientY
 
   let diff =
   currentY - startY
@@ -954,8 +698,6 @@ e=>{
   `translateY(${next}%)`
 
 })
-
-/* DRAG END */
 
 panel.addEventListener(
 "touchend",
@@ -996,9 +738,6 @@ panel.addEventListener(
     currentSnap =
     SNAP_TOP
 
-    backdrop.classList
-    .add("active")
-
   }
 
   else if(percent < 78){
@@ -1006,18 +745,11 @@ panel.addEventListener(
     currentSnap =
     SNAP_MID
 
-    backdrop.classList
-    .add("active")
-
   }
 
   else{
 
-    currentSnap =
-    SNAP_BOTTOM
-
-    backdrop.classList
-    .remove("active")
+    goBack()
 
   }
 
@@ -1025,7 +757,15 @@ panel.addEventListener(
 
 })
 
-/* PREVIEW + SEND */
+/* BACK */
+
+function goBack(){
+
+  history.back()
+
+}
+
+/* SEND */
 
 function previewAndSend(
 file,
@@ -1109,7 +849,7 @@ type
 
     loadConversation()
 
-    closePanel()
+    goBack()
 
   }
 
@@ -1177,7 +917,7 @@ function openPoll(){
 
     loadConversation()
 
-    closePanel()
+    goBack()
 
   }
 
