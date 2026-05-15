@@ -1507,6 +1507,150 @@ function sendPoll(){
 
   `
 
+  /* GET CURRENT USER */
+
+  const userId =
+  localStorage.getItem(
+  "opened_user_id"
+  )
+
+  /* LOAD CHAT */
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+      "chat_" + userId
+    )
+  ) || []
+
+  /* PUSH POLL */
+
+  messages.push({
+
+    content: pollHTML,
+
+    side: "right"
+
+  })
+
+  /* SAVE */
+
+  localStorage.setItem(
+
+    "chat_" + userId,
+
+    JSON.stringify(messages)
+
+  )
+
+  /* CLOSE */
+
+  closePoll()
+
+  /* REFRESH CHAT */
+
+  loadConversation()
+
+}
+
+  let pollHTML = `
+
+  <div style="
+  background:white;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:
+  0 6px 18px rgba(0,0,0,.06);
+  ">
+
+  <div style="
+  font-size:16px;
+  font-weight:800;
+  color:#111;
+  margin-bottom:14px;
+  ">
+  📊 ${question}
+  </div>
+
+  `
+
+  const options = [
+    option1,
+    option2,
+    option3,
+    option4
+  ]
+
+  options.forEach(option=>{
+
+    if(option !== ""){
+
+      pollHTML += `
+
+      <div style="
+      background:#f3f4f6;
+      border-radius:18px;
+      padding:14px 16px;
+      margin-bottom:10px;
+
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      font-weight:700;
+      color:#111;
+      ">
+
+      <span>
+      ${option}
+      </span>
+
+      <span style="
+      color:#8a2be2;
+      font-size:13px;
+      ">
+      0%
+      </span>
+
+      </div>
+
+      `
+
+    }
+
+  })
+
+  pollHTML += `
+
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+  ">
+
+  <img
+  src="logo.png"
+  style="
+  width:20px;
+  height:20px;
+  border-radius:8px;
+  ">
+
+  <div style="
+  font-size:12px;
+  font-weight:800;
+  color:#8a2be2;
+  ">
+  Lyno Poll
+  </div>
+
+  </div>
+
+  </div>
+
+  `
+
   /* SAVE TO USER CHAT */
 
   saveMessage(
