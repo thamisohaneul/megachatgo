@@ -742,5 +742,390 @@ e=>{
 
 </script>
 
+<input
+type="file"
+id="photoInput"
+accept="image/*"
+style="display:none">
+
+<input
+type="file"
+id="videoInput"
+accept="video/*"
+style="display:none">
+
+<input
+type="file"
+id="audioInput"
+accept="audio/*"
+style="display:none">
+
+<input
+type="file"
+id="fileInput"
+accept=".pdf,.doc,.docx,.txt,.zip,.rar"
+style="display:none">
+
+<input
+type="file"
+id="appInput"
+accept=".apk"
+style="display:none">
+
+<input
+type="file"
+id="contactInput"
+accept=".vcf"
+style="display:none">
+
+<input
+type="file"
+id="cameraInput"
+accept="image/*"
+capture="environment"
+style="display:none">
+
+<script>
+
+/* GO BACK */
+
+function closePanel(){
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* PREVIEW + SEND */
+
+function previewAndSend(file,type){
+
+  if(!file) return
+
+  const reader = new FileReader()
+
+  reader.onload = function(e){
+
+    let preview = ""
+
+    /* IMAGE */
+
+    if(type === "photo" ||
+       type === "camera"){
+
+      preview = `
+      <img
+      src="${e.target.result}"
+      style="
+      width:100%;
+      border-radius:20px;
+      margin-top:10px;
+      ">
+      `
+
+    }
+
+    /* VIDEO */
+
+    else if(type === "video"){
+
+      preview = `
+      <video
+      controls
+      style="
+      width:100%;
+      border-radius:20px;
+      margin-top:10px;
+      ">
+      <source src="${e.target.result}">
+      </video>
+      `
+
+    }
+
+    /* AUDIO */
+
+    else if(type === "audio"){
+
+      preview = `
+      <audio
+      controls
+      style="
+      width:100%;
+      margin-top:12px;
+      ">
+      <source src="${e.target.result}">
+      </audio>
+      `
+
+    }
+
+    else{
+
+      preview = `
+      <div style="
+      margin-top:12px;
+      font-size:15px;
+      font-weight:700;
+      ">
+      📄 ${file.name}
+      </div>
+      `
+
+    }
+
+    /* SEND CONFIRM */
+
+    const sendNow =
+    confirm(
+      "Preview ready.\nTap OK to send."
+    )
+
+    if(sendNow){
+
+      localStorage.setItem(
+        "last_sent_file",
+        e.target.result
+      )
+
+      localStorage.setItem(
+        "last_sent_type",
+        type
+      )
+
+      localStorage.setItem(
+        "last_sent_name",
+        file.name
+      )
+
+      alert("Sent successfully 🚀")
+
+      window.location.href =
+      "chatroom.html"
+
+    }
+
+  }
+
+  reader.readAsDataURL(file)
+
+}
+
+/* PHOTOS */
+
+function openPhotos(){
+
+  document
+  .getElementById(
+  "photoInput")
+  .click()
+
+}
+
+/* CAMERA */
+
+function openCamera(){
+
+  document
+  .getElementById(
+  "cameraInput")
+  .click()
+
+}
+
+/* VIDEOS */
+
+function openVideos(){
+
+  document
+  .getElementById(
+  "videoInput")
+  .click()
+
+}
+
+/* AUDIO */
+
+function openAudio(){
+
+  document
+  .getElementById(
+  "audioInput")
+  .click()
+
+}
+
+/* FILES */
+
+function openFiles(){
+
+  document
+  .getElementById(
+  "fileInput")
+  .click()
+
+}
+
+/* APPS */
+
+function openApps(){
+
+  document
+  .getElementById(
+  "appInput")
+  .click()
+
+}
+
+/* CONTACTS */
+
+function openContacts(){
+
+  document
+  .getElementById(
+  "contactInput")
+  .click()
+
+}
+
+/* LOCATION */
+
+function openLocation(){
+
+  window.open(
+    "https://maps.google.com",
+    "_blank"
+  )
+
+}
+
+/* POLL */
+
+function openPoll(){
+
+  const question =
+  prompt(
+    "Enter poll question"
+  )
+
+  if(question){
+
+    localStorage.setItem(
+      "poll_question",
+      question
+    )
+
+    alert(
+      "Poll created 📊"
+    )
+
+    window.location.href =
+    "chatroom.html"
+
+  }
+
+}
+
+/* INPUT EVENTS */
+
+document
+.getElementById(
+"photoInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "photo"
+  )
+
+})
+
+document
+.getElementById(
+"cameraInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "camera"
+  )
+
+})
+
+document
+.getElementById(
+"videoInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "video"
+  )
+
+})
+
+document
+.getElementById(
+"audioInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "audio"
+  )
+
+})
+
+document
+.getElementById(
+"fileInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "file"
+  )
+
+})
+
+document
+.getElementById(
+"appInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "app"
+  )
+
+})
+
+document
+.getElementById(
+"contactInput")
+.addEventListener(
+"change",
+e=>{
+
+  previewAndSend(
+    e.target.files[0],
+    "contact"
+  )
+
+})
+
+</script>
 </body>
 </html>
