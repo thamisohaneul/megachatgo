@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>MegaChat Send Panel</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#0f0f10;
+  overflow:hidden;
+}
+
+/* CHAT BACKGROUND */
+
+.chat-bg{
+  width:100%;
+  height:100vh;
+
+  background:
+  linear-gradient(
+    180deg,
+    #151515,
+    #0f0f10
+  );
+
+  position:relative;
+}
+
+/* FAKE CHAT */
+
+.fake-chat{
+  padding:100px 16px 120px;
+}
+
+.msg{
+  max-width:72%;
+
+  padding:14px 16px;
+
+  border-radius:22px;
+
+  margin-bottom:14px;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  animation:fade .3s ease;
+}
+
+.left{
+  background:#1c1c1f;
+  color:white;
+
+  border-bottom-left-radius:8px;
+}
+
+.right{
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  color:white;
+
+  margin-left:auto;
+
+  border-bottom-right-radius:8px;
+}
+
+/* INPUT BAR */
+
+.input-bar{
+  position:fixed;
+  bottom:20px;
+  left:16px;
+  right:16px;
+
+  height:62px;
+
+  background:#1c1c1f;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 14px;
+
+  z-index:5;
+}
+
+/* PLUS */
+
+.plus-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:linear-gradient(
+    135deg,
+    #8a2be2,
+    #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:30px;
+
+  transition:.25s ease;
+}
+
+/* INPUT */
+
+.input{
+  flex:1;
+
+  margin-left:14px;
+
+  color:#999;
+
+  font-size:15px;
+}
+
+/* SEND */
+
+.send-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#27272a;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  font-size:20px;
+}
+
+/* SEND PANEL */
+
+.send-panel{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:52vh;
+
+  background:rgba(255,255,255,.97);
+
+  backdrop-filter:blur(18px);
+
+  border-top-left-radius:34px;
+  border-top-right-radius:34px;
+
+  padding:18px 18px 40px;
+
+  z-index:100;
+
+  overflow-y:auto;
+
+  transition:.35s ease;
+}
+
+/* FULL PANEL */
+
+.send-panel.full{
+  height:100vh;
+
+  border-radius:0;
+}
+
+/* HANDLE */
+
+.handle{
+  width:62px;
+  height:6px;
+
+  border-radius:10px;
+
+  background:#d1d1d1;
+
+  margin:0 auto 20px;
+}
+
+/* TOP */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:24px;
+}
+
+/* TITLE */
+
+.title{
+  font-size:28px;
+  font-weight:900;
+
+  letter-spacing:-1px;
+}
+
+/* CLOSE */
+
+.close{
+  width:46px;
+  height:46px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.25s ease;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+
+  grid-template-columns:
+  repeat(3,1fr);
+
+  gap:18px;
+}
+
+/* ITEM */
+
+.item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  transition:.25s ease;
+}
+
+/* ICON */
+
+.icon{
+  width:72px;
+  height:72px;
+
+  border-radius:28px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:34px;
+
+  margin-bottom:12px;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.06);
+}
+
+/* COLORS */
+
+.photos{
+  background:#f3ebff;
+  color:#8a2be2;
+}
+
+.camera{
+  background:#ecfeff;
+  color:#06b6d4;
+}
+
+.video{
+  background:#ffeef1;
+  color:#ff4d6d;
+}
+
+.audio{
+  background:#eafcf4;
+  color:#10b981;
+}
+
+.files{
+  background:#eef4ff;
+  color:#2563eb;
+}
+
+.apps{
+  background:#fff6e8;
+  color:#f59e0b;
+}
+
+.contact{
+  background:#f3f4f6;
+  color:#111;
+}
+
+.location{
+  background:#fef3c7;
+  color:#d97706;
+}
+
+.poll{
+  background:#ede9fe;
+  color:#7c3aed;
+}
+
+/* TEXT */
+
+.text{
+  font-size:13px;
+  font-weight:700;
+
+  color:#222;
+}
+
+/* FOOTER */
+
+.footer{
+  margin-top:34px;
+
+  display:flex;
+  justify-content:center;
+}
+
+/* FROM */
+
+.from-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.from{
+  font-size:10px;
+
+  letter-spacing:2px;
+
+  color:#999;
+
+  margin-bottom:6px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+
+  gap:8px;
+}
+
+.logo{
+  width:24px;
+  height:24px;
+
+  border-radius:9px;
+
+  object-fit:cover;
+}
+
+.lyno{
+  font-size:14px;
+  font-weight:900;
+
+  color:#8a2be2;
+}
+
+/* ACTIVE */
+
+.item:active,
+.plus-btn:active,
+.close:active{
+  transform:scale(.92);
+}
+
+/* ANIMATION */
+
+@keyframes fade{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chat-bg">
+
+  <!-- FAKE CHAT -->
+
+  <div class="fake-chat">
+
+    <div class="msg left">
+      Hey 👋 send me the files.
+    </div>
+
+    <div class="msg right">
+      Sure, sending now 🚀
+    </div>
+
+  </div>
+
+  <!-- INPUT -->
+
+  <div class="input-bar">
+
+    <div
+    class="plus-btn"
+    onclick="togglePanel()">
+      +
+    </div>
+
+    <div class="input">
+      Message...
+    </div>
+
+    <div class="send-btn">
+      ➤
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SEND PANEL -->
+
+<div
+class="send-panel"
+id="panel">
+
+  <div class="handle"></div>
+
+  <!-- TOP -->
+
+  <div class="top">
+
+    <div class="title">
+      Share
+    </div>
+
+    <div
+    class="close"
+    onclick="closePanel()">
+      ✕
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+
+  <div class="grid">
+
+    <!-- PHOTO -->
+
+    <div
+    class="item"
+    onclick="openItem('Photos 🖼')">
+
+      <div class="icon photos"><img src="photo.png"></a>
+      </div>
+
+      <div class="text">
+        Photos
+      </div>
+
+    </div>
+
+    <!-- CAMERA -->
+
+    <div
+    class="item"
+    onclick="openItem('Camera 📷')">
+
+      <div class="icon camera"><img src="camera.png"></a>
+      </div>
+
+      <div class="text">
+        Camera
+      </div>
+
+    </div>
+
+    <!-- VIDEO -->
+
+    <div
+    class="item"
+    onclick="openItem('Videos 🎥')">
+
+      <div class="icon video"><img src="video.png"></a>
+      </div>
+
+      <div class="text">
+        Videos
+      </div>
+
+    </div>
+
+    <!-- AUDIO -->
+
+    <div
+    class="item"
+    onclick="openItem('Audio 🎵')">
+
+      <div class="icon audio">
+        🎵
+      </div>
+
+      <div class="text">
+        Audio
+      </div>
+
+    </div>
+
+    <!-- FILES -->
+
+    <div
+    class="item"
+    onclick="openItem('Files 📄')">
+
+      <div class="icon files"><img src="file.png"></a>
+      </div>
+
+      <div class="text">
+        Files
+      </div>
+
+    </div>
+
+    <!-- APPS -->
+
+    <div
+    class="item"
+    onclick="openItem('Apps 📦')">
+
+      <div class="icon apps"><img src="app.png"></a>
+      </div>
+
+      <div class="text">
+        Apps
+      </div>
+
+    </div>
+
+    <!-- CONTACT -->
+
+    <div
+    class="item"
+    onclick="openItem('Contacts 👤')">
+
+      <div class="icon contact"><img src="contact.png"></a>
+      </div>
+
+      <div class="text">
+        Contact
+      </div>
+
+    </div>
+
+    <!-- LOCATION -->
+
+    <div
+    class="item"
+    onclick="openItem('Location 📍')">
+
+      <div class="icon location"><img src="location.png"></a>
+      </div>
+
+      <div class="text">
+        Location
+      </div>
+
+    </div>
+
+    <!-- POLL -->
+
+    <div
+    class="item"
+    onclick="openItem('Poll 📊')">
+
+      <div class="icon poll"><img src="poll.png"></a>
+      </div>
+
+      <div class="text">
+        Poll
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <div class="footer">
+
+    <div class="from-wrap">
+
+      <div class="from">
+        FROM
+      </div>
+
+      <div class="row">
+
+        <img
+        class="logo"
+        src="logo.png">
+
+        <div class="lyno">
+          Lyno
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* PANEL */
+
+const panel =
+document.getElementById("panel")
+
+let expanded = false
+
+/* TOGGLE */
+
+function togglePanel(){
+
+  if(expanded){
+
+    panel.classList.remove("full")
+
+    expanded = false
+
+  }
+
+  else{
+
+    panel.classList.add("full")
+
+    expanded = true
+
+  }
+
+}
+
+/* CLOSE */
+
+function closePanel(){
+
+  panel.style.transform =
+  "translateY(100%)"
+
+  setTimeout(()=>{
+
+    panel.style.transform =
+    "translateY(0)"
+
+  },300)
+
+}
+
+/* OPEN ITEMS */
+
+function openItem(name){
+
+  alert("Opening " + name)
+
+}
+
+/* DRAG */
+
+let startY = 0
+
+panel.addEventListener(
+"touchstart",
+e=>{
+
+  startY =
+  e.touches[0].clientY
+
+})
+
+panel.addEventListener(
+"touchmove",
+e=>{
+
+  let moveY =
+  e.touches[0].clientY
+
+  let diff =
+  startY - moveY
+
+  if(diff > 80){
+
+    panel.classList.add("full")
+
+    expanded = true
+
+  }
+
+})
+
+</script>
+
+</body>
+</html>
