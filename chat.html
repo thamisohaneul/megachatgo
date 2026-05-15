@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>MegaChat Chats</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:88px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+/* TITLE */
+
+.title{
+  font-size:30px;
+  font-weight:900;
+}
+
+/* HEADER SETTINGS */
+
+.header-settings{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.25s ease;
+}
+
+.header-settings img{
+  width:24px;
+  height:24px;
+}
+
+.header-settings:active{
+  transform:scale(.96);
+}
+
+/* CONTENT */
+
+.content{
+  padding:108px 18px 130px;
+}
+
+/* SEARCH */
+
+.search-box{
+  background:white;
+
+  height:62px;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+
+  margin-bottom:24px;
+}
+
+.search-icon{
+  font-size:22px;
+  color:#8a2be2;
+}
+
+.search-box input{
+  flex:1;
+
+  border:none;
+  outline:none;
+
+  background:transparent;
+
+  margin-left:12px;
+
+  font-size:15px;
+}
+
+/* ACTIVE USERS */
+
+.active-users{
+  display:flex;
+  gap:16px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+
+  padding-bottom:6px;
+}
+
+.active-users::-webkit-scrollbar{
+  display:none;
+}
+
+/* USER */
+
+.user{
+  min-width:78px;
+
+  text-align:center;
+
+  transition:.25s ease;
+}
+
+/* RING */
+
+.user-ring{
+  width:78px;
+  height:78px;
+
+  border-radius:26px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc,
+  #d8b4fe
+  );
+
+  padding:3px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,.18);
+}
+
+/* INNER */
+
+.user-inner{
+  width:100%;
+  height:100%;
+
+  border-radius:24px;
+
+  background:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* IMAGE */
+
+.user-inner img{
+  width:64px;
+  height:64px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+}
+
+/* NAME */
+
+.user p{
+  margin-top:8px;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* CHAT LIST */
+
+.chat-list{
+  margin-top:26px;
+}
+
+/* CHAT ITEM */
+
+.chat-item{
+  background:white;
+
+  border-radius:30px;
+
+  padding:16px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:16px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+
+  transition:.25s ease;
+}
+
+.chat-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.chat-left img{
+  width:66px;
+  height:66px;
+
+  border-radius:22px;
+
+  object-fit:cover;
+}
+
+.chat-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.username{
+  font-size:16px;
+  font-weight:800;
+}
+
+.message{
+  margin-top:6px;
+
+  font-size:13px;
+
+  color:#777;
+}
+
+.chat-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+}
+
+.time{
+  font-size:12px;
+  color:#888;
+}
+
+.badge{
+  margin-top:10px;
+
+  min-width:24px;
+  height:24px;
+
+  padding:0 8px;
+
+  border-radius:50px;
+
+  background:#8a2be2;
+
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+/* LYNO FLOAT BUTTON */
+
+.lyno-float{
+  position:fixed;
+
+  right:18px;
+  bottom:105px;
+
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  padding:3px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  box-shadow:
+  0 12px 30px rgba(138,43,226,.35);
+
+  z-index:200;
+
+  transition:.25s ease;
+}
+
+.lyno-float img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  border-radius:50%;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:84px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.25s ease;
+}
+
+.nav-item img{
+  width:24px;
+  height:24px;
+}
+
+/* ACTIVE */
+
+.active{
+  background:#f3e8ff;
+}
+
+/* TAP */
+
+.user:active,
+.chat-item:active,
+.lyno-float:active,
+.nav-item:active{
+  transform:scale(.96);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="title">
+    Chats
+  </div>
+
+  <!-- SETTINGS -->
+
+  <div
+  class="header-settings"
+  onclick="openChatSettings()">
+
+    <img src="edit.png">
+
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- SEARCH -->
+
+  <div class="search-box">
+
+    <div class="search-icon">
+      🔍
+    </div>
+
+    <input
+    type="text"
+    placeholder="Ask Lyno AI or Search">
+
+  </div>
+
+  <!-- ACTIVE USERS -->
+
+  <div class="active-users">
+
+    <!-- YOU -->
+
+    <div
+    class="user"
+    onclick="openChat(
+    'You',
+    'https://i.pravatar.cc/150?img=1',
+    'you_001'
+    )">
+
+      <div class="user-ring">
+
+        <div class="user-inner">
+
+          <img src="https://i.pravatar.cc/150?img=1">
+
+        </div>
+
+      </div>
+
+      <p>You</p>
+
+    </div>
+
+    <!-- ALEX -->
+
+    <div
+    class="user"
+    onclick="openChat(
+    'Alex Morgan',
+    'https://i.pravatar.cc/150?img=2',
+    'alex_001'
+    )">
+
+      <div class="user-ring">
+
+        <div class="user-inner">
+
+          <img src="https://i.pravatar.cc/150?img=2">
+
+        </div>
+
+      </div>
+
+      <p>Alex</p>
+
+    </div>
+
+    <!-- SARAH -->
+
+    <div
+    class="user"
+    onclick="openChat(
+    'Sarah Lee',
+    'https://i.pravatar.cc/150?img=3',
+    'sarah_001'
+    )">
+
+      <div class="user-ring">
+
+        <div class="user-inner">
+
+          <img src="https://i.pravatar.cc/150?img=3">
+
+        </div>
+
+      </div>
+
+      <p>Sarah</p>
+
+    </div>
+
+    <!-- CHRIS -->
+
+    <div
+    class="user"
+    onclick="openChat(
+    'Chris Noah',
+    'https://i.pravatar.cc/150?img=4',
+    'chris_001'
+    )">
+
+      <div class="user-ring">
+
+        <div class="user-inner">
+
+          <img src="https://i.pravatar.cc/150?img=4">
+
+        </div>
+
+      </div>
+
+      <p>Chris</p>
+
+    </div>
+
+    <!-- EMMA -->
+
+    <div
+    class="user"
+    onclick="openChat(
+    'Emma Stone',
+    'https://i.pravatar.cc/150?img=5',
+    'emma_001'
+    )">
+
+      <div class="user-ring">
+
+        <div class="user-inner">
+
+          <img src="https://i.pravatar.cc/150?img=5">
+
+        </div>
+
+      </div>
+
+      <p>Emma</p>
+
+    </div>
+
+  </div>
+
+  <!-- CHAT LIST -->
+
+  <div class="chat-list">
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat(
+    'Alex Morgan',
+    'https://i.pravatar.cc/150?img=2',
+    'alex_001'
+    )">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=2">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Alex Morgan
+          </div>
+
+          <div class="message">
+            Hey, are you coming today?
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          2m ago
+        </div>
+
+        <div class="badge">
+          2
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat(
+    'Sarah Lee',
+    'https://i.pravatar.cc/150?img=3',
+    'sarah_001'
+    )">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=3">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Sarah Lee
+          </div>
+
+          <div class="message">
+            Your post looks amazing 🔥
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          9m ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div
+    class="chat-item"
+    onclick="openChat(
+    'Chris Noah',
+    'https://i.pravatar.cc/150?img=4',
+    'chris_001'
+    )">
+
+      <div class="chat-left">
+
+        <img src="https://i.pravatar.cc/150?img=4">
+
+        <div class="chat-info">
+
+          <div class="username">
+            Chris Noah
+          </div>
+
+          <div class="message">
+            Let's build something huge 🚀
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          1h ago
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FLOATING LYNO AI BUTTON -->
+
+<div
+class="lyno-float"
+onclick="openLynoAI()">
+
+  <img src="logo.png">
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <!-- HOME -->
+
+  <div
+  class="nav-item"
+  onclick="goHome()">
+
+    <img src="home.png">
+
+  </div>
+
+  <!-- CHAT -->
+
+  <div
+  class="nav-item active"
+  onclick="goChats()">
+
+    <img src="chat.png">
+
+  </div>
+
+  <!-- CREATE -->
+
+  <div
+  class="nav-item"
+  onclick="goCreate()">
+
+    <img src="add.png">
+
+  </div>
+
+  <!-- VIDEO -->
+
+  <div
+  class="nav-item"
+  onclick="goBuzz()">
+
+    <img src="buzz.png">
+
+  </div>
+
+  <!-- PROFILE -->
+
+  <div
+  class="nav-item"
+  onclick="goProfile()">
+
+    <img src="profile.png">
+
+  </div>
+
+</div>
+
+<script>
+
+/* NORMAL CHAT */
+
+function openChat(
+name,
+picture,
+id
+){
+
+  localStorage.setItem(
+  "chat_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  id
+  )
+
+  localStorage.setItem(
+  "is_lyno_ai",
+  "false"
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* LYNO AI CHAT */
+
+function openLynoAI(){
+
+  localStorage.setItem(
+  "chat_user_name",
+  "Lyno AI"
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  "logo.png"
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  "lyno_ai"
+  )
+
+  localStorage.setItem(
+  "is_lyno_ai",
+  "true"
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* CHAT SETTINGS */
+
+function openChatSettings(){
+
+  window.location.href =
+  "chatsettings.html"
+
+}
+
+/* NAVIGATION */
+
+function goHome(){
+
+  window.location.href =
+  "home.html"
+
+}
+
+function goChats(){
+
+  window.location.href =
+  "chat.html"
+
+}
+
+function goCreate(){
+
+  window.location.href =
+  "createchat.html"
+
+}
+
+function goBuzz(){
+
+  window.location.href =
+  "buzz.html"
+
+}
+
+function goProfile(){
+
+  window.location.href =
+  "settings.html"
+
+}
+
+</script>
+
+</body>
+</html>
