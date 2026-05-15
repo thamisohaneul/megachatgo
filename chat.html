@@ -591,6 +591,44 @@ body{
   </div>
 
   <!-- CHAT LIST -->
+  
+  <!-- USER ITEM IN chat.html -->
+
+<div class="chat-user"
+onclick="openChat('Mega Creator','https://i.pravatar.cc/150?img=5')">
+
+  <img
+  src="https://i.pravatar.cc/150?img=5"
+  class="user-pic">
+
+  <div class="user-name">
+    Mega Creator
+  </div>
+
+</div>
+
+<script>
+
+/* OPEN USER CHATROOM */
+
+function openChat(name,picture){
+
+  localStorage.setItem(
+    "chat_user_name",
+    name
+  )
+
+  localStorage.setItem(
+    "chat_user_picture",
+    picture
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+</script>
 
   <div class="chat-list">
 
@@ -803,6 +841,27 @@ window.openChat = function(userId) {
   window.location.href = `chat.html?with=${userId}`
 }
 </script>
+<script>
 
+/* OPEN USER CHATROOM */
+
+function openChat(name,picture){
+
+  localStorage.setItem(
+    "chat_user_name",
+    name
+  )
+
+  localStorage.setItem(
+    "chat_user_picture",
+    picture
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+</script>
 </body>
 </html>
