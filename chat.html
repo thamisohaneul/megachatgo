@@ -857,5 +857,38 @@ function openChat(name,picture){
 }
 
 </script>
+  <script>
+
+function openChat(
+name,
+picture,
+id
+){
+
+  /* SAVE USER */
+
+  localStorage.setItem(
+  "chat_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  id
+  )
+
+  /* OPEN CHATROOM */
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+</script>
 </body>
 </html>
