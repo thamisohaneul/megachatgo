@@ -691,6 +691,30 @@ function(e){
 })
 
 </script>
+<script>
 
+window.onload = function(){
+
+  const userName =
+  localStorage.getItem(
+    "chat_user_name"
+  )
+
+  const userPicture =
+  localStorage.getItem(
+    "chat_user_picture"
+  )
+
+  document.querySelector(
+    ".username"
+  ).innerHTML = userName
+
+  document.querySelector(
+    ".profile"
+  ).src = userPicture
+
+}
+
+</script>
 </body>
 </html>
