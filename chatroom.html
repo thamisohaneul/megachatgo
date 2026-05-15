@@ -1000,6 +1000,464 @@ function(e){
 })
 
 </script>
+<script>
 
+/* ===================================== */
+/* USER ID */
+/* ===================================== */
+
+const userId =
+localStorage.getItem(
+"opened_user_id"
+) || "default_user"
+
+/* ===================================== */
+/* ELEMENTS */
+/* ===================================== */
+
+const chatArea =
+document.getElementById(
+"chatArea"
+)
+
+const messageInput =
+document.getElementById(
+"messageInput"
+)
+
+const recordBtn =
+document.getElementById(
+"recordBtn"
+)
+
+let recording = false
+
+/* ===================================== */
+/* LOAD USER */
+/* ===================================== */
+
+window.onload = function(){
+
+  const userName =
+  localStorage.getItem(
+  "chat_user_name"
+  )
+
+  const userPicture =
+  localStorage.getItem(
+  "chat_user_picture"
+  )
+
+  if(userName){
+
+    document.querySelector(
+    ".username"
+    ).innerHTML =
+    userName
+
+  }
+
+  if(userPicture){
+
+    document.querySelector(
+    ".profile"
+    ).src =
+    userPicture
+
+  }
+
+  loadConversation()
+
+}
+
+/* ===================================== */
+/* SAVE MESSAGE */
+/* ===================================== */
+
+function saveMessage(
+content,
+type="text",
+side="sent"
+){
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+      "chat_" + userId
+    )
+  ) || []
+
+  messages.push({
+
+    content:content,
+
+    type:type,
+
+    side:side,
+
+    time:new Date().toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+
+  })
+
+  localStorage.setItem(
+
+    "chat_" + userId,
+
+    JSON.stringify(messages)
+
+  )
+
+}
+
+/* ===================================== */
+/* LOAD CHAT */
+/* ===================================== */
+
+function loadConversation(){
+
+  chatArea.innerHTML = ""
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+      "chat_" + userId
+    )
+  ) || []
+
+  messages.forEach(msg=>{
+
+    const div =
+    document.createElement("div")
+
+    div.className =
+    "message " + msg.side
+
+    /* NORMAL MESSAGE */
+
+    if(msg.type === "text" ||
+       msg.type === "voice"){
+
+      div.innerHTML = `
+
+        ${msg.content}
+
+        <div class="time">
+          ${msg.time}
+        </div>
+
+      `
+
+    }
+
+    /* POLL MESSAGE */
+
+    if(msg.type === "poll"){
+
+      div.innerHTML = `
+
+      <div style="
+      font-weight:800;
+      margin-bottom:12px;
+      ">
+      📊 ${msg.question}
+      </div>
+
+      ${msg.options.map((option,index)=>`
+
+      <div
+      onclick="votePoll(${msg.id},${index})"
+
+      style="
+      padding:12px;
+      background:#f3f3f3;
+      border-radius:14px;
+      margin-bottom:10px;
+      cursor:pointer;
+      ">
+
+      ${option.text}
+
+      <div style="
+      margin-top:6px;
+      font-size:12px;
+      color:#777;
+      ">
+      ${option.votes} votes
+      </div>
+
+      </div>
+
+      `).join("")}
+
+      <div class="time">
+      ${msg.time}
+      </div>
+
+      `
+
+    }
+
+    chatArea.appendChild(div)
+
+  })
+
+  chatArea.scrollTop =
+  chatArea.scrollHeight
+
+}
+
+/* ===================================== */
+/* SEND MESSAGE */
+/* ===================================== */
+
+function sendMessage(){
+
+  const message =
+  messageInput.value.trim()
+
+  if(message !== ""){
+
+    saveMessage(
+      message,
+      "text",
+      "sent"
+    )
+
+    messageInput.value = ""
+
+    loadConversation()
+
+  }
+
+  if(recording){
+
+    saveMessage(
+
+      "🎤 Voice Message",
+
+      "voice",
+
+      "sent"
+
+    )
+
+    recording = false
+
+    recordBtn.classList.remove(
+    "recording"
+    )
+
+    recordBtn.innerHTML =
+    '<img src="voice-call.png">'
+
+    loadConversation()
+
+  }
+
+}
+
+/* ===================================== */
+/* CREATE POLL */
+/* ===================================== */
+
+function createPoll(){
+
+  const question =
+  prompt(
+  "Enter poll question"
+  )
+
+  if(!question) return
+
+  const option1 =
+  prompt("Option 1")
+
+  if(!option1) return
+
+  const option2 =
+  prompt("Option 2")
+
+  if(!option2) return
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+    "chat_" + userId
+    )
+  ) || []
+
+  messages.push({
+
+    id:Date.now(),
+
+    type:"poll",
+
+    side:"sent",
+
+    question:question,
+
+    options:[
+
+      {
+        text:option1,
+        votes:0
+      },
+
+      {
+        text:option2,
+        votes:0
+      }
+
+    ],
+
+    time:new Date().toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+
+  })
+
+  localStorage.setItem(
+
+    "chat_" + userId,
+
+    JSON.stringify(messages)
+
+  )
+
+  loadConversation()
+
+}
+
+/* ===================================== */
+/* VOTE POLL */
+/* ===================================== */
+
+function votePoll(
+pollId,
+optionIndex
+){
+
+  const messages =
+  JSON.parse(
+    localStorage.getItem(
+    "chat_" + userId
+    )
+  ) || []
+
+  const poll =
+  messages.find(
+  m => m.id === pollId
+  )
+
+  if(!poll) return
+
+  poll.options[
+  optionIndex
+  ].votes += 1
+
+  localStorage.setItem(
+
+    "chat_" + userId,
+
+    JSON.stringify(messages)
+
+  )
+
+  loadConversation()
+
+}
+
+/* ===================================== */
+/* RECORDING */
+/* ===================================== */
+
+function toggleRecording(){
+
+  recording = !recording
+
+  if(recording){
+
+    recordBtn.classList.add(
+    "recording"
+    )
+
+    recordBtn.innerHTML =
+    "⏺"
+
+  }
+
+  else{
+
+    recordBtn.classList.remove(
+    "recording"
+    )
+
+    recordBtn.innerHTML =
+    '<img src="voice-call.png">'
+
+  }
+
+}
+
+/* ===================================== */
+/* ENTER KEY */
+/* ===================================== */
+
+messageInput.addEventListener(
+"keypress",
+function(e){
+
+  if(e.key === "Enter"){
+
+    sendMessage()
+
+  }
+
+})
+
+/* ===================================== */
+/* NAVIGATION */
+/* ===================================== */
+
+function goBack(){
+
+  history.back()
+
+}
+
+function openSettings(){
+
+  window.location.href =
+  "profilesettings.html"
+
+}
+
+function startVideoCall(){
+
+  alert(
+  "Starting video call 🎥"
+  )
+
+}
+
+function startAudioCall(){
+
+  alert(
+  "Starting audio call 📞"
+  )
+
+}
+
+function openFiles(){
+
+  createPoll()
+
+}
+
+</script>
 </body>
 </html>
