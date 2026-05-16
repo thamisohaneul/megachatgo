@@ -490,8 +490,45 @@ let isAI = localStorage.getItem("is_lyno_ai") === "true";
 let messages =
 JSON.parse(localStorage.getItem("chat_" + userId)) || [];
 
+/* LOAD USER INFO */
+
+const userName =
+localStorage.getItem("chat_user_name")
+|| "User"
+
+const userPicture =
+localStorage.getItem("chat_user_picture")
+|| "https://i.pravatar.cc/150?img=1"
+
+document.getElementById(
+"username"
+).innerHTML = userName
+
+document.getElementById(
+"profileImage"
+).src = userPicture
+
+/* LYNO AI MODE */
+
+if(isAI){
+
+  document.getElementById(
+  "statusText"
+  ).innerHTML =
+  "with Lyno v1"
+
+  document.getElementById(
+  "videoBtn"
+  ).style.display = "none"
+
+  document.getElementById(
+  "audioBtn"
+  ).style.display = "none"
+
+}
+
 /* INIT */
-render();
+render()
 
 /* SEND MESSAGE */
 function sendMessage(){
