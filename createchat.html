@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Create Chat • MegaChat</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  min-height:100vh;
+  padding-bottom:110px;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:88px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.back-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+}
+
+.title{
+  font-size:25px;
+  font-weight:900;
+}
+
+.create-btn{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  border:none;
+
+  height:46px;
+
+  padding:0 20px;
+
+  border-radius:18px;
+
+  font-weight:800;
+
+  font-size:14px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:108px 16px 130px;
+}
+
+/* SEARCH */
+
+.search-box{
+  width:100%;
+  height:60px;
+
+  background:white;
+
+  border-radius:24px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+}
+
+.search-box input{
+  flex:1;
+
+  border:none;
+  outline:none;
+
+  background:transparent;
+
+  margin-left:12px;
+
+  font-size:15px;
+}
+
+/* SECTION */
+
+.section-title{
+  font-size:17px;
+  font-weight:900;
+
+  margin-bottom:16px;
+}
+
+/* USERS */
+
+.users{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* CARD */
+
+.user-card{
+  background:white;
+
+  border-radius:30px;
+
+  padding:16px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+}
+
+.user-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.user-left img{
+  width:68px;
+  height:68px;
+
+  border-radius:24px;
+
+  object-fit:cover;
+}
+
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.name{
+  font-size:16px;
+  font-weight:900;
+}
+
+.username{
+  margin-top:6px;
+
+  color:#777;
+
+  font-size:13px;
+}
+
+/* BUTTONS */
+
+.user-actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.action-btn{
+  min-width:110px;
+
+  height:42px;
+
+  border:none;
+
+  border-radius:16px;
+
+  font-size:13px;
+  font-weight:800;
+
+  transition:.2s ease;
+}
+
+.chat-btn{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+}
+
+.follow-btn{
+  background:#f3f3f3;
+  color:#111;
+}
+
+.sent{
+  background:#d1fae5;
+  color:#047857;
+}
+
+/* BOTTOM BAR */
+
+.bottom-bar{
+  position:fixed;
+
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:88px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+.bottom-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+
+  color:#777;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+.bottom-icon{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+}
+
+.active .bottom-icon{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+}
+
+.active{
+  color:#8a2be2;
+}
+
+/* ACTIVE EFFECT */
+
+.action-btn:active,
+.bottom-item:active,
+.back-btn:active,
+.create-btn:active{
+  transform:scale(.95);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <div
+    class="back-btn"
+    onclick="goBack()">
+      ←
+    </div>
+
+    <div class="title">
+      Create Chat
+    </div>
+
+  </div>
+
+  <button
+  class="create-btn"
+  onclick="createGroup()">
+    New Group
+  </button>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- SEARCH -->
+
+  <div class="search-box"><img src="search.png"></a>
+
+    <input
+    type="text"
+    id="searchinput"
+    placeholder="Search people..."
+    onkeyup="searchUsers()">
+
+  </div>
+
+  <!-- TITLE -->
+
+  <div class="section-title">
+    Suggested People
+  </div>
+
+  <!-- USERS -->
+
+  <div class="users" id="usersList">
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=12">
+
+        <div class="user-info">
+
+          <div class="name">
+            Alex Morgan
+          </div>
+
+          <div class="username">
+            @alexmorgan
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="user-actions">
+
+        <button
+        class="action-btn chat-btn"
+        onclick="openChat(
+        'Alex Morgan',
+        'https://i.pravatar.cc/150?img=12',
+        'alex_001'
+        )">
+
+          Chat
+
+        </button>
+
+        <button
+        class="action-btn follow-btn"
+        onclick="followUser(this)">
+
+          Follow
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=32">
+
+        <div class="user-info">
+
+          <div class="name">
+            Sarah Lee
+          </div>
+
+          <div class="username">
+            @sarahlee
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="user-actions">
+
+        <button
+        class="action-btn chat-btn"
+        onclick="openChat(
+        'Sarah Lee',
+        'https://i.pravatar.cc/150?img=32',
+        'sarah_001'
+        )">
+
+          Chat
+
+        </button>
+
+        <button
+        class="action-btn follow-btn"
+        onclick="followUser(this)">
+
+          Follow
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=45">
+
+        <div class="user-info">
+
+          <div class="name">
+            Chris Noah
+          </div>
+
+          <div class="username">
+            @chrisnoah
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="user-actions">
+
+        <button
+        class="action-btn chat-btn"
+        onclick="openChat(
+        'Chris Noah',
+        'https://i.pravatar.cc/150?img=45',
+        'chris_001'
+        )">
+
+          Chat
+
+        </button>
+
+        <button
+        class="action-btn follow-btn"
+        onclick="followUser(this)">
+
+          Follow
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=15">
+
+        <div class="user-info">
+
+          <div class="name">
+            Emma Stone
+          </div>
+
+          <div class="username">
+            @emmastone
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="user-actions">
+
+        <button
+        class="action-btn chat-btn"
+        onclick="openChat(
+        'Emma Stone',
+        'https://i.pravatar.cc/150?img=15',
+        'emma_001'
+        )">
+
+          Chat
+
+        </button>
+
+        <button
+        class="action-btn follow-btn"
+        onclick="followUser(this)">
+
+          Follow
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+
+<div class="bottom-bar">
+
+  <!-- HOME -->
+
+  <div
+  class="bottom-item"
+  onclick="window.location.href='home.html'">
+
+    <div class="bottom-icon"><img src="home.png"></a>
+    </div>
+
+    Home
+
+  </div>
+
+  <!-- CHAT -->
+
+  <div
+  class="bottom-item"
+  onclick="window.location.href='chat.html'">
+
+    <div class="bottom-icon"><img src="chat.png"></a>
+    </div>
+
+    Chats
+
+  </div>
+
+  <!-- CREATE -->
+
+  <div
+  class="bottom-item active"
+  onclick="window.location.href='createchat.html'">
+
+    <div class="bottom-icon">
+      ＋
+    </div>
+
+    Create
+
+  </div>
+
+  <!-- VIDEO -->
+
+  <div
+  class="bottom-item"
+  onclick="window.location.href='buzz.html'">
+
+    <div class="bottom-icon"><img src="buzz.png"></a>
+    </div>
+
+    Buzz
+
+  </div>
+
+  <!-- PROFILE -->
+
+  <div
+  class="bottom-item"
+  onclick="window.location.href='settings.html'">
+
+    <div class="bottom-icon"><img src="profile.png"></a>
+    </div>
+
+    Profile
+
+  </div>
+
+</div>
+
+<script>
+
+/* OPEN CHAT */
+
+function openChat(
+name,
+picture,
+id
+){
+
+  localStorage.setItem(
+  "chat_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  id
+  )
+
+  localStorage.setItem(
+  "is_lyno_ai",
+  "false"
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* FOLLOW */
+
+function followUser(button){
+
+  button.innerHTML =
+  "Request Sent"
+
+  button.classList.add(
+  "sent"
+  )
+
+}
+
+/* SEARCH */
+
+function searchUsers(){
+
+  let input =
+  document.getElementById(
+  "searchInput"
+  ).value.toLowerCase()
+
+  let cards =
+  document.querySelectorAll(
+  ".user-card"
+  )
+
+  cards.forEach(card=>{
+
+    let text =
+    card.innerText.toLowerCase()
+
+    if(text.includes(input)){
+
+      card.style.display =
+      "flex"
+
+    }
+
+    else{
+
+      card.style.display =
+      "none"
+
+    }
+
+  })
+
+}
+
+/* BACK */
+
+function goBack(){
+
+  window.location.href =
+    "chat.html"
+
+}
+
+/* GROUP */
+
+function createGroup(){
+
+  window.location.href =
+    "groupchat.html"
+
+}
+
+</script>
+
+</body>
+</html>
