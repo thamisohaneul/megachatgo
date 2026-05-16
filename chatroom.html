@@ -550,7 +550,12 @@ function sendMessage(){
   render();
 
   simulateDelivery(msg.id);
-  scroll();
+
+if(isAI){
+  aiReply();
+}
+
+scroll();
 }
 
 /* SIMULATE WHATSAPP DELIVERY */
