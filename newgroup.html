@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Create Group • MegaChat</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  min-height:100vh;
+  padding-bottom:120px;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:88px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.back-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+}
+
+.title{
+  font-size:24px;
+  font-weight:900;
+}
+
+.create-btn{
+  height:46px;
+
+  border:none;
+
+  padding:0 20px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  font-size:14px;
+  font-weight:800;
+}
+
+/* CONTENT */
+
+.content{
+  padding:108px 16px 130px;
+}
+
+/* GROUP IMAGE */
+
+.group-image{
+  width:110px;
+  height:110px;
+
+  border-radius:34px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  margin:auto;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:42px;
+  color:white;
+
+  box-shadow:
+  0 12px 30px rgba(138,43,226,.25);
+
+  overflow:hidden;
+
+  cursor:pointer;
+}
+
+.group-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* INPUT */
+
+.input-box{
+  margin-top:24px;
+
+  background:white;
+
+  border-radius:24px;
+
+  height:60px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+}
+
+.input-box input{
+  flex:1;
+
+  border:none;
+  outline:none;
+
+  background:transparent;
+
+  font-size:15px;
+}
+
+/* SECTION */
+
+.section-title{
+  margin-top:30px;
+  margin-bottom:18px;
+
+  font-size:17px;
+  font-weight:900;
+}
+
+/* USERS */
+
+.users{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* USER CARD */
+
+.user-card{
+  background:white;
+
+  border-radius:28px;
+
+  padding:16px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+}
+
+.user-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.user-left img{
+  width:68px;
+  height:68px;
+
+  border-radius:24px;
+
+  object-fit:cover;
+}
+
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.name{
+  font-size:16px;
+  font-weight:900;
+}
+
+.username{
+  margin-top:6px;
+
+  font-size:13px;
+  color:#777;
+}
+
+/* SELECT */
+
+.select-btn{
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+  font-weight:900;
+
+  transition:.2s ease;
+}
+
+.selected{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+}
+
+/* ACTIVE */
+
+.back-btn:active,
+.create-btn:active,
+.select-btn:active{
+  transform:scale(.94);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="left">
+
+    <div
+    class="back-btn"
+    onclick="goBack()">
+      ←
+    </div>
+
+    <div class="title">
+      New Group
+    </div>
+
+  </div>
+
+  <button
+  class="create-btn"
+  onclick="createGroup()">
+
+    Create
+
+  </button>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- GROUP PHOTO -->
+
+  <label
+  for="groupPhoto"
+  class="group-image"
+  id="groupPreview">
+
+    📷
+
+  </label>
+
+  <input
+  type="file"
+  id="groupPhoto"
+  accept="image/*"
+  hidden>
+
+  <!-- GROUP NAME -->
+
+  <div class="input-box">
+
+    <input
+    type="text"
+    id="groupName"
+    placeholder="Enter group name">
+
+  </div>
+
+  <!-- SEARCH -->
+
+  <div class="input-box">
+
+    🔍
+
+    <input
+    type="text"
+    id="searchInput"
+    placeholder="Search users..."
+    onkeyup="searchUsers()">
+
+  </div>
+
+  <!-- TITLE -->
+
+  <div class="section-title">
+    Add Participants
+  </div>
+
+  <!-- USERS -->
+
+  <div class="users"
+  id="usersList">
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=12">
+
+        <div class="user-info">
+
+          <div class="name">
+            Alex Morgan
+          </div>
+
+          <div class="username">
+            @alexmorgan
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+      class="select-btn"
+      onclick="toggleUser(
+      this,
+      'Alex Morgan',
+      'https://i.pravatar.cc/150?img=12'
+      )">
+
+        ＋
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=32">
+
+        <div class="user-info">
+
+          <div class="name">
+            Sarah Lee
+          </div>
+
+          <div class="username">
+            @sarahlee
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+      class="select-btn"
+      onclick="toggleUser(
+      this,
+      'Sarah Lee',
+      'https://i.pravatar.cc/150?img=32'
+      )">
+
+        ＋
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=45">
+
+        <div class="user-info">
+
+          <div class="name">
+            Chris Noah
+          </div>
+
+          <div class="username">
+            @chrisnoah
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+      class="select-btn"
+      onclick="toggleUser(
+      this,
+      'Chris Noah',
+      'https://i.pravatar.cc/150?img=45'
+      )">
+
+        ＋
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div class="user-card">
+
+      <div class="user-left">
+
+        <img src="https://i.pravatar.cc/150?img=15">
+
+        <div class="user-info">
+
+          <div class="name">
+            Emma Stone
+          </div>
+
+          <div class="username">
+            @emmastone
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+      class="select-btn"
+      onclick="toggleUser(
+      this,
+      'Emma Stone',
+      'https://i.pravatar.cc/150?img=15'
+      )">
+
+        ＋
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* SELECTED USERS */
+
+let selectedUsers = []
+
+let selectedGroupPhoto = "group.png"
+
+/* GROUP PHOTO PICKER */
+
+document.getElementById(
+"groupPhoto"
+).addEventListener(
+"change",
+function(e){
+
+  const file = e.target.files[0]
+
+  if(file){
+
+    const reader =
+    new FileReader()
+
+    reader.onload = function(){
+
+      selectedGroupPhoto =
+      reader.result
+
+      document.getElementById(
+      "groupPreview"
+      ).innerHTML = `
+        <img src="${reader.result}">
+      `
+
+    }
+
+    reader.readAsDataURL(file)
+
+  }
+
+})
+
+/* TOGGLE USER */
+
+function toggleUser(
+button,
+name,
+picture
+){
+
+  const exists =
+  selectedUsers.find(
+  user => user.name === name
+  )
+
+  if(exists){
+
+    selectedUsers =
+    selectedUsers.filter(
+    user => user.name !== name
+    )
+
+    button.classList.remove(
+    "selected"
+    )
+
+    button.innerHTML = "＋"
+
+  }
+
+  else{
+
+    selectedUsers.push({
+      name:name,
+      picture:picture
+    })
+
+    button.classList.add(
+    "selected"
+    )
+
+    button.innerHTML = "✓"
+
+  }
+
+}
+
+/* CREATE GROUP */
+
+function createGroup(){
+
+  const groupName =
+  document.getElementById(
+  "groupName"
+  ).value.trim()
+
+  if(groupName === ""){
+
+    alert(
+    "Enter group name"
+    )
+
+    return
+
+  }
+
+  if(selectedUsers.length === 0){
+
+    alert(
+    "Add at least 1 participant"
+    )
+
+    return
+
+  }
+
+  const groups =
+  JSON.parse(
+  localStorage.getItem(
+  "megachat_groups"
+  )) || []
+
+  const groupId =
+  "group_" + Date.now()
+
+  const newGroup = {
+
+    id:groupId,
+
+    name:groupName,
+
+    picture:selectedGroupPhoto,
+
+    members:selectedUsers,
+
+    lastMessage:"Group created 🚀",
+
+    time:"now"
+
+  }
+
+  groups.unshift(newGroup)
+
+  localStorage.setItem(
+  "megachat_groups",
+  JSON.stringify(groups)
+  )
+
+  /* OPEN GROUP CHAT */
+
+  localStorage.setItem(
+  "chat_user_name",
+  groupName
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  selectedGroupPhoto
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  groupId
+  )
+
+  localStorage.setItem(
+  "is_lyno_ai",
+  "false"
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* SEARCH */
+
+function searchUsers(){
+
+  let input =
+  document.getElementById(
+  "searchInput"
+  ).value.toLowerCase()
+
+  let cards =
+  document.querySelectorAll(
+  ".user-card"
+  )
+
+  cards.forEach(card=>{
+
+    let text =
+    card.innerText.toLowerCase()
+
+    if(text.includes(input)){
+
+      card.style.display =
+      "flex"
+
+    }
+
+    else{
+
+      card.style.display =
+      "none"
+
+    }
+
+  })
+
+}
+
+/* BACK */
+
+function goBack(){
+
+  window.location.href =
+  "createchat.html"
+
+}
+
+</script>
+
+</body>
+</html>
