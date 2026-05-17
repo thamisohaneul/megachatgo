@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta 
+name="viewport" 
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover,
+interactive-widget=resizes-content">
+
+<title>MegaChat Chatroom</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#f6f6f8;
+}
+
+/* BODY FIX */
+
+body{
+  position:fixed;
+  inset:0;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+
+  top:0;
+  left:0;
+  right:0;
+
+  height:86px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 16px;
+
+  z-index:9999;
+
+  transform:translateZ(0);
+}
+
+/* LEFT */
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* BACK */
+
+.back-btn{
+  width:42px;
+  height:42px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.2s;
+}
+
+/* PROFILE */
+
+.profile{
+  width:54px;
+  height:54px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+
+  border:2px solid #8a2be2;
+}
+
+/* USER INFO */
+
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.username{
+  font-size:16px;
+  font-weight:800;
+}
+
+.status{
+  margin-top:4px;
+
+  font-size:12px;
+
+  color:#777;
+}
+
+/* RIGHT */
+
+.right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* ICON */
+
+.icon{
+  width:42px;
+  height:42px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+
+  transition:.2s;
+}
+
+.icon img{
+  width:22px;
+  height:22px;
+}
+
+/* CHAT AREA */
+
+.chat-area{
+  position:fixed;
+
+  top:86px;
+  left:0;
+  right:0;
+  bottom:84px;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  padding:16px 14px 110px;
+
+  display:flex;
+  flex-direction:column;
+  
+
+
+  overscroll-behavior:contain;
+
+}
+
+/* MESSAGE */
+
+.message{
+  max-width:78%;
+
+  padding:14px 16px;
+
+  border-radius:24px;
+
+  margin-bottom:14px;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  animation:fade .2s ease;
+}
+
+/* RECEIVED */
+
+.received{
+  background:white;
+
+  color:#111;
+
+  border-bottom-left-radius:8px;
+
+  box-shadow:
+  0 5px 18px rgba(0,0,0,.04);
+}
+
+/* SENT */
+
+.sent{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  margin-left:auto;
+
+  border-bottom-right-radius:8px;
+}
+
+/* TIME */
+
+.time{
+  margin-top:8px;
+
+  font-size:11px;
+
+  opacity:.8;
+
+  text-align:right;
+}
+
+/* INPUT BAR */
+
+.input-bar{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:84px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+
+  gap:8px;
+
+  padding:0 12px;
+
+  z-index:9999;
+  
+transform:translateZ(0);
+}
+
+/* SMALL BUTTON */
+
+.small-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+
+  flex-shrink:0;
+}
+
+/* INPUT */
+
+.input{
+  flex:1;
+
+  height:50px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  padding:0 16px;
+
+  font-size:16px;
+}
+
+/* SEND */
+
+.send-btn{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  flex-shrink:0;
+}
+
+/* ACTIVE */
+
+.icon:active,
+.back-btn:active,
+.small-btn:active,
+.send-btn:active{
+  transform:scale(.92);
+}
+
+/* ANIMATION */
+
+@keyframes fade{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="left">
+
+    <div
+    class="back-btn"
+    onclick="goBack()">
+      ←
+    </div>
+
+    <img
+    class="profile"
+    id="profileImage"
+    src="https://i.pravatar.cc/150?img=2">
+
+    <div class="user-info">
+
+      <div
+      class="username"
+      id="username">
+        Alex
+      </div>
+
+      <div
+      class="status"
+      id="statusText">
+        Active now
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="right">
+
+    <div
+    class="icon"
+    onclick="openSettings()">
+      ⚙
+    </div>
+
+    <div
+    class="icon"
+    id="videoBtn"
+    onclick="openVideoCall()">
+
+      <img src="video-call.png">
+
+    </div>
+
+    <div
+    class="icon"
+    id="audioBtn"
+    onclick="openAudioCall()">
+      📞
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CHAT AREA -->
+
+<div
+class="chat-area"
+id="chatArea">
+
+</div>
+
+<!-- INPUT BAR -->
+
+<div class="input-bar">
+
+  <div
+  class="small-btn"
+  onclick="openFiles()">
+    ＋
+  </div>
+
+  <input
+  type="text"
+  id="messageInput"
+  class="input"
+  placeholder="Type a message...">
+
+  <div
+  class="send-btn"
+  onclick="sendMessage()">
+    ➤
+  </div>
+
+</div>
+
+<script>
+
+/* USER DATA */
+
+let userId =
+localStorage.getItem(
+"opened_user_id"
+) || "default_user"
+
+let userName =
+localStorage.getItem(
+"chat_user_name"
+) || "User"
+
+let userPicture =
+localStorage.getItem(
+"chat_user_picture"
+) || "https://i.pravatar.cc/150?img=2"
+
+let isAI =
+localStorage.getItem(
+"is_lyno_ai"
+) === "true"
+
+/* ELEMENTS */
+
+const chatArea =
+document.getElementById("chatArea")
+
+const input =
+document.getElementById("messageInput")
+
+/* LOAD USER */
+
+document.getElementById(
+"username"
+).innerHTML = userName
+
+document.getElementById(
+"profileImage"
+).src = userPicture
+
+if(isAI){
+
+  document.getElementById(
+  "statusText"
+  ).innerHTML =
+  "with Lyno v1"
+
+  document.getElementById(
+  "videoBtn"
+  ).style.display =
+  "none"
+
+  document.getElementById(
+  "audioBtn"
+  ).style.display =
+  "none"
+
+}
+
+/* LOAD MESSAGES */
+
+let messages =
+JSON.parse(
+localStorage.getItem(
+"chat_" + userId
+)) || []
+
+renderMessages()
+
+/* SEND */
+
+function sendMessage(){
+
+  let text =
+  input.value.trim()
+
+  if(text === "") return
+
+  let msg = {
+
+    text:text,
+
+    type:"sent",
+
+    time:getTime()
+
+  }
+
+  messages.push(msg)
+
+  saveMessages()
+
+  input.value = ""
+
+  renderMessages()
+
+  if(isAI){
+
+    setTimeout(()=>{
+
+      messages.push({
+
+        text:"🤖 Lyno AI is thinking...",
+
+        type:"received",
+
+        time:getTime()
+
+      })
+
+      saveMessages()
+
+      renderMessages()
+
+    },1000)
+
+  }
+
+}
+
+/* RENDER */
+
+function renderMessages(){
+
+  chatArea.innerHTML = ""
+
+  messages.forEach(msg=>{
+
+    let div =
+    document.createElement("div")
+
+    div.className =
+    "message " + msg.type
+
+    div.innerHTML = `
+      ${msg.text}
+
+      <div class="time">
+        ${msg.time}
+      </div>
+    `
+
+    chatArea.appendChild(div)
+
+  })
+
+  scrollBottom()
+
+}
+
+/* SAVE */
+
+function saveMessages(){
+
+  localStorage.setItem(
+  "chat_" + userId,
+  JSON.stringify(messages)
+  )
+
+}
+
+/* TIME */
+
+function getTime(){
+
+  return new Date()
+  .toLocaleTimeString([],{
+
+    hour:"2-digit",
+    minute:"2-digit"
+
+  })
+
+}
+
+/* SCROLL */
+
+function scrollBottom(){
+
+  setTimeout(()=>{
+
+    chatArea.scrollTop =
+    chatArea.scrollHeight
+
+  },100)
+
+}
+
+/* ENTER */
+
+input.addEventListener(
+"keypress",
+function(e){
+
+  if(e.key === "Enter"){
+
+    sendMessage()
+
+  }
+
+})
+
+
+
+/* NAVIGATION */
+
+function goBack(){
+
+  window.location.href =
+  "chat.html"
+
+}
+
+function openSettings(){
+
+  if(isAI){
+
+    window.location.href =
+    "AIsettings.html"
+
+  }
+
+  else{
+
+    window.location.href =
+    "profilesettings.html"
+
+  }
+
+}
+
+function openVideoCall(){
+
+  window.location.href =
+  "videocall.html"
+
+}
+
+function openAudioCall(){
+
+  window.location.href =
+  "audiocall.html"
+
+}
+
+function openFiles(){
+
+  window.location.href =
+  "chatfiles.html"
+
+}
+
+</script>
+
+</body>
+</html>
