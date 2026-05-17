@@ -17,11 +17,74 @@ content="width=device-width, initial-scale=1.0">  <title>MegaChat Chatroom</titl
   background:#f6f6f8;
   color:#111;
 
+  width:100%;
   height:100dvh;
+
   overflow:hidden;
 
   position:fixed;
-  inset:0;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  -webkit-overflow-scrolling:touch;
+}
+
+/* CHAT AREA */
+
+.chat-area{
+  position:fixed;
+
+  top:86px;
+  left:0;
+  right:0;
+  bottom:84px;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  -webkit-overflow-scrolling:touch;
+
+  padding:18px 14px 110px;
+
+  display:flex;
+  flex-direction:column;
+
+  overscroll-behavior:contain;
+}
+
+/* KEEP HEADER FIXED */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  z-index:9999;
+
+  transform:translateZ(0);
+}
+
+/* KEEP INPUT BAR FIXED */
+
+.input-bar{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:9999;
+
+  transform:translateZ(0);
+}
+
+/* INPUT FIX FOR MOBILE */
+
+.input{
+  font-size:16px;
 }
   
 /* HEADER */  
