@@ -737,6 +737,30 @@ input.addEventListener("keypress", function(e){
     sendMessage();
   }
 });
+  
+ /* KEYBOARD AVOID FIX */
+
+window.addEventListener("resize", () => {
+
+  setTimeout(() => {
+
+    chatArea.scrollTop =
+    chatArea.scrollHeight;
+
+  }, 100);
+
+});
+
+input.addEventListener("focus", () => {
+
+  setTimeout(() => {
+
+    chatArea.scrollTop =
+    chatArea.scrollHeight;
+
+  }, 300);
+
+}); 
 
 </script>
 
