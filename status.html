@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Status</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#0f0f14;
+  color:white;
+  overflow:hidden;
+}
+
+/* TOP BAR */
+
+.top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:88px;
+
+  padding:0 16px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:rgba(10,10,15,.7);
+
+  backdrop-filter:blur(18px);
+
+  z-index:100;
+}
+
+.left-top{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.back-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.08);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  transition:.2s;
+}
+
+.title{
+  font-size:22px;
+  font-weight:800;
+}
+
+.right-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tool-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.08);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+
+  transition:.2s;
+}
+
+/* PREVIEW */
+
+.preview{
+  position:fixed;
+  top:88px;
+  bottom:120px;
+  left:0;
+  right:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  overflow:hidden;
+}
+
+.preview img,
+.preview video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.empty-preview{
+  text-align:center;
+  opacity:.7;
+}
+
+.empty-preview h2{
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.empty-preview p{
+  font-size:14px;
+}
+
+/* DRAG ITEMS */
+
+.drag-item{
+  position:absolute;
+  z-index:999;
+  touch-action:none;
+}
+
+/* BOTTOM TOOLS */
+
+.bottom-tools{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:120px;
+
+  background:rgba(10,10,15,.75);
+
+  backdrop-filter:blur(18px);
+
+  border-top:
+  1px solid rgba(255,255,255,.06);
+
+  padding:12px;
+
+  z-index:100;
+}
+
+.tools-scroll{
+  display:flex;
+  gap:12px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+}
+
+.tools-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+.action{
+  min-width:82px;
+  text-align:center;
+}
+
+.action-circle{
+  width:68px;
+  height:68px;
+
+  margin:auto;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,.08);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:28px;
+
+  transition:.2s;
+}
+
+.action p{
+  margin-top:8px;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* PUBLISH BUTTON */
+
+.publish-btn{
+  position:fixed;
+
+  right:18px;
+  bottom:138px;
+
+  height:58px;
+
+  padding:0 24px;
+
+  border-radius:24px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:10px;
+
+  font-size:15px;
+  font-weight:800;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,.35);
+
+  z-index:101;
+
+  transition:.2s;
+}
+
+/* PICKERS */
+
+.bottom-picker{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:330px;
+
+  background:#111118;
+
+  border-radius:30px 30px 0 0;
+
+  padding:20px;
+
+  z-index:999999;
+
+  overflow-y:auto;
+}
+
+.picker-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:20px;
+}
+
+.picker-title{
+  font-size:24px;
+  font-weight:900;
+}
+
+.close-btn{
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:#1d1d27;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+}
+
+.grid-picker{
+  display:grid;
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:18px;
+}
+
+.grid-item{
+  background:#1a1a22;
+
+  border-radius:22px;
+
+  padding:14px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:58px;
+}
+
+/* MUSIC */
+
+.music-picker{
+  position:fixed;
+  inset:0;
+
+  background:#0f0f14;
+
+  z-index:999999;
+
+  overflow-y:auto;
+
+  padding:18px;
+}
+
+.music-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:18px;
+}
+
+.music-title{
+  font-size:28px;
+  font-weight:900;
+}
+
+.search-box{
+  height:56px;
+
+  border-radius:18px;
+
+  background:#1a1a22;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 16px;
+
+  margin-bottom:20px;
+}
+
+.search-box input{
+  flex:1;
+
+  background:none;
+
+  border:none;
+  outline:none;
+
+  color:white;
+
+  margin-left:12px;
+
+  font-size:15px;
+}
+
+.song-card{
+  background:#181820;
+
+  border-radius:24px;
+
+  padding:16px;
+
+  margin-bottom:16px;
+}
+
+.song-name{
+  font-size:18px;
+  font-weight:800;
+}
+
+.song-artist{
+  margin-top:4px;
+
+  color:#aaa;
+
+  font-size:13px;
+}
+
+.use-song{
+  margin-top:14px;
+
+  height:50px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-weight:800;
+}
+
+/* TAP */
+
+.tool-btn:active,
+.back-btn:active,
+.action-circle:active,
+.publish-btn:active,
+.close-btn:active,
+.grid-item:active,
+.use-song:active{
+  transform:scale(.94);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+  <div class="left-top">
+
+    <div
+    class="back-btn"
+    onclick="goBack()">
+      ←
+    </div>
+
+    <div class="title">
+      Create Status
+    </div>
+
+  </div>
+
+  <div class="right-top">
+
+    <div
+    class="tool-btn"
+    onclick="rotateMedia()">
+      ↻
+    </div>
+
+    <div
+    class="tool-btn"
+    onclick="cropMedia()">
+      ⛶
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PREVIEW -->
+
+<div class="preview" id="preview">
+
+  <div class="empty-preview">
+
+    <h2>Create a Status</h2>
+
+    <p>
+      Photos, videos, music, stickers & effects
+    </p>
+
+  </div>
+
+</div>
+
+<!-- PUBLISH -->
+
+<div
+class="publish-btn"
+onclick="publishStatus()">
+
+  ✦ Create Status
+
+</div>
+
+<!-- TOOLS -->
+
+<div class="bottom-tools">
+
+  <div class="tools-scroll">
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="pickPhoto()">
+        🖼
+      </div>
+
+      <p>Photo</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="pickVideo()">
+        🎥
+      </div>
+
+      <p>Video</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="addText()">
+        ✎
+      </div>
+
+      <p>Text</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="openMusicPicker()">
+        ♪
+      </div>
+
+      <p>Music</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="addSticker()">
+        😍
+      </div>
+
+      <p>Sticker</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="addEmoji()">
+        😂
+      </div>
+
+      <p>Emoji</p>
+
+    </div>
+
+    <div class="action">
+
+      <div
+      class="action-circle"
+      onclick="changeFilter()">
+        ✨
+      </div>
+
+      <p>Filters</p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<input
+type="file"
+accept="image/*"
+id="photoInput"
+style="display:none">
+
+<input
+type="file"
+accept="video/*"
+id="videoInput"
+style="display:none">
+
+<script>
+
+/* ELEMENTS */
+
+const preview =
+document.getElementById("preview")
+
+const photoInput =
+document.getElementById("photoInput")
+
+const videoInput =
+document.getElementById("videoInput")
+
+/* USER */
+
+let userId =
+localStorage.getItem(
+"my_user_id"
+) || "you_001"
+
+let userName =
+localStorage.getItem(
+"my_name"
+) || "You"
+
+let userPicture =
+localStorage.getItem(
+"my_picture"
+) ||
+"https://i.pravatar.cc/150?img=1"
+
+/* STATE */
+
+let currentMedia = ""
+let currentType = ""
+let currentFilter = 0
+
+let rotation = 0
+let scale = 1
+
+/* SONGS */
+
+const songs = [
+
+{
+name:"Dream Night",
+artist:"Lyno Beats",
+audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+},
+
+{
+name:"Purple Lights",
+artist:"MegaChat Music",
+audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+},
+
+{
+name:"Summer Mood",
+artist:"Lyno Studio",
+audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+},
+
+{
+name:"Night Drive",
+artist:"DJ Lyno",
+audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+}
+
+]
+
+/* PHOTO */
+
+function pickPhoto(){
+
+photoInput.click()
+
+}
+
+photoInput.onchange = e => {
+
+const file = e.target.files[0]
+
+if(!file) return
+
+const reader = new FileReader()
+
+reader.onload = ev => {
+
+currentMedia = ev.target.result
+currentType = "photo"
+
+preview.innerHTML = `
+<img
+id="mediaView"
+src="${currentMedia}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+transform:
+rotate(0deg)
+scale(1);">
+`
+
+enableMediaDrag()
+
+}
+
+reader.readAsDataURL(file)
+
+}
+
+/* VIDEO */
+
+function pickVideo(){
+
+videoInput.click()
+
+}
+
+videoInput.onchange = e => {
+
+const file = e.target.files[0]
+
+if(!file) return
+
+const url = URL.createObjectURL(file)
+
+currentMedia = url
+currentType = "video"
+
+preview.innerHTML = `
+<video
+id="mediaView"
+src="${url}"
+autoplay
+loop
+controls
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+transform:
+rotate(0deg)
+scale(1);">
+</video>
+`
+
+enableMediaDrag()
+
+}
+
+/* TEXT */
+
+function addText(){
+
+let text =
+prompt("Write your text")
+
+if(!text) return
+
+let div =
+document.createElement("div")
+
+div.className =
+"drag-item"
+
+div.innerHTML = text
+
+div.style.top = "45%"
+div.style.left = "25%"
+
+div.style.fontSize = "34px"
+div.style.fontWeight = "900"
+
+div.style.color = "white"
+
+div.style.textShadow =
+"0 5px 20px rgba(0,0,0,.55)"
+
+preview.appendChild(div)
+
+makeDraggable(div)
+
+}
+
+/* STICKERS */
+
+function addSticker(){
+
+const stickers = [
+
+"🔥","😍","🚀","💜",
+"🥳","⭐","😎","🎉",
+"👑","💫","📸","🎵"
+
+]
+
+let html = `
+
+<div
+class="bottom-picker"
+id="stickerPicker">
+
+<div class="picker-header">
+
+<div class="picker-title">
+Choose Sticker
+</div>
+
+<div
+class="close-btn"
+onclick="
+document.getElementById(
+'stickerPicker'
+).remove()
+">
+✕
+</div>
+
+</div>
+
+<div class="grid-picker">
+
+`
+
+stickers.forEach(sticker=>{
+
+html += `
+<div
+class="grid-item"
+onclick="
+selectSticker('${sticker}')
+">
+${sticker}
+</div>
+`
+
+})
+
+html += `
+</div>
+</div>
+`
+
+document.body.insertAdjacentHTML(
+"beforeend",
+html
+)
+
+}
+
+function selectSticker(sticker){
+
+document.getElementById(
+"stickerPicker"
+).remove()
+
+let div =
+document.createElement("div")
+
+div.className =
+"drag-item"
+
+div.innerHTML = sticker
+
+div.style.top = "40%"
+div.style.left = "40%"
+
+div.style.fontSize = "82px"
+
+preview.appendChild(div)
+
+makeDraggable(div)
+
+}
+
+/* EMOJI */
+
+function addEmoji(){
+
+const emojis = [
+
+"😂","😭","❤️","🥺",
+"😈","🤍","😴","😡",
+"🤩","😜","😘","😅"
+
+]
+
+let html = `
+
+<div
+class="bottom-picker"
+id="emojiPicker">
+
+<div class="picker-header">
+
+<div class="picker-title">
+Choose Emoji
+</div>
+
+<div
+class="close-btn"
+onclick="
+document.getElementById(
+'emojiPicker'
+).remove()
+">
+✕
+</div>
+
+</div>
+
+<div class="grid-picker">
+
+`
+
+emojis.forEach(emoji=>{
+
+html += `
+<div
+class="grid-item"
+onclick="
+selectEmoji('${emoji}')
+">
+${emoji}
+</div>
+`
+
+})
+
+html += `
+</div>
+</div>
+`
+
+document.body.insertAdjacentHTML(
+"beforeend",
+html
+)
+
+}
+
+function selectEmoji(emoji){
+
+document.getElementById(
+"emojiPicker"
+).remove()
+
+let div =
+document.createElement("div")
+
+div.className =
+"drag-item"
+
+div.innerHTML = emoji
+
+div.style.top = "40%"
+div.style.left = "40%"
+
+div.style.fontSize = "82px"
+
+preview.appendChild(div)
+
+makeDraggable(div)
+
+}
+
+/* MUSIC */
+
+function openMusicPicker(){
+
+let html = `
+
+<div
+class="music-picker"
+id="musicPicker">
+
+<div class="music-header">
+
+<div class="music-title">
+Music
+</div>
+
+<div
+class="close-btn"
+onclick="closeMusicPicker()">
+✕
+</div>
+
+</div>
+
+<div class="search-box">
+
+<div>🔍</div>
+
+<input
+type="text"
+placeholder="Search songs..."
+onkeyup="searchSongs(this.value)">
+
+</div>
+
+<div id="songsContainer">
+
+`
+
+songs.forEach(song=>{
+
+html += `
+
+<div class="song-card">
+
+<div class="song-name">
+${song.name}
+</div>
+
+<div class="song-artist">
+${song.artist}
+</div>
+
+<audio
+controls
+style="
+width:100%;
+margin-top:12px;">
+<source src="${song.audio}">
+</audio>
+
+<div
+class="use-song"
+onclick="
+chooseMusic(
+'${song.name}',
+'${song.artist}',
+'${song.audio}'
+)">
+Use This Song
+</div>
+
+</div>
+
+`
+
+})
+
+html += `
+</div>
+</div>
+`
+
+document.body.insertAdjacentHTML(
+"beforeend",
+html
+)
+
+}
+
+function closeMusicPicker(){
+
+let picker =
+document.getElementById(
+"musicPicker"
+)
+
+if(picker){
+
+picker.remove()
+
+}
+
+}
+
+function searchSongs(value){
+
+const cards =
+document.querySelectorAll(
+".song-card"
+)
+
+cards.forEach(card=>{
+
+if(
+card.innerText
+.toLowerCase()
+.includes(
+value.toLowerCase()
+)
+){
+
+card.style.display =
+"block"
+
+}
+
+else{
+
+card.style.display =
+"none"
+
+}
+
+})
+
+}
+
+function chooseMusic(
+song,
+artist,
+audio
+){
+
+closeMusicPicker()
+
+let music =
+document.createElement("div")
+
+music.className =
+"drag-item"
+
+music.innerHTML = `
+
+<div
+id="musicMiniPlayer"
+style="
+background:
+rgba(0,0,0,.55);
+
+backdrop-filter:
+blur(12px);
+
+padding:12px 14px;
+
+border-radius:20px;
+
+display:flex;
+align-items:center;
+gap:12px;
+
+min-width:220px;
+max-width:260px;">
+
+<div
+onclick="
+toggleMusicSize(this)
+"
+style="
+width:44px;
+height:44px;
+
+border-radius:14px;
+
+background:
+linear-gradient(
+135deg,
+#8a2be2,
+#c084fc
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:18px;
+flex-shrink:0;">
+🎵
+</div>
+
+<div
+class="music-info"
+style="
+flex:1;
+overflow:hidden;">
+
+<div style="
+font-size:14px;
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;">
+${song}
+</div>
+
+<div style="
+font-size:11px;
+opacity:.7;
+margin-top:3px;">
+${artist}
+</div>
+
+<audio
+controls
+autoplay
+style="
+width:100%;
+margin-top:8px;
+height:28px;">
+<source src="${audio}">
+</audio>
+
+</div>
+
+</div>
+
+`
+
+music.style.top = "20px"
+music.style.left = "20px"
+
+preview.appendChild(music)
+
+makeDraggable(music)
+
+}
+
+function toggleMusicSize(btn){
+
+const parent =
+btn.parentElement
+
+const info =
+parent.querySelector(
+".music-info"
+)
+
+if(info.style.display === "none"){
+
+info.style.display =
+"block"
+
+parent.style.minWidth =
+"220px"
+
+}
+
+else{
+
+info.style.display =
+"none"
+
+parent.style.minWidth =
+"60px"
+
+}
+
+}
+
+/* FILTERS */
+
+function changeFilter(){
+
+let media =
+document.getElementById(
+"mediaView"
+)
+
+if(!media) return
+
+currentFilter++
+
+if(currentFilter === 1){
+
+media.style.filter =
+"grayscale(1)"
+
+}
+
+else if(currentFilter === 2){
+
+media.style.filter =
+"brightness(1.2)"
+
+}
+
+else if(currentFilter === 3){
+
+media.style.filter =
+"hue-rotate(35deg)"
+
+}
+
+else{
+
+media.style.filter = ""
+
+currentFilter = 0
+
+}
+
+}
+
+/* ROTATE */
+
+function rotateMedia(){
+
+let media =
+document.getElementById(
+"mediaView"
+)
+
+if(!media) return
+
+rotation += 15
+
+media.style.transform = `
+rotate(${rotation}deg)
+scale(${scale})
+`
+
+}
+
+/* CROP */
+
+function cropMedia(){
+
+let media =
+document.getElementById(
+"mediaView"
+)
+
+if(!media) return
+
+scale += 0.1
+
+if(scale > 2){
+
+scale = 1
+
+}
+
+media.style.transform = `
+rotate(${rotation}deg)
+scale(${scale})
+`
+
+}
+
+/* DRAG MEDIA */
+
+function enableMediaDrag(){
+
+const media =
+document.getElementById(
+"mediaView"
+)
+
+if(!media) return
+
+let startX,startY
+let moveX = 0
+let moveY = 0
+
+media.addEventListener(
+"touchstart",
+e=>{
+
+startX =
+e.touches[0].clientX
+- moveX
+
+startY =
+e.touches[0].clientY
+- moveY
+
+})
+
+media.addEventListener(
+"touchmove",
+e=>{
+
+moveX =
+e.touches[0].clientX
+- startX
+
+moveY =
+e.touches[0].clientY
+- startY
+
+media.style.transform = `
+translate(
+${moveX}px,
+${moveY}px
+)
+rotate(${rotation}deg)
+scale(${scale})
+`
+
+})
+
+}
+
+/* DRAG ITEMS */
+
+function makeDraggable(el){
+
+let x = 0
+let y = 0
+
+let startX = 0
+let startY = 0
+
+el.addEventListener(
+"touchstart",
+e=>{
+
+startX =
+e.touches[0].clientX - x
+
+startY =
+e.touches[0].clientY - y
+
+})
+
+el.addEventListener(
+"touchmove",
+e=>{
+
+x =
+e.touches[0].clientX - startX
+
+y =
+e.touches[0].clientY - startY
+
+el.style.transform =
+`translate(${x}px,${y}px)`
+
+})
+
+}
+
+/* PUBLISH */
+
+function publishStatus(){
+
+if(currentMedia === ""){
+
+alert(
+"Please add photo or video"
+)
+
+return
+
+}
+
+let statuses =
+JSON.parse(
+localStorage.getItem(
+"megachat_statuses"
+)) || []
+
+let status = {
+
+id:Date.now(),
+
+userId:userId,
+
+name:userName,
+
+picture:userPicture,
+
+media:currentMedia,
+
+type:currentType,
+
+createdAt:Date.now(),
+
+expiresAt:
+Date.now() +
+86400000
+
+}
+
+statuses.unshift(status)
+
+localStorage.setItem(
+"megachat_statuses",
+JSON.stringify(statuses)
+)
+
+alert(
+"Status published ✨"
+)
+
+window.location.href =
+"home.html"
+
+}
+
+/* BACK */
+
+function goBack(){
+
+window.location.href =
+"home.html"
+
+}
+
+</script>
+
+</body>
+</html>
