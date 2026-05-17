@@ -546,6 +546,53 @@ function sendMessage(){
   }
 
   messages.push(msg)
+  /* UPDATE CHAT LIST */
+
+let chats =
+JSON.parse(
+localStorage.getItem(
+"megachat_chats"
+)) || []
+
+let existing =
+chats.find(
+chat => chat.id === userId
+)
+
+if(existing){
+
+  existing.message = text
+  existing.time = getTime()
+  existing.updatedAt = Date.now()
+
+}
+
+else{
+
+  chats.push({
+
+    id:userId,
+
+    name:userName,
+
+    picture:userPicture,
+
+    message:text,
+
+    time:getTime(),
+
+    unread:0,
+
+    updatedAt:Date.now()
+
+  })
+
+}
+
+localStorage.setItem(
+"megachat_chats",
+JSON.stringify(chats)
+)
 
   saveMessages()
 
