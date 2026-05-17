@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Profile</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+
+  height:82px;
+
+  background:
+  rgba(255,255,255,.95);
+
+  backdrop-filter:blur(18px);
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+
+  border-bottom:
+  1px solid #ececec;
+}
+
+.username-top{
+  font-size:24px;
+  font-weight:900;
+}
+
+.top-icons{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.top-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.2s;
+}
+
+.top-btn:active{
+  transform:scale(.92);
+}
+
+/* CONTENT */
+
+.content{
+  padding:22px 18px 130px;
+}
+
+/* PROFILE TOP */
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:24px;
+}
+
+/* PROFILE IMAGE */
+
+.profile-wrap{
+  position:relative;
+}
+
+.profile-image{
+  width:102px;
+  height:102px;
+
+  border-radius:34px;
+
+  object-fit:cover;
+
+  border:3px solid #8a2be2;
+}
+
+.edit-photo{
+  position:absolute;
+
+  right:-2px;
+  bottom:-2px;
+
+  width:34px;
+  height:34px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  border:3px solid white;
+}
+
+/* STATS */
+
+.stats{
+  display:flex;
+  gap:18px;
+}
+
+.stat{
+  text-align:center;
+}
+
+.stat-number{
+  font-size:23px;
+  font-weight:900;
+}
+
+.stat-text{
+  margin-top:4px;
+
+  font-size:13px;
+  color:#777;
+}
+
+/* BIO */
+
+.profile-name{
+  font-size:22px;
+  font-weight:900;
+}
+
+.bio{
+  margin-top:10px;
+
+  color:#555;
+
+  line-height:1.6;
+
+  font-size:14px;
+}
+
+/* BUTTONS */
+
+.profile-buttons{
+  display:flex;
+  gap:12px;
+
+  margin-top:22px;
+}
+
+.profile-btn{
+  flex:1;
+
+  height:52px;
+
+  border-radius:18px;
+
+  background:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-weight:800;
+
+  box-shadow:
+  0 8px 24px rgba(0,0,0,.04);
+
+  transition:.2s;
+}
+
+.main-btn{
+  background:
+  linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+}
+
+.profile-btn:active{
+  transform:scale(.96);
+}
+
+/* SECTION */
+
+.section{
+  margin-top:34px;
+}
+
+.section-title{
+  font-size:20px;
+  font-weight:900;
+
+  margin-bottom:18px;
+}
+
+/* PEEPS */
+
+.friends{
+  display:flex;
+  gap:14px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+}
+
+.friends::-webkit-scrollbar{
+  display:none;
+}
+
+.friend{
+  min-width:88px;
+
+  text-align:center;
+
+  transition:.2s;
+}
+
+.friend:active{
+  transform:scale(.95);
+}
+
+.friend img{
+  width:82px;
+  height:82px;
+
+  border-radius:26px;
+
+  object-fit:cover;
+
+  border:2px solid #8a2be2;
+}
+
+.friend p{
+  margin-top:8px;
+
+  font-size:13px;
+  font-weight:700;
+}
+
+/* POSTS */
+
+.posts-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(3,1fr);
+
+  gap:10px;
+}
+
+.post{
+  aspect-ratio:1/1;
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  position:relative;
+
+  background:#eee;
+
+  transition:.2s;
+}
+
+.post:active{
+  transform:scale(.96);
+}
+
+.post img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.post-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+  linear-gradient(
+  transparent,
+  rgba(0,0,0,.45)
+  );
+
+  display:flex;
+  align-items:flex-end;
+
+  padding:10px;
+
+  color:white;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:84px;
+
+  background:
+  rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-top:
+  1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+.nav-item{
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.2s;
+}
+
+.nav-item img{
+  width:24px;
+  height:24px;
+}
+
+.active{
+  background:#f3e8ff;
+}
+
+.nav-item:active{
+  transform:scale(.92);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div
+  class="username-top"
+  id="topUsername">
+    @megachat
+  </div>
+
+  <div class="top-icons">
+
+    <div
+    class="top-btn"
+    onclick="openEditProfile()">
+      ✎
+    </div>
+
+    <div
+    class="top-btn"
+    onclick="openSettings()">
+      ⚙
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- PROFILE TOP -->
+
+  <div class="profile-top">
+
+    <div class="profile-wrap">
+
+      <img
+      id="profileImage"
+      class="profile-image"
+      src="https://i.pravatar.cc/300?img=12">
+
+      <div
+      class="edit-photo"
+      onclick="changePhoto()">
+        +
+      </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div
+      class="stat"
+      onclick="openPosts()">
+
+        <div
+        class="stat-number"
+        id="postsCount">
+          12
+        </div>
+
+        <div class="stat-text">
+          Posts
+        </div>
+
+      </div>
+
+      <div
+      class="stat"
+      onclick="openFollowers()">
+
+        <div
+        class="stat-number"
+        id="followersCount">
+          3.2K
+        </div>
+
+        <div class="stat-text">
+          Followers
+        </div>
+
+      </div>
+
+      <div
+      class="stat"
+      onclick="openFollowing()">
+
+        <div
+        class="stat-number"
+        id="followingCount">
+          289
+        </div>
+
+        <div class="stat-text">
+          Following
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- NAME -->
+
+  <div
+  class="profile-name"
+  id="profileName">
+    MegaChat User
+  </div>
+
+  <!-- BIO -->
+
+  <div
+  class="bio"
+  id="profileBio">
+    ✨ Building the future with MegaChat Go
+    <br>
+    💜 Friends • Chats • Videos • AI
+  </div>
+
+  <!-- BUTTONS -->
+
+  <div class="profile-buttons">
+
+    <div
+    class="profile-btn main-btn"
+    onclick="editProfile()">
+      Edit Profile
+    </div>
+
+    <div
+    class="profile-btn"
+    onclick="shareProfile()">
+      Share Profile
+    </div>
+
+  </div>
+
+  <!-- FRIENDS -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Peeps
+    </div>
+
+    <div class="friends">
+
+      <!-- ALEX -->
+
+      <div
+      class="friend"
+      onclick="openFriend(
+      'Alex Morgan',
+      'https://i.pravatar.cc/300?img=2',
+      'alex_001'
+      )">
+
+        <img
+        src="https://i.pravatar.cc/300?img=2">
+
+        <p>Alex</p>
+
+      </div>
+
+      <!-- SARAH -->
+
+      <div
+      class="friend"
+      onclick="openFriend(
+      'Sarah Lee',
+      'https://i.pravatar.cc/300?img=3',
+      'sarah_001'
+      )">
+
+        <img
+        src="https://i.pravatar.cc/300?img=3">
+
+        <p>Sarah</p>
+
+      </div>
+
+      <!-- CHRIS -->
+
+      <div
+      class="friend"
+      onclick="openFriend(
+      'Chris Noah',
+      'https://i.pravatar.cc/300?img=4',
+      'chris_001'
+      )">
+
+        <img
+        src="https://i.pravatar.cc/300?img=4">
+
+        <p>Chris</p>
+
+      </div>
+
+      <!-- EMMA -->
+
+      <div
+      class="friend"
+      onclick="openFriend(
+      'Emma Stone',
+      'https://i.pravatar.cc/300?img=5',
+      'emma_001'
+      )">
+
+        <img
+        src="https://i.pravatar.cc/300?img=5">
+
+        <p>Emma</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- POSTS -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Your Posts
+    </div>
+
+    <div class="posts-grid">
+
+      <div
+      class="post"
+      onclick="openPost(1)">
+
+        <img
+        src="https://picsum.photos/400?1">
+
+        <div class="post-overlay">
+          245 Likes
+        </div>
+
+      </div>
+
+      <div
+      class="post"
+      onclick="openPost(2)">
+
+        <img
+        src="https://picsum.photos/400?2">
+
+        <div class="post-overlay">
+          991 Likes
+        </div>
+
+      </div>
+
+      <div
+      class="post"
+      onclick="openPost(3)">
+
+        <img
+        src="https://picsum.photos/400?3">
+
+        <div class="post-overlay">
+          104 Likes
+        </div>
+
+      </div>
+
+      <div
+      class="post"
+      onclick="openPost(4)">
+
+        <img
+        src="https://picsum.photos/400?4">
+
+        <div class="post-overlay">
+          431 Likes
+        </div>
+
+      </div>
+
+      <div
+      class="post"
+      onclick="openPost(5)">
+
+        <img
+        src="https://picsum.photos/400?5">
+
+        <div class="post-overlay">
+          87 Likes
+        </div>
+
+      </div>
+
+      <div
+      class="post"
+      onclick="openPost(6)">
+
+        <img
+        src="https://picsum.photos/400?6">
+
+        <div class="post-overlay">
+          1.4K Likes
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div
+  class="nav-item"
+  onclick="goHome()">
+
+    <img src="home.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goChats()">
+
+    <img src="chat.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goCreate()">
+
+    <img src="add.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goBuzz()">
+
+    <img src="buzz.png">
+
+  </div>
+
+  <div
+  class="nav-item active"
+  onclick="goProfile()">
+
+    <img src="profile.png">
+
+  </div>
+
+</div>
+
+<!-- HIDDEN FILE INPUT -->
+
+<input
+type="file"
+id="photoInput"
+accept="image/*"
+style="display:none">
+
+<script>
+
+/* LOAD USER DATA */
+
+const savedName =
+localStorage.getItem(
+"profile_name"
+) || "MegaChat User"
+
+const savedUsername =
+localStorage.getItem(
+"profile_username"
+) || "@megachat"
+
+const savedBio =
+localStorage.getItem(
+"profile_bio"
+) || "✨ Building the future with MegaChat Go"
+
+const savedPhoto =
+localStorage.getItem(
+"profile_photo"
+) || "https://i.pravatar.cc/300?img=12"
+
+/* APPLY */
+
+document.getElementById(
+"profileName"
+).innerHTML = savedName
+
+document.getElementById(
+"topUsername"
+).innerHTML = savedUsername
+
+document.getElementById(
+"profileBio"
+).innerHTML = savedBio
+
+document.getElementById(
+"profileImage"
+).src = savedPhoto
+
+/* CHANGE PHOTO */
+
+function changePhoto(){
+
+  document.getElementById(
+  "photoInput"
+  ).click()
+
+}
+
+document.getElementById(
+"photoInput"
+).addEventListener(
+"change",
+function(e){
+
+  const file =
+  e.target.files[0]
+
+  if(!file) return
+
+  const reader =
+  new FileReader()
+
+  reader.onload =
+  function(event){
+
+    const image =
+    event.target.result
+
+    document.getElementById(
+    "profileImage"
+    ).src = image
+
+    localStorage.setItem(
+    "profile_photo",
+    image
+    )
+
+  }
+
+  reader.readAsDataURL(file)
+
+})
+
+/* BUTTON FUNCTIONS */
+
+function editProfile(){
+
+  window.location.href =
+  "editprofile.html"
+
+}
+
+function shareProfile(){
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"MegaChat Profile",
+
+      text:
+      "Follow me on MegaChat Go 💜"
+
+    })
+
+  }
+
+  else{
+
+    alert(
+    "Profile shared!"
+    )
+
+  }
+
+}
+
+/* OPEN POSTS */
+
+function openPosts(){
+
+  window.location.href =
+  "posts.html"
+
+}
+
+/* OPEN SINGLE POST */
+
+function openPost(id){
+
+  localStorage.setItem(
+  "opened_post_id",
+  id
+  )
+
+  window.location.href =
+  "postviewer.html"
+
+}
+
+/* FOLLOWERS */
+
+function openFollowers(){
+
+  window.location.href =
+  "followers.html"
+
+}
+
+/* FOLLOWING */
+
+function openFollowing(){
+
+  window.location.href =
+  "following.html"
+
+}
+
+/* OPEN FRIEND CHAT */
+
+function openFriend(
+name,
+picture,
+id
+){
+
+  localStorage.setItem(
+  "chat_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_user_id",
+  id
+  )
+
+  localStorage.setItem(
+  "is_lyno_ai",
+  "false"
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+function openEditProfile(){
+
+  editProfile()
+
+}
+
+function openSettings(){
+
+  window.location.href =
+  "settings.html"
+
+}
+
+/* NAVIGATION */
+
+function goHome(){
+
+  window.location.href =
+  "home.html"
+
+}
+
+function goChats(){
+
+  window.location.href =
+  "chat.html"
+
+}
+
+function goCreate(){
+
+  window.location.href =
+  "create.html"
+
+}
+
+function goBuzz(){
+
+  window.location.href =
+  "buzz.html"
+
+}
+
+function goProfile(){
+
+  window.location.href =
+  "profile.html"
+
+}
+
+</script>
+
+</body>
+</html>
