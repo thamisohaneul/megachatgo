@@ -458,8 +458,7 @@ interactive-widget=resizes-content"><title>MegaChat Chatroom</title>
 
 <div  
 class="back-btn"  
-onclick="goBack()">  
-  ←  
+onclick="goBack()"><a href="chat.html"><img src="back.png"></a> 
 </div>  
 
 <!-- PROFILE -->  
@@ -493,7 +492,7 @@ src="https://i.pravatar.cc/150?img=2">
 
 <div  
 class="icon"  
-onclick="openSettings()">  
+onclick="openSettings()"><a href="profilesettings.html"> 
   ⚙  
 </div>  
 
@@ -502,7 +501,7 @@ onclick="openSettings()">
 <div  
 class="icon"  
 id="videoBtn"  
-onclick="openVideoCall()">  
+onclick="openVideoCall()"><a href"videocall.html"> 
 
   <img src="video-call.png">  
 
@@ -513,7 +512,7 @@ onclick="openVideoCall()">
 <div  
 class="icon"  
 id="audioBtn"  
-onclick="openAudioCall()">  
+onclick="openAudioCall()"><a href="audiocall.html"> 
   📞  
 </div>
 
@@ -527,12 +526,12 @@ id="chatArea">    <div class="message received">  Hello 👋
 
   </div>  </div>  <!-- INPUT BAR -->  <div class="input-bar">    <!-- FILE -->    <div  
   class="small-btn"  
-  onclick="openFiles()">  
+  onclick="openFiles()"><a href="chatfiles.html"> 
     ＋  
   </div>    <!-- RECORD -->    <div  
   class="small-btn"  
   id="recordBtn"  
-  onclick="toggleRecording()">  <img src="voice-call.png">
+  onclick="toggleRecording()"><img src="voice-call.png">
 
   </div>    <!-- INPUT -->  <input  
 type="text"  
@@ -668,7 +667,7 @@ function aiReply(){
 
     messages.push({
       id: Date.now(),
-      text: "🤖 Lyno AI: I’m processing your request...",
+      text: "🤖 Lyno AI:"CEO 'Tebogo Thamiso Seroke' is still working on AI features,it will be available soon..."
       type: "received",
       status: "seen",
       time: getTime()
