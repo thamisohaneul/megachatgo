@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>Share</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(12px);
+
+  height:100vh;
+  overflow:hidden;
+}
+
+/* BACKDROP */
+
+.backdrop{
+  position:fixed;
+  inset:0;
+}
+
+/* SHEET */
+
+.sheet{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:68vh;
+
+  background:#fff;
+
+  border-radius:30px 30px 0 0;
+
+  overflow-y:auto;
+
+  padding:14px 18px 34px;
+
+  animation:up .22s ease;
+}
+
+/* HANDLE */
+
+.handle{
+  width:52px;
+  height:5px;
+
+  border-radius:50px;
+
+  background:#ccc;
+
+  margin:4px auto 18px;
+}
+
+/* TOP */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:24px;
+}
+
+.title{
+  font-size:22px;
+  font-weight:800;
+}
+
+.close{
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+
+  gap:24px 12px;
+}
+
+/* ITEM */
+
+.item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.icon{
+  width:56px;
+  height:56px;
+
+  border-radius:18px;
+
+  background:#f7f7f7;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  margin-bottom:8px;
+}
+
+.item p{
+  font-size:13px;
+  text-align:center;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.45);
+
+  display:none;
+
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+}
+
+.modal-box{
+  width:90%;
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:22px;
+
+  animation:popup .22s ease;
+}
+
+/* TITLE */
+
+.modal-title{
+  font-size:22px;
+  font-weight:800;
+
+  margin-bottom:18px;
+}
+
+/* INPUT */
+
+.input{
+  width:100%;
+  height:54px;
+
+  border:none;
+  outline:none;
+
+  background:#f3f3f3;
+
+  border-radius:18px;
+
+  padding:0 16px;
+
+  margin-bottom:12px;
+
+  font-size:15px;
+}
+
+/* BUTTON */
+
+.send{
+  width:100%;
+  height:54px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  font-size:16px;
+  font-weight:800;
+}
+
+/* ANIMATIONS */
+
+@keyframes up{
+
+  from{
+    transform:translateY(100%);
+  }
+
+  to{
+    transform:translateY(0);
+  }
+
+}
+
+@keyframes popup{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div
+class="backdrop"
+onclick="goBack()"></div>
+
+<!-- SHEET -->
+
+<div class="sheet">
+
+  <div class="handle"></div>
+
+  <div class="top">
+
+    <div class="title">
+      Share
+    </div>
+
+    <div
+    class="close"
+    onclick="goBack()">
+      ✕
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+
+  <div class="grid">
+
+    <!-- PHOTOS -->
+
+    <div
+    class="item"
+    onclick="openPhotos()">
+
+      <div class="icon">🖼</div>
+
+      <p>Photos</p>
+
+    </div>
+
+    <!-- VIDEOS -->
+
+    <div
+    class="item"
+    onclick="openVideos()">
+
+      <div class="icon">🎥</div>
+
+      <p>Videos</p>
+
+    </div>
+
+    <!-- MUSIC -->
+
+    <div
+    class="item"
+    onclick="openMusic()">
+
+      <div class="icon">🎵</div>
+
+      <p>Music</p>
+
+    </div>
+
+    <!-- POLL -->
+
+    <div
+    class="item"
+    onclick="openPoll()">
+
+      <div class="icon">📊</div>
+
+      <p>Poll</p>
+
+    </div>
+
+    <!-- APPS -->
+
+    <div
+    class="item"
+    onclick="openApps()">
+
+      <div class="icon">📱</div>
+
+      <p>Apps</p>
+
+    </div>
+
+    <!-- CONTACTS -->
+
+    <div
+    class="item"
+    onclick="shareContact()">
+
+      <div class="icon contacts">👤</div>
+
+      <div class="label">
+        <p>Contacts</p>
+      </div>
+
+    </div>
+
+    <!-- FILES -->
+
+    <div
+    class="item"
+    onclick="openFiles()">
+
+      <div class="icon">📄</div>
+
+      <p>Files</p>
+
+    </div>
+
+    <!-- EVENT -->
+
+    <div
+    class="item"
+    onclick="openEvent()">
+
+      <div class="icon">📅</div>
+
+      <p>Event</p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- POLL MODAL -->
+
+<div
+class="modal"
+id="pollModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      Create Poll
+    </div>
+
+    <input
+    id="pollQuestion"
+    class="input"
+    placeholder="Question">
+
+    <input
+    id="poll1"
+    class="input"
+    placeholder="Option 1">
+
+    <input
+    id="poll2"
+    class="input"
+    placeholder="Option 2">
+
+    <button
+    class="send"
+    onclick="sendPoll()">
+      Send Poll
+    </button>
+
+  </div>
+
+</div>
+
+<!-- EVENT MODAL -->
+
+<div
+class="modal"
+id="eventModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      Create Event
+    </div>
+
+    <input
+    id="eventName"
+    class="input"
+    placeholder="Event name">
+
+    <input
+    type="date"
+    id="eventDate"
+    class="input">
+
+    <input
+    type="time"
+    id="eventTime"
+    class="input">
+
+    <button
+    class="send"
+    onclick="sendEvent()">
+      Create Event
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+/* USER ID */
+
+let userId =
+localStorage.getItem(
+"opened_user_id"
+) || "default_user"
+
+/* BACK */
+
+function goBack(){
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* STORAGE PICKERS */
+
+function openPhotos(){
+
+  let input =
+  document.createElement("input")
+
+  input.type = "file"
+
+  input.accept = "image/*"
+
+  input.click()
+
+}
+
+function openVideos(){
+
+  let input =
+  document.createElement("input")
+
+  input.type = "file"
+
+  input.accept = "video/*"
+
+  input.click()
+
+}
+
+function openMusic(){
+
+  let input =
+  document.createElement("input")
+
+  input.type = "file"
+
+  input.accept = "audio/*"
+
+  input.click()
+
+}
+
+function openFiles(){
+
+  let input =
+  document.createElement("input")
+
+  input.type = "file"
+
+  input.click()
+
+}
+
+function openApps(){
+
+  let input =
+  document.createElement("input")
+
+  input.type = "file"
+
+  input.accept =
+  ".apk,.xapk"
+
+  input.click()
+
+}
+
+/* CONTACTS */
+
+async function shareContact(){
+
+  if("contacts" in navigator &&
+  "ContactsManager" in window){
+
+    try{
+
+      const contacts =
+      await navigator.contacts.select(
+      ["name","tel"],
+      {multiple:false}
+      )
+
+      if(contacts.length > 0){
+
+        let c = contacts[0]
+
+        sendMessage(
+`👤 Contact Shared
+
+${c.name}
+
+${c.tel}`
+        )
+
+      }
+
+    }
+
+    catch(err){
+
+      alert(
+      "Contacts permission denied"
+      )
+
+    }
+
+  }
+
+  else{
+
+    let name =
+    prompt(
+    "Contact name"
+    )
+
+    let phone =
+    prompt(
+    "Phone number"
+    )
+
+    if(name){
+
+      sendMessage(
+`👤 Contact Shared
+
+${name}
+
+${phone}`
+      )
+
+    }
+
+  }
+
+}
+/* POLL */
+
+function openPoll(){
+
+  document.getElementById(
+  "pollModal"
+  ).style.display =
+  "flex"
+
+}
+
+function sendPoll(){
+
+  let question =
+  document.getElementById(
+  "pollQuestion"
+  ).value
+
+  let opt1 =
+  document.getElementById(
+  "poll1"
+  ).value
+
+  let opt2 =
+  document.getElementById(
+  "poll2"
+  ).value
+
+  if(
+  !question ||
+  !opt1 ||
+  !opt2
+  ) return
+
+  let messages =
+  JSON.parse(
+  localStorage.getItem(
+  "chat_" + userId
+  )) || []
+
+  messages.push({
+
+    type:"poll",
+
+    question:question,
+
+    options:[
+      opt1,
+      opt2
+    ],
+
+    time:new Date()
+    .toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+
+  })
+
+  localStorage.setItem(
+  "chat_" + userId,
+  JSON.stringify(messages)
+  )
+
+  goBack()
+
+}
+
+/* EVENT */
+
+function openEvent(){
+
+  document.getElementById(
+  "eventModal"
+  ).style.display =
+  "flex"
+
+}
+
+function sendEvent(){
+
+  let name =
+  document.getElementById(
+  "eventName"
+  ).value
+
+  let date =
+  document.getElementById(
+  "eventDate"
+  ).value
+
+  let time =
+  document.getElementById(
+  "eventTime"
+  ).value
+
+  if(
+  !name ||
+  !date ||
+  !time
+  ) return
+
+  let messages =
+  JSON.parse(
+  localStorage.getItem(
+  "chat_" + userId
+  )) || []
+
+  messages.push({
+
+    type:"event",
+
+    name:name,
+
+    date:date,
+
+    eventTime:time,
+
+    time:new Date()
+    .toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+
+  })
+
+  localStorage.setItem(
+  "chat_" + userId,
+  JSON.stringify(messages)
+  )
+
+  goBack()
+
+}
+
+</script>
+
+</body>
+</html>
