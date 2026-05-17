@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Settings</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  height:88px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 18px;
+}
+
+.back-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  transition:.2s;
+}
+
+.title{
+  margin-left:14px;
+
+  font-size:28px;
+  font-weight:900;
+}
+
+/* CONTENT */
+
+.content{
+  padding:18px 18px 120px;
+}
+
+/* PROFILE CARD */
+
+.profile-card{
+  background:white;
+
+  border-radius:34px;
+
+  padding:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.04);
+
+  margin-bottom:26px;
+}
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.profile-left img{
+  width:74px;
+  height:74px;
+
+  border-radius:26px;
+
+  object-fit:cover;
+
+  border:3px solid #8a2be2;
+}
+
+.profile-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.profile-name{
+  font-size:18px;
+  font-weight:800;
+}
+
+.profile-username{
+  margin-top:4px;
+
+  font-size:13px;
+
+  color:#777;
+}
+
+.edit-btn{
+  padding:12px 18px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+
+  font-size:13px;
+  font-weight:700;
+
+  transition:.2s;
+}
+
+/* SECTION */
+
+.section{
+  margin-bottom:26px;
+}
+
+.section-title{
+  margin-bottom:12px;
+
+  font-size:14px;
+  font-weight:800;
+
+  color:#8a2be2;
+
+  padding-left:6px;
+}
+
+/* SETTINGS LIST */
+
+.settings-list{
+  background:white;
+
+  border-radius:32px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.04);
+}
+
+/* ITEM */
+
+.setting-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:18px;
+
+  border-bottom:1px solid #f1f1f1;
+
+  transition:.2s;
+}
+
+.setting-item:last-child{
+  border-bottom:none;
+}
+
+.setting-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.setting-icon{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:#f3e8ff;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  color:#8a2be2;
+}
+
+.setting-text{
+  display:flex;
+  flex-direction:column;
+}
+
+.setting-name{
+  font-size:15px;
+  font-weight:700;
+}
+
+.setting-sub{
+  margin-top:4px;
+
+  font-size:12px;
+
+  color:#777;
+}
+
+.setting-right{
+  font-size:22px;
+  color:#999;
+}
+
+/* LYNO CENTER */
+
+.lyno-center{
+  background:white;
+
+  border-radius:32px;
+
+  padding:20px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:26px;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.04);
+}
+
+.lyno-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.lyno-left img{
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+}
+
+.lyno-text{
+  display:flex;
+  flex-direction:column;
+}
+
+.lyno-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.lyno-sub{
+  margin-top:4px;
+
+  font-size:13px;
+
+  color:#777;
+}
+
+/* ACCOUNT BUTTONS */
+
+.account-actions{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.action-btn{
+  height:60px;
+
+  border-radius:24px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:16px;
+  font-weight:800;
+
+  transition:.2s;
+}
+
+.switch-btn{
+  background:white;
+
+  color:#8a2be2;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.04);
+}
+
+.logout-btn{
+  background:linear-gradient(
+  135deg,
+  #ff375f,
+  #ff6482
+  );
+
+  color:white;
+}
+
+/* TAP EFFECT */
+
+.setting-item:active,
+.action-btn:active,
+.back-btn:active,
+.edit-btn:active{
+  transform:scale(.97);
+}
+
+/* SMOOTH */
+
+html{
+  scroll-behavior:smooth;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div
+  class="back-btn"
+  onclick="goBack()">
+    ←
+  </div>
+
+  <div class="title">
+    Settings
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- PROFILE -->
+
+  <div class="profile-card">
+
+    <div class="profile-left">
+
+      <img
+      id="profileImage"
+      src="https://i.pravatar.cc/150?img=12">
+
+      <div class="profile-info">
+
+        <div
+        class="profile-name"
+        id="profileName">
+          Mega User
+        </div>
+
+        <div
+        class="profile-username"
+        id="profileUsername">
+          @megachat
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+    class="edit-btn"
+    onclick="editProfile()">
+      Edit
+    </div>
+
+  </div>
+
+  <!-- LYNO CENTER -->
+
+  <div
+  class="lyno-center"
+  onclick="openLynoCenter()">
+
+    <div class="lyno-left">
+
+      <img src="logo.png">
+
+      <div class="lyno-text">
+
+        <div class="lyno-title">
+          Lyno Center
+        </div>
+
+        <div class="lyno-sub">
+          Security, AI & account controls
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="setting-right">
+      ›
+    </div>
+
+  </div>
+
+  <!-- ACCOUNT -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Your Account
+    </div>
+
+    <div class="settings-list">
+
+      <div
+      class="setting-item"
+      onclick="openPage('profile.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            👤
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Profile
+            </div>
+
+            <div class="setting-sub">
+              Edit your account profile
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+      <div
+      class="setting-item"
+      onclick="openPage('followers.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            👥
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Followers & Friends
+            </div>
+
+            <div class="setting-sub">
+              Manage followers and requests
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+      <div
+      class="setting-item"
+      onclick="openPage('privacy.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            🔒
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Privacy
+            </div>
+
+            <div class="setting-sub">
+              Control your visibility
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CHAT -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Chats & Notifications
+    </div>
+
+    <div class="settings-list">
+
+      <div
+      class="setting-item"
+      onclick="openPage('chatsettings.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            💬
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Chat Settings
+            </div>
+
+            <div class="setting-sub">
+              Wallpapers, backups & media
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+      <div
+      class="setting-item"
+      onclick="openPage('notifications.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            🔔
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Notifications
+            </div>
+
+            <div class="setting-sub">
+              Sounds, calls & messages
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+      <div
+      class="setting-item"
+      onclick="openPage('storage.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            📁
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Storage & Data
+            </div>
+
+            <div class="setting-sub">
+              Media usage and downloads
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SECURITY -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Security
+    </div>
+
+    <div class="settings-list">
+
+      <div
+      class="setting-item"
+      onclick="openPage('security.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            🛡️
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Account Security
+            </div>
+
+            <div class="setting-sub">
+              Password and login activity
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+      <div
+      class="setting-item"
+      onclick="openPage('blocked.html')">
+
+        <div class="setting-left">
+
+          <div class="setting-icon">
+            🚫
+          </div>
+
+          <div class="setting-text">
+
+            <div class="setting-name">
+              Blocked Users
+            </div>
+
+            <div class="setting-sub">
+              Manage blocked accounts
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="setting-right">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ACCOUNT ACTIONS -->
+
+  <div class="account-actions">
+
+    <div
+    class="action-btn switch-btn"
+    onclick="switchAccount()">
+      Switch Account
+    </div>
+
+    <div
+    class="action-btn logout-btn"
+    onclick="logout()">
+      Log Out
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* LOAD USER */
+
+let savedName =
+localStorage.getItem("profile_name")
+|| "Mega User"
+
+let savedUsername =
+localStorage.getItem("profile_username")
+|| "@megachat"
+
+let savedPhoto =
+localStorage.getItem("profile_photo")
+|| "https://i.pravatar.cc/150?img=12"
+
+document.getElementById(
+"profileName"
+).innerHTML = savedName
+
+document.getElementById(
+"profileUsername"
+).innerHTML = savedUsername
+
+document.getElementById(
+"profileImage"
+).src = savedPhoto
+
+/* FUNCTIONS */
+
+function goBack(){
+
+  window.location.href =
+  "profile.html"
+
+}
+
+function editProfile(){
+
+  window.location.href =
+  "editprofile.html"
+
+}
+
+function openLynoCenter(){
+
+  window.location.href =
+  "lynocenter.html"
+
+}
+
+function openPage(page){
+
+  window.location.href = page
+
+}
+
+function switchAccount(){
+
+  alert(
+  "Switch Account clicked"
+  )
+
+  window.location.href =
+  "login.html"
+
+}
+
+function logout(){
+
+  let confirmLogout =
+  confirm(
+  "Are you sure you want to log out?"
+  )
+
+  if(confirmLogout){
+
+    localStorage.removeItem(
+    "opened_user_id"
+    )
+
+    localStorage.removeItem(
+    "is_lyno_ai"
+    )
+
+    window.location.href =
+    "login.html"
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
