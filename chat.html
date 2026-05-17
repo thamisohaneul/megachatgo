@@ -762,7 +762,65 @@ onclick="openLynoAI()">
 
 <script>
 
-/* NORMAL CHAT */
+/* SAVE CHAT PREVIEW */
+
+function updateChatPreview(
+id,
+name,
+picture,
+message,
+time
+){
+
+  let chats =
+  JSON.parse(
+  localStorage.getItem(
+  "megachat_chats"
+  )) || []
+
+  let existing =
+  chats.find(chat => chat.id === id)
+
+  if(existing){
+
+    existing.message = message
+    existing.time = time
+    existing.picture = picture
+    existing.name = name
+    existing.unread =
+    (existing.unread || 0) + 1
+
+  }
+
+  else{
+
+    chats.push({
+
+      id:id,
+      name:name,
+      picture:picture,
+      message:message,
+      time:time,
+      unread:1
+
+    })
+
+  }
+
+  /* NEWEST FIRST */
+
+  chats.sort((a,b)=>
+    b.updatedAt - a.updatedAt
+  )
+
+  localStorage.setItem(
+  "megachat_chats",
+  JSON.stringify(chats)
+  )
+
+}
+
+/* OPEN CHAT */
 
 function openChat(
 name,
@@ -790,12 +848,35 @@ id
   "false"
   )
 
+  /* RESET UNREAD */
+
+  let chats =
+  JSON.parse(
+  localStorage.getItem(
+  "megachat_chats"
+  )) || []
+
+  chats.forEach(chat=>{
+
+    if(chat.id === id){
+
+      chat.unread = 0
+
+    }
+
+  })
+
+  localStorage.setItem(
+  "megachat_chats",
+  JSON.stringify(chats)
+  )
+
   window.location.href =
   "chatroom.html"
 
 }
 
-/* LYNO AI CHAT */
+/* OPEN LYNO AI */
 
 function openLynoAI(){
 
@@ -824,7 +905,91 @@ function openLynoAI(){
 
 }
 
-/* CHAT SETTINGS */
+/* RENDER CHAT LIST */
+
+function renderChats(){
+
+  let container =
+  document.querySelector(
+  ".chat-list"
+  )
+
+  container.innerHTML = ""
+
+  let chats =
+  JSON.parse(
+  localStorage.getItem(
+  "megachat_chats"
+  )) || []
+
+  /* SORT NEWEST */
+
+  chats.sort((a,b)=>
+    b.updatedAt - a.updatedAt
+  )
+
+  chats.forEach(chat=>{
+
+    container.innerHTML += `
+
+    <div
+    class="chat-item"
+    onclick="openChat(
+    '${chat.name}',
+    '${chat.picture}',
+    '${chat.id}'
+    )">
+
+      <div class="chat-left">
+
+        <img src="${chat.picture}">
+
+        <div class="chat-info">
+
+          <div class="username">
+            ${chat.name}
+          </div>
+
+          <div class="message">
+            ${chat.message}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-right">
+
+        <div class="time">
+          ${chat.time}
+        </div>
+
+        ${
+          chat.unread > 0
+          ?
+
+          `<div class="badge">
+            ${chat.unread}
+          </div>`
+
+          : ""
+        }
+
+      </div>
+
+    </div>
+
+    `
+
+  })
+
+}
+
+/* INIT */
+
+renderChats()
+
+/* SETTINGS */
 
 function openChatSettings(){
 
