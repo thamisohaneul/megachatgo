@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Home</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#f6f6f8;
+  color:#111;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:86px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid #ececec;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  z-index:100;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* HEADER RIGHT */
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.top-btn{
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:#f3f3f3;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.2s;
+}
+
+.top-btn img{
+  width:24px;
+  height:24px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:
+  104px 0 110px;
+}
+
+/* STORIES */
+
+.stories{
+  display:flex;
+  gap:16px;
+
+  overflow-x:auto;
+
+  padding:0 18px 10px;
+
+  scrollbar-width:none;
+}
+
+.stories::-webkit-scrollbar{
+  display:none;
+}
+
+/* STORY */
+
+.story{
+  min-width:78px;
+
+  text-align:center;
+}
+
+.story-ring{
+  width:78px;
+  height:78px;
+
+  border-radius:28px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc,
+  #d8b4fe
+  );
+
+  padding:3px;
+
+  box-shadow:
+  0 10px 24px rgba(138,43,226,.18);
+}
+
+.story-inner{
+  width:100%;
+  height:100%;
+
+  border-radius:24px;
+
+  background:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.story-inner img{
+  width:64px;
+  height:64px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+}
+
+.story-name{
+  margin-top:8px;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* FEED */
+
+.feed{
+  margin-top:18px;
+  padding:0 18px;
+}
+
+/* POST */
+
+.post{
+  background:white;
+
+  border-radius:34px;
+
+  overflow:hidden;
+
+  margin-bottom:24px;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.04);
+}
+
+/* POST TOP */
+
+.post-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px;
+}
+
+.post-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.post-user img{
+  width:54px;
+  height:54px;
+
+  border-radius:20px;
+
+  object-fit:cover;
+
+  border:2px solid #8a2be2;
+}
+
+.post-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.post-name{
+  font-size:15px;
+  font-weight:800;
+}
+
+.post-time{
+  margin-top:4px;
+
+  font-size:12px;
+
+  color:#777;
+}
+
+/* POST IMAGE */
+
+.post-image{
+  width:100%;
+  height:390px;
+
+  object-fit:cover;
+
+  background:#eee;
+}
+
+/* POST ACTIONS */
+
+.post-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:16px 18px;
+}
+
+.left-actions{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.action{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  font-size:14px;
+  font-weight:700;
+
+  color:#444;
+
+  transition:.2s;
+}
+
+.action img{
+  width:22px;
+  height:22px;
+}
+
+/* CAPTION */
+
+.caption{
+  padding:
+  0 18px 18px;
+
+  font-size:14px;
+
+  line-height:1.6;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:84px;
+
+  background:rgba(255,255,255,.96);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid #ececec;
+
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  z-index:100;
+}
+
+.nav-item{
+  width:54px;
+  height:54px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:.2s;
+}
+
+.nav-item img{
+  width:25px;
+  height:25px;
+}
+
+.active{
+  background:#f3e8ff;
+}
+
+/* SHARE POPUP */
+
+.share-popup{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.35);
+
+  display:none;
+  justify-content:flex-end;
+  flex-direction:column;
+
+  z-index:999;
+}
+
+.share-box{
+  background:white;
+
+  border-radius:34px 34px 0 0;
+
+  padding:24px;
+
+  animation:up .25s ease;
+}
+
+.share-title{
+  font-size:20px;
+  font-weight:800;
+
+  margin-bottom:18px;
+}
+
+.share-btn{
+  width:100%;
+  height:58px;
+
+  border:none;
+
+  border-radius:20px;
+
+  margin-bottom:14px;
+
+  font-size:15px;
+  font-weight:800;
+
+  background:#f3f3f3;
+
+  transition:.2s;
+}
+
+.save-btn{
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  color:white;
+}
+
+/* TAP */
+
+.top-btn:active,
+.story:active,
+.action:active,
+.nav-item:active,
+.share-btn:active{
+  transform:scale(.95);
+}
+
+/* ANIMATION */
+
+@keyframes up{
+
+  from{
+    transform:translateY(100%);
+  }
+
+  to{
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="logo">
+    MegaChat
+  </div>
+
+  <div class="header-right">
+
+    <!-- NOTIFICATIONS -->
+
+    <div
+    class="top-btn"
+    onclick="openNotifications()">
+
+      <img src="notification.png">
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div
+    class="top-btn"
+    onclick="openChats()">
+
+      <img src="chat.png">
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+  <!-- STORIES -->
+
+  <div class="stories">
+
+    <!-- YOU -->
+
+    <div
+    class="story"
+    onclick="openStatus(
+    'You',
+    'https://i.pravatar.cc/150?img=1',
+    'you_001'
+    )">
+
+      <div class="story-ring">
+
+        <div class="story-inner">
+
+          <img src="https://i.pravatar.cc/150?img=1">
+
+        </div>
+
+      </div>
+
+      <div class="story-name">
+        You
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div
+    class="story"
+    onclick="openStatus(
+    'Alex Morgan',
+    'https://i.pravatar.cc/150?img=2',
+    'alex_001'
+    )">
+
+      <div class="story-ring">
+
+        <div class="story-inner">
+
+          <img src="https://i.pravatar.cc/150?img=2">
+
+        </div>
+
+      </div>
+
+      <div class="story-name">
+        Alex
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div
+    class="story"
+    onclick="openStatus(
+    'Sarah Lee',
+    'https://i.pravatar.cc/150?img=3',
+    'sarah_001'
+    )">
+
+      <div class="story-ring">
+
+        <div class="story-inner">
+
+          <img src="https://i.pravatar.cc/150?img=3">
+
+        </div>
+
+      </div>
+
+      <div class="story-name">
+        Sarah
+      </div>
+
+    </div>
+
+    <!-- USER -->
+
+    <div
+    class="story"
+    onclick="openStatus(
+    'Chris Noah',
+    'https://i.pravatar.cc/150?img=4',
+    'chris_001'
+    )">
+
+      <div class="story-ring">
+
+        <div class="story-inner">
+
+          <img src="https://i.pravatar.cc/150?img=4">
+
+        </div>
+
+      </div>
+
+      <div class="story-name">
+        Chris
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FEED -->
+
+  <div class="feed">
+
+    <!-- POST -->
+
+    <div class="post">
+
+      <div class="post-top">
+
+        <div
+        class="post-user"
+        onclick="openProfile('alex_001')">
+
+          <img src="https://i.pravatar.cc/500?img=12">
+
+          <div class="post-info">
+
+            <div class="post-name">
+              Alex Morgan
+            </div>
+
+            <div class="post-time">
+              12 min ago
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <img
+      class="post-image"
+      src="https://picsum.photos/700/900?1"
+      onclick="openPost(
+      'https://picsum.photos/700/900?1'
+      )">
+
+      <div class="post-actions">
+
+        <div class="left-actions">
+
+          <div
+          class="action"
+          onclick="likePost(this)">
+
+            ❤️ <span>1.2K</span>
+
+          </div>
+
+          <div
+          class="action"
+          onclick="openComments()">
+
+            💬 <span>224</span>
+
+          </div>
+
+          <div
+          class="action"
+          onclick="openShare(
+          'https://picsum.photos/700/900?1'
+          )">
+
+            📤 <span>Share</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="caption">
+
+        <b>Alex Morgan</b>
+        Enjoying the sunset vibes 🌅
+
+      </div>
+
+    </div>
+
+    <!-- POST -->
+
+    <div class="post">
+
+      <div class="post-top">
+
+        <div
+        class="post-user"
+        onclick="openProfile('sarah_001')">
+
+          <img src="https://i.pravatar.cc/500?img=20">
+
+          <div class="post-info">
+
+            <div class="post-name">
+              Sarah Lee
+            </div>
+
+            <div class="post-time">
+              1 hour ago
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <img
+      class="post-image"
+      src="https://picsum.photos/700/900?2"
+      onclick="openPost(
+      'https://picsum.photos/700/900?2'
+      )">
+
+      <div class="post-actions">
+
+        <div class="left-actions">
+
+          <div
+          class="action"
+          onclick="likePost(this)">
+
+            ❤️ <span>892</span>
+
+          </div>
+
+          <div
+          class="action"
+          onclick="openComments()">
+
+            💬 <span>84</span>
+
+          </div>
+
+          <div
+          class="action"
+          onclick="openShare(
+          'https://picsum.photos/700/900?2'
+          )">
+
+            📤 <span>Share</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="caption">
+
+        <b>Sarah Lee</b>
+        MegaChat moments ✨
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SHARE -->
+
+<div
+class="share-popup"
+id="sharePopup">
+
+  <div class="share-box">
+
+    <div class="share-title">
+      Share Post
+    </div>
+
+    <button
+    class="share-btn save-btn"
+    onclick="saveImage()">
+      Save Image
+    </button>
+
+    <button
+    class="share-btn"
+    onclick="sharePost()">
+      Share to Friends
+    </button>
+
+    <button
+    class="share-btn"
+    onclick="closeShare()">
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+  <div
+  class="nav-item active"
+  onclick="goHome()">
+
+    <img src="home.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goSearch()">
+
+    <img src="search.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goCreate()">
+
+    <img src="add.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goBuzz()">
+
+    <img src="buzz.png">
+
+  </div>
+
+  <div
+  class="nav-item"
+  onclick="goProfile()">
+
+    <img src="profile.png">
+
+  </div>
+
+</div>
+
+<script>
+
+/* SHARE */
+
+let currentImage = ""
+
+function openShare(image){
+
+  currentImage = image
+
+  document.getElementById(
+  "sharePopup"
+  ).style.display = "flex"
+
+}
+
+function closeShare(){
+
+  document.getElementById(
+  "sharePopup"
+  ).style.display = "none"
+
+}
+
+function sharePost(){
+
+  alert(
+  "Post shared successfully"
+  )
+
+  closeShare()
+
+}
+
+/* SAVE IMAGE */
+
+function saveImage(){
+
+  let link =
+  document.createElement("a")
+
+  link.href = currentImage
+
+  link.download =
+  "MegaChat_Post.jpg"
+
+  link.click()
+
+  alert(
+  "Image saved to device"
+  )
+
+  closeShare()
+
+}
+
+/* LIKE */
+
+function likePost(btn){
+
+  btn.innerHTML =
+  "💜 <span>Liked</span>"
+
+}
+
+/* OPEN POST */
+
+function openPost(image){
+
+  localStorage.setItem(
+  "opened_post",
+  image
+  )
+
+  window.location.href =
+  "postview.html"
+
+}
+
+/* COMMENTS */
+
+function openComments(){
+
+  window.location.href =
+  "comments.html"
+
+}
+
+/* PROFILE */
+
+function openProfile(id){
+
+  localStorage.setItem(
+  "opened_profile_id",
+  id
+  )
+
+  window.location.href =
+  "userprofile.html"
+
+}
+
+/* STATUS */
+
+function openStatus(
+name,
+picture,
+id
+){
+
+  localStorage.setItem(
+  "status_user_name",
+  name
+  )
+
+  localStorage.setItem(
+  "status_user_picture",
+  picture
+  )
+
+  localStorage.setItem(
+  "opened_status_user_id",
+  id
+  )
+
+  window.location.href =
+  "status.html"
+
+}
+
+/* HEADER */
+
+function openChats(){
+
+  window.location.href =
+  "chat.html"
+
+}
+
+function openNotifications(){
+
+  window.location.href =
+  "notifications.html"
+
+}
+
+/* NAVIGATION */
+
+function goHome(){
+
+  window.location.href =
+  "home.html"
+
+}
+
+function goSearch(){
+
+  window.location.href =
+  "search.html"
+
+}
+
+function goCreate(){
+
+  window.location.href =
+  "createpost.html"
+
+}
+
+function goBuzz(){
+
+  window.location.href =
+  "buzz.html"
+
+}
+
+function goProfile(){
+
+  window.location.href =
+  "profile.html"
+
+}
+
+</script>
+
+</body>
+</html>
