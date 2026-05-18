@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>View Status</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:#000;
+  overflow:hidden;
+  color:white;
+}
+
+/* STATUS IMAGE / VIDEO */
+
+.status-media{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#000;
+}
+
+/* OVERLAY */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:
+  linear-gradient(
+  to bottom,
+  rgba(0,0,0,.55),
+  transparent 30%,
+  transparent 70%,
+  rgba(0,0,0,.55)
+  );
+  z-index:5;
+}
+
+/* TOP */
+
+.top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:92px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 16px;
+
+  z-index:20;
+}
+
+/* LEFT */
+
+.left-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.back-btn{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.12);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:24px;
+
+  backdrop-filter:blur(10px);
+
+  transition:.2s;
+}
+
+.user-photo{
+  width:54px;
+  height:54px;
+
+  border-radius:18px;
+
+  object-fit:cover;
+
+  border:2px solid #c084fc;
+}
+
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.user-name{
+  font-size:16px;
+  font-weight:800;
+}
+
+.user-time{
+  margin-top:4px;
+
+  font-size:12px;
+
+  opacity:.8;
+}
+
+/* RIGHT */
+
+.right-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.top-icon{
+  width:46px;
+  height:46px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.12);
+
+  backdrop-filter:blur(10px);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+
+  transition:.2s;
+}
+
+/* REPLY BAR */
+
+.reply-bar{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  padding:14px;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  z-index:20;
+}
+
+/* INPUT */
+
+.reply-input{
+  flex:1;
+
+  height:54px;
+
+  border:none;
+  outline:none;
+
+  border-radius:22px;
+
+  background:rgba(255,255,255,.14);
+
+  backdrop-filter:blur(12px);
+
+  color:white;
+
+  padding:0 18px;
+
+  font-size:15px;
+}
+
+.reply-input::placeholder{
+  color:#ddd;
+}
+
+/* SEND */
+
+.send-btn,
+.like-btn{
+  width:54px;
+  height:54px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:22px;
+
+  transition:.2s;
+}
+
+/* MENU */
+
+.menu{
+  position:fixed;
+
+  top:90px;
+  right:16px;
+
+  width:230px;
+
+  background:#18181f;
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  z-index:999;
+
+  display:none;
+
+  box-shadow:
+  0 14px 40px rgba(0,0,0,.45);
+}
+
+.menu-item{
+  padding:18px;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.06);
+
+  font-size:15px;
+  font-weight:700;
+
+  transition:.2s;
+}
+
+.menu-item:last-child{
+  border:none;
+}
+
+/* REPORT PANEL */
+
+.report-panel{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-100%;
+
+  background:#121218;
+
+  border-radius:30px 30px 0 0;
+
+  padding:20px;
+
+  z-index:9999;
+
+  transition:.35s ease;
+}
+
+.report-panel.show{
+  bottom:0;
+}
+
+.report-title{
+  font-size:22px;
+  font-weight:900;
+
+  margin-bottom:18px;
+}
+
+.report-option{
+  background:#1b1b24;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  margin-bottom:12px;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+.report-input{
+  width:100%;
+
+  height:120px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  background:#1b1b24;
+
+  color:white;
+
+  padding:14px;
+
+  resize:none;
+
+  margin-top:10px;
+}
+
+.report-btn{
+  margin-top:16px;
+
+  height:54px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+  135deg,
+  #8a2be2,
+  #c084fc
+  );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:15px;
+  font-weight:800;
+}
+
+/* PROGRESS */
+
+.progress-bar{
+  position:fixed;
+  top:12px;
+  left:12px;
+  right:12px;
+
+  height:4px;
+
+  background:rgba(255,255,255,.18);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  z-index:50;
+}
+
+.progress{
+  width:0%;
+  height:100%;
+
+  background:white;
+
+  animation:progress 10s linear forwards;
+}
+
+/* TAP */
+
+.top-icon:active,
+.back-btn:active,
+.send-btn:active,
+.like-btn:active,
+.menu-item:active,
+.report-option:active,
+.report-btn:active{
+  transform:scale(.95);
+}
+
+@keyframes progress{
+
+  from{
+    width:0%;
+  }
+
+  to{
+    width:100%;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- STATUS MEDIA -->
+
+<img
+id="statusImage"
+class="status-media"
+src="https://picsum.photos/500/900">
+
+<video
+id="statusVideo"
+class="status-media"
+style="display:none"
+autoplay
+loop
+controls>
+</video>
+
+<div class="overlay"></div>
+
+<!-- PROGRESS -->
+
+<div class="progress-bar">
+  <div class="progress"></div>
+</div>
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+  <div class="left-top">
+
+    <div
+    class="back-btn"
+    onclick="goBack()">
+      ←
+    </div>
+
+    <img
+    class="user-photo"
+    id="userPhoto"
+    src="https://i.pravatar.cc/150?img=2">
+
+    <div class="user-info">
+
+      <div
+      class="user-name"
+      id="userName">
+        Alex Morgan
+      </div>
+
+      <div
+      class="user-time"
+      id="statusTime">
+        3 mins ago
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="right-top">
+
+    <div
+    class="top-icon"
+    onclick="toggleMenu()">
+      ⋮
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MENU -->
+
+<div class="menu" id="menu"></div>
+
+<!-- REPLY -->
+
+<div class="reply-bar">
+
+  <input
+  type="text"
+  class="reply-input"
+  id="replyInput"
+  placeholder="Reply to status...">
+
+  <div
+  class="like-btn"
+  onclick="likeStatus()">
+    ❤
+  </div>
+
+  <div
+  class="send-btn"
+  onclick="sendReply()">
+    ➤
+  </div>
+
+</div>
+
+<!-- REPORT PANEL -->
+
+<div class="report-panel" id="reportPanel">
+
+  <div class="report-title">
+    Report Status
+  </div>
+
+  <div
+  class="report-option"
+  onclick="chooseReport('Spam')">
+    Spam
+  </div>
+
+  <div
+  class="report-option"
+  onclick="chooseReport('Violence')">
+    Violence
+  </div>
+
+  <div
+  class="report-option"
+  onclick="chooseReport('Harassment')">
+    Harassment
+  </div>
+
+  <div
+  class="report-option"
+  onclick="chooseReport('False Information')">
+    False Information
+  </div>
+
+  <textarea
+  class="report-input"
+  id="customReport"
+  placeholder="Write your report..."></textarea>
+
+  <div
+  class="report-btn"
+  onclick="submitReport()">
+    Submit Report
+  </div>
+
+</div>
+
+<script>
+
+/* USER */
+
+const userId =
+localStorage.getItem(
+"opened_status_user_id"
+) || "alex_001"
+
+const userName =
+localStorage.getItem(
+"status_user_name"
+) || "Alex Morgan"
+
+const userPicture =
+localStorage.getItem(
+"status_user_picture"
+) ||
+"https://i.pravatar.cc/150?img=2"
+
+/* ELEMENTS */
+
+const menu =
+document.getElementById("menu")
+
+document.getElementById(
+"userName"
+).innerHTML = userName
+
+document.getElementById(
+"userPhoto"
+).src = userPicture
+
+/* LOAD STATUS */
+
+let statuses =
+JSON.parse(
+localStorage.getItem(
+"megachat_statuses"
+)) || []
+
+let userStatus =
+statuses.find(
+s => s.userId === userId
+)
+
+if(userStatus){
+
+  document.getElementById(
+  "statusTime"
+  ).innerHTML =
+  formatTime(
+  userStatus.createdAt
+  )
+
+  if(userStatus.type === "photo"){
+
+    document.getElementById(
+    "statusImage"
+    ).src =
+    userStatus.media
+
+  }
+
+  if(userStatus.type === "video"){
+
+    document.getElementById(
+    "statusImage"
+    ).style.display =
+    "none"
+
+    const video =
+    document.getElementById(
+    "statusVideo"
+    )
+
+    video.style.display =
+    "block"
+
+    video.src =
+    userStatus.media
+
+  }
+
+}
+
+/* MENU */
+
+function toggleMenu(){
+
+  if(menu.style.display === "block"){
+
+    menu.style.display = "none"
+
+    return
+
+  }
+
+  const isMine =
+  userId === "you_001"
+
+  menu.innerHTML = isMine ? `
+
+    <div
+    class="menu-item"
+    onclick="forwardStatus()">
+      📤 Forward
+    </div>
+
+    <div
+    class="menu-item"
+    onclick="saveStatus()">
+      💾 Save
+    </div>
+
+    <div
+    class="menu-item"
+    onclick="deleteStatus()">
+      🗑 Delete
+    </div>
+
+  ` : `
+
+    <div
+    class="menu-item"
+    onclick="messageUser()">
+      💬 Message Me
+    </div>
+
+    <div
+    class="menu-item"
+    onclick="enableNotifications()">
+      🔔 Get Notifications
+    </div>
+
+    <div
+    class="menu-item"
+    onclick="hideStatus()">
+      🙈 Hide
+    </div>
+
+    <div
+    class="menu-item"
+    onclick="openReport()">
+      ⚠ Report
+    </div>
+
+  `
+
+  menu.style.display = "block"
+
+}
+
+/* FORWARD */
+
+function forwardStatus(){
+
+  menu.style.display = "none"
+
+  localStorage.setItem(
+  "forward_status_media",
+  userStatus.media
+  )
+
+  alert(
+  "Choose a friend to forward status"
+  )
+
+  window.location.href =
+  "chat.html"
+
+}
+
+/* SAVE */
+
+function saveStatus(){
+
+  menu.style.display = "none"
+
+  const a =
+  document.createElement("a")
+
+  a.href =
+  userStatus.media
+
+  a.download =
+  "MegaChat_Status"
+
+  a.click()
+
+  alert(
+  "Status saved to phone ✨"
+  )
+
+}
+
+/* DELETE */
+
+function deleteStatus(){
+
+  menu.style.display = "none"
+
+  let filtered =
+  statuses.filter(
+  s => s.id !== userStatus.id
+  )
+
+  localStorage.setItem(
+  "megachat_statuses",
+  JSON.stringify(filtered)
+  )
+
+  alert(
+  "Status deleted"
+  )
+
+  window.location.href =
+  "home.html"
+
+}
+
+/* MESSAGE */
+
+function messageUser(){
+
+  menu.style.display = "none"
+
+  localStorage.setItem(
+  "opened_user_id",
+  userId
+  )
+
+  localStorage.setItem(
+  "chat_user_name",
+  userName
+  )
+
+  localStorage.setItem(
+  "chat_user_picture",
+  userPicture
+  )
+
+  window.location.href =
+  "chatroom.html"
+
+}
+
+/* NOTIFICATIONS */
+
+function enableNotifications(){
+
+  menu.style.display = "none"
+
+  localStorage.setItem(
+  "notify_" + userId,
+  "true"
+  )
+
+  alert(
+  "Notifications enabled 🔔"
+  )
+
+}
+
+/* HIDE */
+
+function hideStatus(){
+
+  menu.style.display = "none"
+
+  let hidden =
+  JSON.parse(
+  localStorage.getItem(
+  "hidden_statuses"
+  )) || []
+
+  if(!hidden.includes(userId)){
+
+    hidden.push(userId)
+
+  }
+
+  localStorage.setItem(
+  "hidden_statuses",
+  JSON.stringify(hidden)
+  )
+
+  alert(
+  "Status hidden"
+  )
+
+  window.location.href =
+  "home.html"
+
+}
+
+/* REPORT */
+
+function openReport(){
+
+  menu.style.display = "none"
+
+  document.getElementById(
+  "reportPanel"
+  ).classList.add("show")
+
+}
+
+let selectedReport = ""
+
+function chooseReport(type){
+
+  selectedReport = type
+
+  alert(
+  type + " selected"
+  )
+
+}
+
+function submitReport(){
+
+  const custom =
+  document.getElementById(
+  "customReport"
+  ).value
+
+  alert(
+  "Report submitted"
+  )
+
+  document.getElementById(
+  "reportPanel"
+  ).classList.remove("show")
+
+}
+
+/* LIKE */
+
+function likeStatus(){
+
+  let likes =
+  JSON.parse(
+  localStorage.getItem(
+  "status_likes_" + userId
+  )) || []
+
+  const myId =
+  localStorage.getItem(
+  "my_user_id"
+  ) || "you_001"
+
+  /* PREVENT DOUBLE LIKE */
+
+  if(!likes.includes(myId)){
+
+    likes.push(myId)
+
+    localStorage.setItem(
+    "status_likes_" + userId,
+    JSON.stringify(likes)
+    )
+
+  }
+
+  /* BUTTON EFFECT */
+
+  const btn =
+  document.querySelector(
+  ".like-btn"
+  )
+
+  btn.style.transform =
+  "scale(1.15)"
+
+  btn.style.background =
+  "linear-gradient(135deg,#ff2d55,#ff6b81)"
+
+  setTimeout(()=>{
+
+    btn.style.transform =
+    "scale(1)"
+
+  },150)
+
+}
+
+/* REPLY */
+
+function sendReply(){
+
+  const text =
+  document.getElementById(
+  "replyInput"
+  ).value.trim()
+
+  if(text === "") return
+
+  let replies =
+  JSON.parse(
+  localStorage.getItem(
+  "status_replies_" + userId
+  )) || []
+
+  replies.push({
+
+    text:text,
+
+    time:Date.now()
+
+  })
+
+  localStorage.setItem(
+  "status_replies_" + userId,
+  JSON.stringify(replies)
+  )
+
+  document.getElementById(
+  "replyInput"
+  ).value = ""
+
+  alert(
+  "Reply sent ✨"
+  )
+
+}
+
+/* TIME FORMAT */
+
+function formatTime(time){
+
+  const now =
+  Date.now()
+
+  const diff =
+  now - time
+
+  const mins =
+  Math.floor(
+  diff / 60000
+  )
+
+  if(mins < 60){
+
+    return mins +
+    " mins ago"
+
+  }
+
+  const d =
+  new Date(time)
+
+  const today =
+  new Date()
+
+  const yesterday =
+  new Date()
+
+  yesterday.setDate(
+  today.getDate() - 1
+  )
+
+  const format =
+  d.toLocaleTimeString(
+  [],
+  {
+    hour:"2-digit",
+    minute:"2-digit"
+  })
+
+  if(
+  d.toDateString() ===
+  today.toDateString()
+  ){
+
+    return "Today, " + format
+
+  }
+
+  if(
+  d.toDateString() ===
+  yesterday.toDateString()
+  ){
+
+    return "Yesterday, " + format
+
+  }
+
+  return d.toLocaleDateString() +
+  ", " + format
+
+}
+
+/* BACK */
+
+function goBack(){
+
+  window.location.href =
+  "home.html"
+
+}
+
+</script>
+
+</body>
+</html>
