@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Search</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:#f6f6fb;
+color:#111;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+
+height:88px;
+
+background:rgba(255,255,255,.96);
+
+backdrop-filter:blur(18px);
+
+border-bottom:1px solid #ececec;
+
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:0 18px;
+
+z-index:999;
+}
+
+/* BACK */
+
+.back-btn{
+width:48px;
+height:48px;
+
+border-radius:18px;
+
+background:#f2f2f7;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:24px;
+font-weight:900;
+
+transition:.18s;
+
+flex:none;
+}
+
+.back-btn:active{
+transform:scale(.92);
+}
+
+/* SEARCH */
+
+.search-box{
+flex:1;
+
+height:52px;
+
+background:#f2f2f7;
+
+border-radius:18px;
+
+display:flex;
+align-items:center;
+
+padding:0 16px;
+
+gap:12px;
+}
+
+.search-box i{
+font-size:17px;
+color:#888;
+}
+
+.search-box input{
+border:none;
+outline:none;
+background:none;
+
+width:100%;
+
+font-size:15px;
+font-weight:600;
+color:#111;
+}
+
+.search-box input::placeholder{
+color:#888;
+}
+
+/* CONTENT */
+
+.content{
+padding:
+110px 16px 120px;
+}
+
+/* FILTERS */
+
+.filters{
+display:flex;
+gap:10px;
+
+overflow-x:auto;
+
+margin-bottom:20px;
+
+scrollbar-width:none;
+}
+
+.filters::-webkit-scrollbar{
+display:none;
+}
+
+.filter-btn{
+padding:11px 16px;
+
+border-radius:16px;
+
+background:white;
+
+font-size:13px;
+font-weight:800;
+
+white-space:nowrap;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.04);
+
+transition:.18s;
+}
+
+.filter-btn.active{
+background:linear-gradient(
+135deg,
+#8a2be2,
+#c084fc
+);
+
+color:white;
+}
+
+.filter-btn:active{
+transform:scale(.92);
+}
+
+/* RESULTS */
+
+.results{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* USER CARD */
+
+.user-card{
+background:white;
+
+border-radius:24px;
+
+padding:14px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.04);
+
+transition:.18s;
+}
+
+.user-card:active{
+transform:scale(.98);
+}
+
+.user-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.user-avatar{
+width:58px;
+height:58px;
+
+border-radius:20px;
+
+object-fit:cover;
+}
+
+.user-info h3{
+font-size:15px;
+font-weight:900;
+}
+
+.user-info p{
+margin-top:4px;
+
+font-size:13px;
+color:#777;
+}
+
+.user-info span{
+display:inline-block;
+
+margin-top:6px;
+
+font-size:11px;
+font-weight:800;
+
+color:#8a2be2;
+}
+
+/* BUTTONS */
+
+.user-actions{
+display:flex;
+gap:8px;
+}
+
+.action-btn{
+height:42px;
+
+padding:0 15px;
+
+border:none;
+
+border-radius:16px;
+
+font-size:12px;
+font-weight:800;
+
+transition:.18s;
+}
+
+.peeps-btn{
+background:linear-gradient(
+135deg,
+#8a2be2,
+#c084fc
+);
+
+color:white;
+}
+
+.message-btn{
+background:#efeff4;
+}
+
+.connected{
+background:#e9d5ff;
+color:#6b21a8;
+}
+
+.action-btn:active{
+transform:scale(.92);
+}
+
+/* PAGE CARD */
+
+.page-card{
+background:white;
+
+border-radius:24px;
+
+padding:14px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.04);
+
+transition:.18s;
+}
+
+.page-card:active{
+transform:scale(.98);
+}
+
+.page-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.page-avatar{
+width:62px;
+height:62px;
+
+border-radius:22px;
+
+object-fit:cover;
+}
+
+.follow-page-btn{
+height:44px;
+
+padding:0 16px;
+
+border:none;
+
+border-radius:16px;
+
+background:#111;
+
+color:white;
+
+font-size:13px;
+font-weight:800;
+
+transition:.18s;
+}
+
+.follow-page-btn:active{
+transform:scale(.92);
+}
+
+/* VIDEO */
+
+.video-card{
+background:white;
+
+border-radius:24px;
+
+overflow:hidden;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.04);
+
+transition:.18s;
+}
+
+.video-card:active{
+transform:scale(.98);
+}
+
+.video-thumb{
+width:100%;
+height:200px;
+
+object-fit:cover;
+}
+
+.video-info{
+padding:14px;
+}
+
+.video-info h3{
+font-size:16px;
+font-weight:900;
+}
+
+.video-info p{
+margin-top:7px;
+
+font-size:13px;
+line-height:1.5;
+color:#666;
+}
+
+.video-tags{
+margin-top:12px;
+
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.tag{
+padding:7px 11px;
+
+border-radius:13px;
+
+background:#f3e8ff;
+
+font-size:11px;
+font-weight:800;
+
+color:#8a2be2;
+}
+
+/* EMPTY */
+
+.empty-state{
+margin-top:90px;
+
+text-align:center;
+display:none;
+}
+
+.empty-state img{
+width:110px;
+opacity:.7;
+}
+
+.empty-state h2{
+margin-top:18px;
+
+font-size:22px;
+font-weight:900;
+}
+
+.empty-state p{
+margin-top:10px;
+
+font-size:14px;
+line-height:1.5;
+color:#777;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+height:86px;
+
+background:rgba(255,255,255,.96);
+
+backdrop-filter:blur(18px);
+
+border-top:1px solid #ececec;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+z-index:999;
+}
+
+.nav-btn{
+width:56px;
+height:56px;
+
+border-radius:18px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+transition:.18s;
+}
+
+.nav-btn img{
+width:25px;
+height:25px;
+}
+
+.active-nav{
+background:#f3e8ff;
+}
+
+.nav-btn:active{
+transform:scale(.92);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div
+class="back-btn"
+onclick="goHome()">
+←
+</div>
+
+<div class="search-box">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search peeps or Lyno updates"
+onkeyup="searchEverything()">
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+<div class="filter-btn active">
+All
+</div>
+
+<div class="filter-btn">
+Peeps
+</div>
+
+<div class="filter-btn">
+Buzz
+</div>
+
+<div class="filter-btn">
+Pages
+</div>
+
+<div class="filter-btn">
+Videos
+</div>
+
+</div>
+
+<!-- RESULTS -->
+
+<div
+class="results"
+id="results">
+
+<!-- USER -->
+
+<div
+class="user-card"
+data-search="
+alex alex abel alexander music producer megachat"
+onclick="openProfile('alex_001')">
+
+<div class="user-left">
+
+<img
+class="user-avatar"
+src="https://i.pravatar.cc/300?img=2">
+
+<div class="user-info">
+
+<h3>
+Alex Abel
+</h3>
+
+<p>
+@alexabel
+</p>
+
+<span>
+Music Producer
+</span>
+
+</div>
+
+</div>
+
+<div class="user-actions">
+
+<button
+class="action-btn peeps-btn"
+onclick="sendPeeps(event,this)">
+Peeps
+</button>
+
+</div>
+
+</div>
+
+<!-- USER -->
+
+<div
+class="user-card"
+data-search="
+alex alex morgan photography creator designer"
+onclick="openProfile('alex_002')">
+
+<div class="user-left">
+
+<img
+class="user-avatar"
+src="https://i.pravatar.cc/300?img=5">
+
+<div class="user-info">
+
+<h3>
+Alex Morgan
+</h3>
+
+<p>
+@alexmorgan
+</p>
+
+<span>
+Creative Designer
+</span>
+
+</div>
+
+</div>
+
+<div class="user-actions">
+
+<button
+class="action-btn connected">
+Connected
+</button>
+
+<button
+class="action-btn message-btn"
+onclick="openChat(event,'alex_002')">
+Message
+</button>
+
+</div>
+
+</div>
+
+<!-- USER -->
+
+<div
+class="user-card"
+data-search="
+sarah sarah lee fashion creator beauty"
+onclick="openProfile('sarah_001')">
+
+<div class="user-left">
+
+<img
+class="user-avatar"
+src="https://i.pravatar.cc/300?img=9">
+
+<div class="user-info">
+
+<h3>
+Sarah Lee
+</h3>
+
+<p>
+@sarahlee
+</p>
+
+<span>
+Fashion Creator
+</span>
+
+</div>
+
+</div>
+
+<div class="user-actions">
+
+<button
+class="action-btn connected">
+Connected
+</button>
+
+<button
+class="action-btn message-btn"
+onclick="openChat(event,'sarah_001')">
+Message
+</button>
+
+</div>
+
+</div>
+
+<!-- PAGE -->
+
+<div
+class="page-card"
+data-search="
+megachat page social media app megachat go"
+onclick="openPage(
+'page_001',
+'MegaChat Creators'
+)">
+
+<div class="page-left">
+
+<img
+class="page-avatar"
+src="https://picsum.photos/300?12">
+
+<div class="user-info">
+
+<h3>
+MegaChat Creators
+</h3>
+
+<p>
+Official MegaChat Go page
+</p>
+
+<span>
+245K followers
+</span>
+
+</div>
+
+</div>
+
+<button
+class="follow-page-btn"
+onclick="followPage(event,this)">
+Follow
+</button>
+
+</div>
+
+<!-- PAGE -->
+
+<div
+class="page-card"
+data-search="
+sports football sportszone page"
+onclick="openPage(
+'page_002',
+'SportsZone'
+)">
+
+<div class="page-left">
+
+<img
+class="page-avatar"
+src="https://picsum.photos/300?18">
+
+<div class="user-info">
+
+<h3>
+SportsZone
+</h3>
+
+<p>
+Sports creators & live updates
+</p>
+
+<span>
+122K followers
+</span>
+
+</div>
+
+</div>
+
+<button
+class="follow-page-btn"
+onclick="followPage(event,this)">
+Follow
+</button>
+
+</div>
+
+<!-- VIDEO -->
+
+<div
+class="video-card"
+data-search="
+dance video buzz challenge trending lyno updates"
+onclick="openBuzz()">
+
+<img
+class="video-thumb"
+src="https://picsum.photos/600/400?21">
+
+<div class="video-info">
+
+<h3>
+Mega Dance Buzz Challenge 🔥
+</h3>
+
+<p>
+Trending dance moves and creator
+moments from MegaChat users.
+</p>
+
+<div class="video-tags">
+
+<div class="tag">
+#Dance
+</div>
+
+<div class="tag">
+#Buzz
+</div>
+
+<div class="tag">
+#Trending
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- VIDEO -->
+
+<div
+class="video-card"
+data-search="
+football sports highlights buzz updates"
+onclick="openBuzz()">
+
+<img
+class="video-thumb"
+src="https://picsum.photos/600/400?24">
+
+<div class="video-info">
+
+<h3>
+Football Buzz Highlights ⚽
+</h3>
+
+<p>
+Latest football moments and sports
+buzz updates.
+</p>
+
+<div class="video-tags">
+
+<div class="tag">
+#Sports
+</div>
+
+<div class="tag">
+#Football
+</div>
+
+<div class="tag">
+#Buzz
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- EMPTY -->
+
+<div
+class="empty-state"
+id="emptyState">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png">
+
+<h2>
+No Results Found
+</h2>
+
+<p>
+Try searching for peeps,
+videos, pages or Lyno updates.
+</p>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div
+class="nav-btn"
+onclick="goHome()">
+
+<img src="home.png">
+
+</div>
+
+<div
+class="nav-btn active-nav">
+
+<img src="search.png">
+
+</div>
+
+<div
+class="nav-btn"
+onclick="goCreate()">
+
+<img src="add.png">
+
+</div>
+
+<div
+class="nav-btn"
+onclick="goBuzz()">
+
+<img src="buzz.png">
+
+</div>
+
+<div
+class="nav-btn"
+onclick="goProfile()">
+
+<img src="profile.png">
+
+</div>
+
+</div>
+
+<script>
+
+/* SEARCH */
+
+function searchEverything(){
+
+let input =
+document.getElementById(
+"searchInput"
+).value.toLowerCase()
+
+let results =
+document.querySelectorAll(
+"[data-search]"
+)
+
+let visible = 0
+
+results.forEach(item=>{
+
+let keywords =
+item.getAttribute(
+"data-search"
+).toLowerCase()
+
+if(
+keywords.includes(input)
+){
+
+if(
+item.classList.contains(
+"video-card"
+)
+){
+
+item.style.display =
+"block"
+
+}
+
+else{
+
+item.style.display =
+"flex"
+
+}
+
+visible++
+
+}
+
+else{
+
+item.style.display =
+"none"
+
+}
+
+})
+
+if(visible === 0){
+
+document.getElementById(
+"emptyState"
+).style.display =
+"block"
+
+}
+
+else{
+
+document.getElementById(
+"emptyState"
+).style.display =
+"none"
+
+}
+
+}
+
+/* PROFILE */
+
+function openProfile(id){
+
+localStorage.setItem(
+"opened_profile_id",
+id
+)
+
+window.location.href =
+"userprofile.html"
+
+}
+
+/* PEEPS */
+
+function sendPeeps(event,btn){
+
+event.stopPropagation()
+
+btn.innerHTML =
+"Request Sent"
+
+btn.style.background =
+"#e9d5ff"
+
+btn.style.color =
+"#6b21a8"
+
+}
+
+/* CHATROOM */
+
+function openChat(
+event,
+userId
+){
+
+event.stopPropagation()
+
+localStorage.setItem(
+"opened_chat_user_id",
+userId
+)
+
+window.location.href =
+"chatroom.html"
+
+}
+
+/* PAGES */
+
+function openPage(
+pageId,
+pageName
+){
+
+localStorage.setItem(
+"opened_page_id",
+pageId
+)
+
+localStorage.setItem(
+"opened_page_name",
+pageName
+)
+
+window.location.href =
+"pages.html"
+
+}
+
+function followPage(event,btn){
+
+event.stopPropagation()
+
+btn.innerHTML =
+"Following"
+
+btn.style.background =
+"#e9d5ff"
+
+btn.style.color =
+"#6b21a8"
+
+}
+
+/* BUZZ */
+
+function openBuzz(){
+
+window.location.href =
+"buzz.html"
+
+}
+
+/* NAVIGATION */
+
+function goHome(){
+
+window.location.href =
+"home.html"
+
+}
+
+function goCreate(){
+
+window.location.href =
+"createpost.html"
+
+}
+
+function goBuzz(){
+
+window.location.href =
+"buzz.html"
+
+}
+
+function goProfile(){
+
+window.location.href =
+"profile.html"
+
+}
+
+</script>
+
+</body>
+</html>
