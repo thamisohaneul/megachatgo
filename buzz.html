@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="
+width=device-width,
+initial-scale=1.0,
+viewport-fit=cover">
+
+<title>MegaChat Buzz</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+}
+
+/* CONTAINER */
+
+.buzz-container{
+width:100%;
+height:100vh;
+
+overflow-y:scroll;
+
+scroll-snap-type:y mandatory;
+
+scroll-behavior:smooth;
+}
+
+.buzz-container::-webkit-scrollbar{
+display:none;
+}
+
+/* CARD */
+
+.buzz-card{
+position:relative;
+
+width:100%;
+height:100vh;
+
+overflow:hidden;
+
+scroll-snap-align:start;
+
+background:#000;
+}
+
+/* VIDEO */
+
+.buzz-video{
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+background:#000;
+}
+
+/* TOP BAR */
+
+.top-bar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+
+height:76px;
+
+padding:
+8px 16px 0;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+z-index:9999;
+}
+
+.logo{
+font-size:28px;
+font-weight:900;
+color:white;
+
+text-shadow:
+0 2px 10px rgba(0,0,0,.45);
+}
+
+/* TOP BUTTONS */
+
+.top-actions{
+display:flex;
+gap:10px;
+}
+
+.top-btn{
+width:46px;
+height:46px;
+
+border-radius:18px;
+
+background:rgba(0,0,0,.28);
+
+backdrop-filter:blur(14px);
+
+border:1px solid rgba(255,255,255,.1);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:18px;
+color:white;
+
+transition:.18s;
+}
+
+.top-btn:active{
+transform:scale(.9);
+}
+
+/* SEARCH */
+
+.search-overlay{
+position:fixed;
+top:0;
+left:0;
+right:0;
+
+height:88px;
+
+background:white;
+
+padding:
+14px 14px 0;
+
+display:none;
+align-items:center;
+gap:10px;
+
+z-index:99999;
+}
+
+.search-box{
+flex:1;
+
+height:50px;
+
+background:#f2f2f7;
+
+border-radius:18px;
+
+display:flex;
+align-items:center;
+
+padding:0 16px;
+
+gap:10px;
+}
+
+.search-box i{
+font-size:16px;
+color:#777;
+}
+
+.search-box input{
+border:none;
+outline:none;
+background:none;
+
+width:100%;
+
+font-size:15px;
+font-weight:700;
+}
+
+.close-search{
+width:48px;
+height:48px;
+
+border-radius:18px;
+
+background:#f2f2f7;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+font-weight:900;
+}
+
+/* PLAY BUTTON */
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+
+transform:
+translate(-50%,-50%);
+
+width:84px;
+height:84px;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.25);
+
+backdrop-filter:blur(14px);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:34px;
+color:white;
+
+opacity:0;
+
+z-index:20;
+
+transition:.2s;
+}
+
+/* RIGHT ACTIONS */
+
+.video-actions{
+position:absolute;
+right:12px;
+bottom:125px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:18px;
+
+z-index:20;
+}
+
+.action-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+}
+
+.action-icon{
+width:56px;
+height:56px;
+
+border-radius:22px;
+
+background:rgba(0,0,0,.25);
+
+backdrop-filter:blur(14px);
+
+border:1px solid rgba(255,255,255,.08);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+color:white;
+
+transition:.18s;
+}
+
+.action-icon:active{
+transform:scale(.9);
+}
+
+.action-count{
+font-size:12px;
+font-weight:800;
+color:white;
+
+text-shadow:
+0 2px 8px rgba(0,0,0,.5);
+}
+
+/* INFO */
+
+.video-info{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+
+padding:
+0 16px 92px;
+
+z-index:20;
+
+background:
+linear-gradient(
+to top,
+rgba(0,0,0,.68),
+transparent
+);
+}
+
+/* PROFILE */
+
+.profile-row{
+display:flex;
+align-items:center;
+gap:12px;
+
+margin-bottom:14px;
+}
+
+.profile-pic{
+width:56px;
+height:56px;
+
+border-radius:22px;
+
+object-fit:cover;
+
+border:2px solid rgba(255,255,255,.3);
+}
+
+.profile-name{
+font-size:17px;
+font-weight:900;
+color:white;
+
+text-shadow:
+0 2px 10px rgba(0,0,0,.5);
+}
+
+.caption{
+margin-top:4px;
+
+font-size:14px;
+line-height:1.55;
+color:white;
+
+max-width:78%;
+
+text-shadow:
+0 2px 10px rgba(0,0,0,.5);
+}
+
+/* PROGRESS */
+
+.progress-bar{
+margin-top:16px;
+
+width:100%;
+height:4px;
+
+background:rgba(255,255,255,.22);
+
+border-radius:999px;
+
+overflow:hidden;
+}
+
+.progress{
+width:0%;
+height:100%;
+
+background:white;
+}
+
+.time{
+margin-top:8px;
+
+font-size:12px;
+font-weight:700;
+color:white;
+}
+
+/* COMMENTS */
+
+.comment-sheet{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+
+height:70vh;
+
+background:white;
+
+border-radius:
+32px 32px 0 0;
+
+padding:18px;
+
+display:none;
+flex-direction:column;
+
+z-index:999999;
+}
+
+.comment-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:18px;
+}
+
+.comment-top h2{
+font-size:19px;
+font-weight:900;
+}
+
+.close-comments{
+width:42px;
+height:42px;
+
+border-radius:15px;
+
+background:#f2f2f7;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+font-weight:900;
+}
+
+.comments{
+flex:1;
+
+overflow-y:auto;
+
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* COMMENT */
+
+.comment{
+display:flex;
+gap:12px;
+}
+
+.comment img{
+width:44px;
+height:44px;
+
+border-radius:16px;
+
+object-fit:cover;
+}
+
+.comment-content{
+background:#f5f5fa;
+
+padding:12px;
+
+border-radius:18px;
+
+flex:1;
+}
+
+.comment-content h4{
+font-size:14px;
+font-weight:900;
+}
+
+.comment-content p{
+margin-top:4px;
+
+font-size:13px;
+line-height:1.4;
+color:#555;
+}
+
+/* INPUT */
+
+.comment-input{
+margin-top:14px;
+
+display:flex;
+gap:12px;
+}
+
+.comment-input input{
+flex:1;
+
+height:54px;
+
+border:none;
+outline:none;
+
+background:#f2f2f7;
+
+border-radius:18px;
+
+padding:0 16px;
+
+font-size:14px;
+font-weight:700;
+}
+
+.send-btn{
+width:54px;
+height:54px;
+
+border:none;
+
+border-radius:18px;
+
+background:linear-gradient(
+135deg,
+#8a2be2,
+#c084fc
+);
+
+color:white;
+
+font-size:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SEARCH -->
+
+<div
+class="search-overlay"
+id="searchOverlay">
+
+<div class="search-box">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input
+type="text"
+id="buzzSearch"
+placeholder="Search buzz videos..."
+onkeyup="searchBuzz()">
+
+</div>
+
+<div
+class="close-search"
+onclick="closeSearch()">
+✕
+</div>
+
+</div>
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+<div class="logo">
+Buzz
+</div>
+
+<div class="top-actions">
+
+<div
+class="top-btn"
+onclick="openSearch()">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+</div>
+
+<div
+class="top-btn"
+onclick="openCreateBuzz()">
+
+<i class="fa-solid fa-video"></i>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BUZZ -->
+
+<div
+class="buzz-container"
+id="buzzContainer">
+
+<!-- VIDEO 1 -->
+
+<div
+class="buzz-card"
+data-search="alex dance music">
+
+<video
+class="buzz-video"
+autoplay
+playsinline
+loop
+src="https://www.w3schools.com/html/mov_bbb.mp4">
+</video>
+
+<div
+class="play-btn">
+▶
+</div>
+
+<!-- ACTIONS -->
+
+<div class="video-actions">
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="toggleLike(this)">
+❤️
+</div>
+
+<div class="action-count">
+<span class="like-count">
+12.4K
+</span>
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="openComments()">
+💬
+</div>
+
+<div class="action-count">
+4.2K
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="shareBuzz()">
+↗
+</div>
+
+<div class="action-count">
+Share
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="saveBuzz(
+'https://www.w3schools.com/html/mov_bbb.mp4'
+)">
+⬇
+</div>
+
+<div class="action-count">
+Save
+</div>
+
+</div>
+
+</div>
+
+<!-- INFO -->
+
+<div class="video-info">
+
+<div class="profile-row">
+
+<img
+class="profile-pic"
+src="https://i.pravatar.cc/300?img=5">
+
+<div>
+
+<div class="profile-name">
+Alex Morgan
+</div>
+
+<div class="caption">
+Late night dance vibes 🔥
+#buzz #dance #music
+</div>
+
+</div>
+
+</div>
+
+<div class="progress-bar">
+
+<div class="progress"></div>
+
+</div>
+
+<div class="time">
+0:00 / 0:30
+</div>
+
+</div>
+
+</div>
+
+<!-- VIDEO 2 -->
+
+<div
+class="buzz-card"
+data-search="sarah fashion beauty">
+
+<video
+class="buzz-video"
+autoplay
+playsinline
+loop
+src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+</video>
+
+<div
+class="play-btn">
+▶
+</div>
+
+<div class="video-actions">
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="toggleLike(this)">
+❤️
+</div>
+
+<div class="action-count">
+<span class="like-count">
+8.9K
+</span>
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="openComments()">
+💬
+</div>
+
+<div class="action-count">
+2.1K
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="shareBuzz()">
+↗
+</div>
+
+<div class="action-count">
+Share
+</div>
+
+</div>
+
+<div class="action-item">
+
+<div
+class="action-icon"
+onclick="saveBuzz(
+'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+)">
+⬇
+</div>
+
+<div class="action-count">
+Save
+</div>
+
+</div>
+
+</div>
+
+<div class="video-info">
+
+<div class="profile-row">
+
+<img
+class="profile-pic"
+src="https://i.pravatar.cc/300?img=9">
+
+<div>
+
+<div class="profile-name">
+Sarah Lee
+</div>
+
+<div class="caption">
+Fashion moments today ✨
+#style #beauty
+</div>
+
+</div>
+
+</div>
+
+<div class="progress-bar">
+
+<div class="progress"></div>
+
+</div>
+
+<div class="time">
+0:00 / 0:25
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- COMMENTS -->
+
+<div
+class="comment-sheet"
+id="commentSheet">
+
+<div class="comment-top">
+
+<h2>
+Comments
+</h2>
+
+<div
+class="close-comments"
+onclick="closeComments()">
+✕
+</div>
+
+</div>
+
+<div
+class="comments"
+id="comments">
+
+<div class="comment">
+
+<img
+src="https://i.pravatar.cc/300?img=12">
+
+<div class="comment-content">
+
+<h4>
+Nathan
+</h4>
+
+<p>
+This buzz is fire 🔥
+</p>
+
+</div>
+
+</div>
+
+<div class="comment">
+
+<img
+src="https://i.pravatar.cc/300?img=22">
+
+<div class="comment-content">
+
+<h4>
+Emily
+</h4>
+
+<p>
+Love this vibe 😍
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="comment-input">
+
+<input
+type="text"
+id="commentInput"
+placeholder="Write a comment...">
+
+<button
+class="send-btn"
+onclick="sendComment()">
+➤
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* VIDEOS */
+
+const videos =
+document.querySelectorAll(
+".buzz-video"
+)
+
+/* PLAY FIRST */
+
+videos[0].play()
+
+/* AUTO PLAY ON SCROLL */
+
+const observer =
+new IntersectionObserver(
+
+(entries)=>{
+
+entries.forEach(entry=>{
+
+const video =
+entry.target.querySelector(
+"video"
+)
+
+if(entry.isIntersecting){
+
+video.play()
+
+}
+
+else{
+
+video.pause()
+
+}
+
+})
+
+},
+
+{
+threshold:0.7
+}
+
+)
+
+document
+.querySelectorAll(".buzz-card")
+.forEach(card=>{
+
+observer.observe(card)
+
+})
+
+/* UPDATE TIME */
+
+videos.forEach(video=>{
+
+video.addEventListener(
+"timeupdate",
+()=>{
+
+let parent =
+video.parentElement
+
+let progress =
+parent.querySelector(
+".progress"
+)
+
+let time =
+parent.querySelector(
+".time"
+)
+
+let percent =
+(video.currentTime /
+video.duration) * 100
+
+progress.style.width =
+percent + "%"
+
+time.innerHTML =
+formatTime(video.currentTime)
++
+" / " +
+formatTime(video.duration)
+
+/* AUTO NEXT */
+
+if(
+video.currentTime >=
+video.duration - 0.25
+){
+
+let next =
+parent.nextElementSibling
+
+if(
+next &&
+next.classList.contains(
+"buzz-card"
+)
+){
+
+next.scrollIntoView({
+behavior:"smooth"
+})
+
+}
+
+}
+
+})
+
+})
+
+/* TAP VIDEO */
+
+videos.forEach(video=>{
+
+video.addEventListener(
+"click",
+()=>{
+
+let btn =
+video.parentElement.querySelector(
+".play-btn"
+)
+
+if(video.paused){
+
+video.play()
+
+btn.style.opacity =
+"0"
+
+}
+
+else{
+
+video.pause()
+
+btn.style.opacity =
+"1"
+
+}
+
+})
+
+})
+
+/* TIME */
+
+function formatTime(sec){
+
+if(isNaN(sec))
+return "0:00"
+
+let mins =
+Math.floor(sec/60)
+
+let secs =
+Math.floor(sec%60)
+
+if(secs < 10){
+
+secs = "0" + secs
+
+}
+
+return mins + ":" + secs
+
+}
+
+/* LIKE */
+
+function toggleLike(btn){
+
+let count =
+btn.parentElement.querySelector(
+".like-count"
+)
+
+let likes =
+parseFloat(
+count.innerHTML
+)
+
+likes += 1
+
+count.innerHTML =
+likes.toFixed(1) + "K"
+
+btn.style.transform =
+"scale(1.2)"
+
+setTimeout(()=>{
+
+btn.style.transform =
+"scale(1)"
+
+},150)
+
+}
+
+/* COMMENTS */
+
+function openComments(){
+
+document.getElementById(
+"commentSheet"
+).style.display =
+"flex"
+
+}
+
+function closeComments(){
+
+document.getElementById(
+"commentSheet"
+).style.display =
+"none"
+
+}
+
+/* SEND COMMENT */
+
+function sendComment(){
+
+let input =
+document.getElementById(
+"commentInput"
+)
+
+if(input.value.trim() === "")
+return
+
+let comments =
+document.getElementById(
+"comments"
+)
+
+comments.innerHTML += `
+
+<div class="comment">
+
+<img
+src="https://i.pravatar.cc/300?img=14">
+
+<div class="comment-content">
+
+<h4>
+You
+</h4>
+
+<p>
+${input.value}
+</p>
+
+</div>
+
+</div>
+
+`
+
+input.value = ""
+
+comments.scrollTop =
+comments.scrollHeight
+
+}
+
+/* SHARE */
+
+function shareBuzz(){
+
+if(navigator.share){
+
+navigator.share({
+
+title:"MegaChat Buzz",
+text:"Check out this Buzz video"
+
+})
+
+}
+
+}
+
+/* SAVE */
+
+function saveBuzz(url){
+
+const link =
+document.createElement("a")
+
+link.href = url
+
+link.download =
+"megachat-buzz.mp4"
+
+document.body.appendChild(link)
+
+link.click()
+
+document.body.removeChild(link)
+
+}
+
+/* SEARCH */
+
+function openSearch(){
+
+document.getElementById(
+"searchOverlay"
+).style.display =
+"flex"
+
+}
+
+function closeSearch(){
+
+document.getElementById(
+"searchOverlay"
+).style.display =
+"none"
+
+}
+
+function searchBuzz(){
+
+let input =
+document.getElementById(
+"buzzSearch"
+).value.toLowerCase()
+
+let cards =
+document.querySelectorAll(
+".buzz-card"
+)
+
+cards.forEach(card=>{
+
+let keywords =
+card.getAttribute(
+"data-search"
+).toLowerCase()
+
+if(
+keywords.includes(input)
+){
+
+card.style.display =
+"block"
+
+}
+
+else{
+
+card.style.display =
+"none"
+
+}
+
+})
+
+}
+
+/* CREATE BUZZ */
+
+function openCreateBuzz(){
+
+window.location.href =
+"createbuzz.html"
+
+}
+
+</script>
+
+</body>
+</html>
